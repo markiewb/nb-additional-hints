@@ -40,48 +40,25 @@
  */
 package de.markiewb.netbeans.plugins.hints;
 
-import com.sun.source.tree.MemberSelectTree;
+import de.markiewb.netbeans.plugins.hints.common.StringUtils;
+import de.markiewb.netbeans.plugins.hints.common.ImportFQNsHack;
 import com.sun.source.tree.Scope;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
-import com.sun.source.util.TreePathScanner;
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import javax.lang.model.element.Element;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.JTextComponent;
-import javax.swing.text.Position;
-import javax.swing.text.Position.Bias;
-import javax.swing.text.StyleConstants;
-import org.netbeans.api.editor.EditorRegistry;
-import org.netbeans.api.editor.settings.AttributesUtilities;
 import org.netbeans.api.java.source.CancellableTask;
-import org.netbeans.api.java.source.GeneratorUtilities;
 import org.netbeans.api.java.source.JavaSource;
 import org.netbeans.api.java.source.JavaSource.Phase;
 import org.netbeans.api.java.source.TreePathHandle;
 import org.netbeans.api.java.source.WorkingCopy;
-import org.netbeans.spi.editor.highlighting.HighlightsLayer;
-import org.netbeans.spi.editor.highlighting.HighlightsLayerFactory;
-import org.netbeans.spi.editor.highlighting.ZOrder;
-import org.netbeans.spi.editor.highlighting.support.PositionsBag;
 import org.netbeans.spi.editor.hints.ChangeInfo;
 import org.netbeans.spi.editor.hints.Fix;
-import org.netbeans.spi.java.hints.JavaFixUtilities;
 import org.openide.ErrorManager;
 import org.openide.loaders.DataObject;
-import org.openide.text.NbDocument;
 import org.openide.util.MapFormat;
 
 /**
@@ -110,27 +87,6 @@ public class ReplaceWithMessageFormatFix implements Fix {
 	return "Replace '+' with 'java.text.MessageFormat.format()'";
     }
 
-    private String join(Iterable<String> list, String separator) {
-	boolean first = true;
-	StringBuilder sb = new StringBuilder(200);
-	for (String string : list) {
-	    if (isEmpty(string)) {
-		continue;
-	    }
-
-	    if (!first) {
-		sb.append(separator);
-	    }
-	    sb.append(string);
-	    first = false;
-	}
-	return sb.toString();
-    }
-
-    private static boolean isEmpty(String string) {
-	return null == string || "".equals(string);
-    }
-
     @Override
     public ChangeInfo implement() throws IOException {
 
@@ -142,7 +98,7 @@ public class ReplaceWithMessageFormatFix implements Fix {
 	table.put("format", format); // NOI18N
 
 	StringBuilder arguments = new StringBuilder();
-	arguments.append(join(argument, ", "));
+	arguments.append(StringUtils.join(argument, ", "));
 	if (argument.isEmpty()) {
 	    table.put("arguments", ""); // NOI18N
 	} else {
@@ -150,7 +106,12 @@ public class ReplaceWithMessageFormatFix implements Fix {
 	}
 
 	final String text = new MapFormat(table).format(_format);
+	rewrite(js, text);
 
+	return null;
+    }
+
+    private void rewrite(JavaSource js, final String text) {
 	try {
 
 	    js.runModificationTask(new CancellableTask<WorkingCopy>() {
@@ -175,29 +136,6 @@ public class ReplaceWithMessageFormatFix implements Fix {
 
 	} catch (IOException ex) {
 	    ErrorManager.getDefault().notify(ex);
-	}
-
-	return null;
-    }
-
-    private static final class ImportFQNsHack extends TreePathScanner<Void, Void> {
-
-	private WorkingCopy wc;
-
-	ImportFQNsHack(WorkingCopy wc) {
-	    this.wc = wc;
-	}
-
-	@Override
-	public Void visitMemberSelect(MemberSelectTree node, Void p) {
-	    Element e = wc.getTrees().getElement(getCurrentPath());
-
-	    if (e != null && (e.getKind().isClass() || e.getKind().isInterface())) {
-		wc.rewrite(node, wc.getTreeMaker().QualIdent(e));
-		return null;
-	    } else {
-		return super.visitMemberSelect(node, p);
-	    }
 	}
     }
 }

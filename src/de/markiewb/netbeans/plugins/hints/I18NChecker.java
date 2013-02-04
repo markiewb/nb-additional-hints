@@ -105,7 +105,7 @@ import org.openide.util.NbBundle.Messages;
     "DESC_com.bla.Example=This is an example hint that warns about an example problem."})
 public class I18NChecker {
 
-    private static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);
+    public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);
 
     @TriggerTreeKind(value = {Kind.STRING_LITERAL, Kind.PLUS})
     public static ErrorDescription computeHint(HintContext ctx) {
@@ -195,51 +195,5 @@ public class I18NChecker {
 
     private Set<Kind> getTreeKinds() {
 	return TREEKINDS;
-    }
-
-    private static class BuildArgumentsVisitor extends TreePathScanner<Void, Object> {
-
-	private CompilationInfo info;
-	private StringBuffer format = new StringBuffer();
-	private List<String> arguments = new ArrayList<String>();
-	private boolean wasLiteral;
-	private int argIndex;
-
-	BuildArgumentsVisitor(CompilationInfo info) {
-	    this.info = info;
-	}
-
-	public @Override
-	Void visitBinary(BinaryTree tree, Object p) {
-	    handleTree(new TreePath(getCurrentPath(), tree.getLeftOperand()));
-	    handleTree(new TreePath(getCurrentPath(), tree.getRightOperand()));
-	    return null;
-	}
-
-	public @Override
-	Void visitLiteral(LiteralTree tree, Object p) {
-	    String value = tree.getValue().toString();
-	    if (!value.isEmpty()) {
-		wasLiteral = true;
-		format.append(value);
-	    }
-	    return null;
-	}
-
-	public void handleTree(TreePath tp) {
-	    Tree tree = tp.getLeaf();
-	    if (TREEKINDS.contains(tree.getKind())) {
-		scan(tree, null);
-		return;
-	    }
-	    //create placeholder in format string - like {0}
-	    format.append("{").append(argIndex++).append("}");
-
-	    //use original values as arguments
-	    SourcePositions pos = info.getTrees().getSourcePositions();
-	    int start = (int) pos.getStartPosition(tp.getCompilationUnit(), tree);
-	    int end = (int) pos.getEndPosition(tp.getCompilationUnit(), tree);
-	    arguments.add(info.getText().substring(start, end));
-	}
     }
 }
