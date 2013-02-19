@@ -46,11 +46,11 @@ public class ReplaceWithSingleStringFixTest {
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"ABC\\nDEF\\rGHI\";\n"
+                + "        String foo=\"ABC\\nD\"+\"EF\\rGHI\";\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:34:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:37:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithSingleStringFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -60,4 +60,16 @@ public class ReplaceWithSingleStringFixTest {
                 + "    }\n"
                 + "}\n");
     }    
+    @Test
+    public void testSingleLiteral() throws Exception {
+        HintTest.create().
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo=\"A\";\n"
+                + "    }\n"
+                + "}\n").
+                run(ReplacePlusHint.class).
+		assertNotContainsWarnings(Bundle.DN_ReplacePlus());
+    }
 }

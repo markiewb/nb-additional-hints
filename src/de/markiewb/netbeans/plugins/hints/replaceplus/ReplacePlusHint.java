@@ -153,15 +153,19 @@ public class ReplacePlusHint {
 
             v.scan(treePath, null);
             BuildArgumentsVisitor.Result data = v.toResult();
-            List<Fix> fixes = new NonNullArrayList();
-            fixes.add(ReplaceWithMessageFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-            fixes.add(ReplaceWithStringFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-            fixes.add(ReplaceWithStringBuilderFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-            fixes.add(ReplaceWithSingleStringFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 
-            return ErrorDescriptionFactory.
-                    createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
-                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+	    //only join joinable terms, at least 2 terms are required
+	    if (data.get().size() >= 2) {
+		List<Fix> fixes = new NonNullArrayList();
+		fixes.add(ReplaceWithMessageFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+		fixes.add(ReplaceWithStringFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+		fixes.add(ReplaceWithStringBuilderFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+		fixes.add(ReplaceWithSingleStringFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+
+		return ErrorDescriptionFactory.
+			createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
+			getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
                     notify(ErrorManager.INFORMATIONAL, ex);

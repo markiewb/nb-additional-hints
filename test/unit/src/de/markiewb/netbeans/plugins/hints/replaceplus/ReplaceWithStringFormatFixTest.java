@@ -146,4 +146,16 @@ public class ReplaceWithStringFormatFixTest {
                 + "    }\n"
                 + "}\n");
     }    
+    @Test
+    public void testSingleLiteral() throws Exception {
+        HintTest.create().
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo=\"A\";\n"
+                + "    }\n"
+                + "}\n").
+                run(ReplacePlusHint.class).
+		assertNotContainsWarnings(Bundle.DN_ReplacePlus());
+    }
 }
