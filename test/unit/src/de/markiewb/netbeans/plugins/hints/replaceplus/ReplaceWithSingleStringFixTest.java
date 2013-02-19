@@ -30,7 +30,7 @@ public class ReplaceWithSingleStringFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:30:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithSingleStringFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -50,7 +50,7 @@ public class ReplaceWithSingleStringFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:34:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithSingleStringFix()).
                 assertCompilable().
                 assertOutput("package test;\n"

@@ -146,6 +146,9 @@ public class ReplacePlusHint {
             final long hardCodedOffset = compilationInfo.getTrees().
                     getSourcePositions().
                     getStartPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
+            final long hardCodedOffsetEnd = compilationInfo.getTrees().
+                    getSourcePositions().
+                    getEndPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
             BuildArgumentsVisitor v = new BuildArgumentsVisitor(compilationInfo);
 
             v.scan(treePath, null);
@@ -158,7 +161,7 @@ public class ReplacePlusHint {
 
             return ErrorDescriptionFactory.
                     createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
-                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffset);
+                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
                     notify(ErrorManager.INFORMATIONAL, ex);

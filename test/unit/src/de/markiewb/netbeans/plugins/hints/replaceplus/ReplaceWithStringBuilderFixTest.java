@@ -30,7 +30,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:50:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -51,7 +51,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:24:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -71,7 +71,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:32:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -92,7 +92,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:24:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -113,7 +113,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:30:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -134,7 +134,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:95:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -156,7 +156,7 @@ public class ReplaceWithStringBuilderFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:19-3:39:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
