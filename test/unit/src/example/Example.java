@@ -31,7 +31,12 @@ public class Example {
     }
         
     private static void testBreakStrings() {
-        String foo = "Hello,\n\rworld\n!\n "+"ljlkj";  
+//        String bar="select *"
+//                + "from"
+//                + table
+//                + "where"
+//                + "bla="+var;
+        String foo = "Hello,\n\r" + "world\n" + "!\n" + " ljlkj";  
     }
     
 

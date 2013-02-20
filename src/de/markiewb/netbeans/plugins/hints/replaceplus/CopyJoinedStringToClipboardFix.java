@@ -40,6 +40,7 @@
  */
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;

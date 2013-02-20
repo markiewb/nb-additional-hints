@@ -41,24 +41,12 @@
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
 import de.markiewb.netbeans.plugins.hints.common.StringUtils;
-import de.markiewb.netbeans.plugins.hints.common.ImportFQNsHack;
-import com.sun.source.tree.Scope;
-import com.sun.source.tree.Tree;
-import com.sun.source.util.SourcePositions;
-import com.sun.source.util.TreePath;
-import de.markiewb.netbeans.plugins.hints.replaceplus.BuildArgumentsVisitor.Result;
-import java.io.IOException;
+import de.markiewb.netbeans.plugins.hints.literals.AbstractReplaceWithFix;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor.Result;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import org.netbeans.api.java.source.CancellableTask;
-import org.netbeans.api.java.source.JavaSource;
-import org.netbeans.api.java.source.JavaSource.Phase;
 import org.netbeans.api.java.source.TreePathHandle;
-import org.netbeans.api.java.source.WorkingCopy;
-import org.netbeans.spi.editor.hints.ChangeInfo;
-import org.netbeans.spi.editor.hints.Fix;
-import org.openide.ErrorManager;
 import org.openide.loaders.DataObject;
 import org.openide.util.MapFormat;
 import org.openide.util.NbBundle;

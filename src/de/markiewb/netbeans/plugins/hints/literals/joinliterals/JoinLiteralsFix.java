@@ -38,9 +38,11 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  */
-package de.markiewb.netbeans.plugins.hints.replaceplus;
+package de.markiewb.netbeans.plugins.hints.literals.joinliterals;
 
 import de.markiewb.netbeans.plugins.hints.common.StringUtils;
+import de.markiewb.netbeans.plugins.hints.literals.AbstractReplaceWithFix;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import org.netbeans.api.java.source.TreePathHandle;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle;
@@ -48,22 +50,22 @@ import org.openide.util.NbBundle;
 /**
  * Fix which converts patterns like
  * <pre>"Foo "+"bar"+"bla"</pre> into
- * <pre>"Foobarbla"</pre>.<br/>
+ * <pre>"Foo barbla"</pre>.<br/>
  * Based on http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n/src/org/netbeans/modules/editor/hints/i18n
  * from Jan Lahoda.
  *
  * @author markiewb
  */
-public class ReplaceWithSingleStringFix extends AbstractReplaceWithFix {
+public class JoinLiteralsFix extends AbstractReplaceWithFix {
 
-    public static ReplaceWithSingleStringFix create(DataObject od, TreePathHandle handle, BuildArgumentsVisitor.Result data) {
-        if (ReplaceWithSingleStringFix.supports(data)) {
-            return new ReplaceWithSingleStringFix(od, handle, data);
+    public static JoinLiteralsFix create(DataObject od, TreePathHandle handle, BuildArgumentsVisitor.Result data) {
+        if (JoinLiteralsFix.supports(data)) {
+            return new JoinLiteralsFix(od, handle, data);
         }
         return null;
     }
 
-    private ReplaceWithSingleStringFix(DataObject od, TreePathHandle handle, BuildArgumentsVisitor.Result data) {
+    private JoinLiteralsFix(DataObject od, TreePathHandle handle, BuildArgumentsVisitor.Result data) {
         super(handle, od, data);
     }
 
@@ -74,8 +76,7 @@ public class ReplaceWithSingleStringFix extends AbstractReplaceWithFix {
             //ignore "plus" expressions without a literal
             return false;
         }
-        if (data.getArguments().
-                isEmpty()) {
+        if (data.getArguments().isEmpty()) {
             //only literals can be joined
             return true;
         }
@@ -84,10 +85,10 @@ public class ReplaceWithSingleStringFix extends AbstractReplaceWithFix {
         return false;
     }
 
-    @NbBundle.Messages({"LBL_ReplaceWithSingleStringFix=Replace '+' with joined String"})
+    @NbBundle.Messages({"LBL_JoinLiterals=Join separate literals"})
     @Override
     public String getText() {
-        return Bundle.LBL_ReplaceWithSingleStringFix();
+        return Bundle.LBL_JoinLiterals();
     }
 
     @Override
@@ -95,8 +96,7 @@ public class ReplaceWithSingleStringFix extends AbstractReplaceWithFix {
         StringBuilder formatBuilder = new StringBuilder();
 
         formatBuilder.append("\"");
-        for (BuildArgumentsVisitor.TokenPair pair : getData().
-                get()) {
+        for (BuildArgumentsVisitor.TokenPair pair : getData().get()) {
             formatBuilder.append(StringUtils.escapeLF(pair.getText()));
         }
         formatBuilder.append("\"");

@@ -120,6 +120,19 @@ public class ReplaceWithMessageFormatFixTest {
     }
 
     @Test
+    public void testOnlyLiterals() throws Exception {
+        HintTest.create().
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo=\"A\"+\"B\"+\"C\";\n"
+                + "    }\n"
+                + "}\n").
+                run(ReplacePlusHint.class).
+		assertNotContainsWarnings(Bundle.DN_ReplacePlus());
+    }
+
+    @Test
     public void testFixWorkingMixedB() throws Exception {
         HintTest.create().
                 input("package test;\n"

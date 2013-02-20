@@ -41,7 +41,9 @@
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
 import de.markiewb.netbeans.plugins.hints.common.StringUtils;
-import de.markiewb.netbeans.plugins.hints.replaceplus.BuildArgumentsVisitor.Result;
+import de.markiewb.netbeans.plugins.hints.literals.AbstractReplaceWithFix;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor.Result;
 import java.util.HashMap;
 import java.util.Map;
 import org.netbeans.api.java.source.TreePathHandle;
@@ -75,7 +77,7 @@ public class ReplaceWithStringFormatFix extends AbstractReplaceWithFix {
 
         if (data.hasOnlyNonLiterals()) {
             //?? ignore zero-length string literals and 
-            //ignore "plus" expressions without a literal
+            //ignore "plus" expressions without a literal like 4 + 5
             return false;
         }
         return true;

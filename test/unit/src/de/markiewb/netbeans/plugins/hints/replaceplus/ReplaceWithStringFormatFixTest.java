@@ -84,7 +84,7 @@ public class ReplaceWithStringFormatFixTest {
     }
     
     @Test
-    public void testFixWorkingOnlyLiterals() throws Exception {
+    public void testOnlyLiterals() throws Exception {
         HintTest.create().
                 input("package test;\n"
                 + "public class Test {\n"
@@ -93,15 +93,7 @@ public class ReplaceWithStringFormatFixTest {
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:30:hint:" + Bundle.DN_ReplacePlus()).
-                applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
-                assertCompilable().
-                assertOutput("package test;\n"
-                + "public class Test {\n"
-                + "    public static void main(String[] args) {\n"
-                + "        String foo=String.format(\"ABC\");\n"
-                + "    }\n"
-                + "}\n");
+                assertNotContainsWarnings(Bundle.DN_ReplacePlus());
     }
 
     @Test

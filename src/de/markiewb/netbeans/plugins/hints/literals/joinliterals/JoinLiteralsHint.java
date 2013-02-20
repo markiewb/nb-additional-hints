@@ -38,9 +38,8 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  */
-package de.markiewb.netbeans.plugins.hints.replaceplus;
+package de.markiewb.netbeans.plugins.hints.literals.joinliterals;
 
-import com.sun.source.util.TreePath;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -59,7 +58,9 @@ import org.netbeans.spi.java.hints.Hint;
 import org.openide.ErrorManager;
 import org.openide.loaders.DataObject;
 import com.sun.source.tree.Tree.Kind;
+import com.sun.source.util.TreePath;
 import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
+import static de.markiewb.netbeans.plugins.hints.literals.joinliterals.JoinLiteralsHint.TREEKINDS;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle.Messages;
@@ -69,43 +70,29 @@ import org.openide.util.NbBundle.Messages;
  * Based on http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n/src/org/netbeans/modules/editor/hints/i18n
  * from Jan Lahoda.
  */
-@Hint(displayName = "#DN_CopyJoinedStringToClipboard",
-        description = "#DESC_CopyJoinedStringToClipboard",
+@Hint(displayName = "#DN_JoinLiterals",
+        description = "#DESC_JoinLiterals",
         category = "suggestions") //NOI18N
-@Messages({"DN_CopyJoinedStringToClipboard=Copy the joined String to clipboard",
-    "DESC_CopyJoinedStringToClipboard=Copy the joined String concatenation to clipboard. It converts escaped linebreaks into real linebreaks too."})
-public class CopyJoinedStringToClipboardHint {
+@Messages({"DN_JoinLiterals=Join separate literals", 
+    "DESC_JoinLiterals=Joins separate literals. <p>For example: <code>\"Foo \" + \"Bar\"</code> will be transformed into <code>\"Foo Bar\"</code> </p>"})
+public class JoinLiteralsHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);
 
     @TriggerTreeKind(value = {Kind.STRING_LITERAL, Kind.PLUS})
     public static ErrorDescription computeHint(HintContext ctx) {
-        ErrorDescription run = new CopyJoinedStringToClipboardHint().run(ctx.getInfo(), ctx.getPath());
+        ErrorDescription run = new JoinLiteralsHint().run(ctx.getInfo(), ctx.getPath());
         return run;
     }
-    static Logger LOG = Logger.getLogger(CopyJoinedStringToClipboardHint.class.getName());
+    static Logger LOG = Logger.getLogger(JoinLiteralsHint.class.getName());
     private AtomicBoolean cancelled = new AtomicBoolean(false);
 
     public void cancel() {
         cancelled.set(true);
     }
 
-    private static boolean checkParentKind(TreePath tp, int parentIndex, Kind requiredKind) {
-        while (parentIndex-- > 0 && tp != null) {
-            tp = tp.getParentPath();
-        }
-
-        if (tp == null) {
-            return false;
-        }
-
-        return tp.getLeaf().
-                getKind() == requiredKind;
-    }
-
     public ErrorDescription run(CompilationInfo compilationInfo, TreePath treePath) {
 
-        //TODO: generate unique 
         try {
             final DataObject od = DataObject.find(compilationInfo.getFileObject());
             final Document doc = compilationInfo.getDocument();
@@ -129,10 +116,10 @@ public class CopyJoinedStringToClipboardHint {
                 return null;
             }
 
-            //@Annotation("..."):
-            if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
-                return null;
-            }
+//            //@Annotation("..."):
+//            if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
+//                return null;
+//            }
 
             //@Annotation({"...", "..."}):
             TreePath tp = treePath;
@@ -140,23 +127,30 @@ public class CopyJoinedStringToClipboardHint {
             while (tp != null) {
                 tp = tp.getParentPath();
             }
-            if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
-                return null;
-            }
+//            if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
+//                return null;
+//            }
 
             final long hardCodedOffset = compilationInfo.getTrees().
                     getSourcePositions().
                     getStartPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
+            final long hardCodedOffsetEnd = compilationInfo.getTrees().
+                    getSourcePositions().
+                    getEndPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
             BuildArgumentsVisitor v = new BuildArgumentsVisitor(compilationInfo);
 
             v.scan(treePath, null);
             BuildArgumentsVisitor.Result data = v.toResult();
-            List<Fix> fixes = new ArrayList();
-            fixes.add(CopyJoinedStringToClipboardFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 
-            return ErrorDescriptionFactory.
-                    createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
-                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffset);
+	    //only join joinable terms, at least 2 terms are required
+	    if (data.get().size() >= 2) {
+		List<Fix> fixes = new JoinLiteralsHint.NonNullArrayList();
+		fixes.add(JoinLiteralsFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+
+		return ErrorDescriptionFactory.
+			createErrorDescription(Severity.HINT, Bundle.DN_JoinLiterals(), fixes, compilationInfo.
+			getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
                     notify(ErrorManager.INFORMATIONAL, ex);
@@ -169,5 +163,19 @@ public class CopyJoinedStringToClipboardHint {
 
     private Set<Kind> getTreeKinds() {
         return TREEKINDS;
+    }
+
+    private class NonNullArrayList extends ArrayList<Fix> {
+
+        public NonNullArrayList() {
+        }
+
+        @Override
+        public boolean add(Fix e) {
+            if (null != e) {
+                return super.add(e);
+            }
+            return false;
+        }
     }
 }

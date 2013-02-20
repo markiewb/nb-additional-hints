@@ -1,10 +1,11 @@
-package de.markiewb.netbeans.plugins.hints.replaceplus;
+package de.markiewb.netbeans.plugins.hints.literals;
 
 import com.sun.source.tree.Scope;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
 import de.markiewb.netbeans.plugins.hints.common.ImportFQNsHack;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import java.io.IOException;
 import org.netbeans.api.java.source.CancellableTask;
 import org.netbeans.api.java.source.JavaSource;
@@ -48,15 +49,12 @@ public abstract class AbstractReplaceWithFix implements Fix {
                 }
 
                 public void run(WorkingCopy cont) throws Exception {
-                    cont.toPhase(JavaSource.Phase.PARSED);
+                    cont.toPhase(JavaSource.Phase.RESOLVED);
                     TreePath path = handle.resolve(cont);
-                    Scope context = cont.getTrees().
-                            getScope(path);
+                    Scope context = cont.getTrees().getScope(path);
                     SourcePositions[] pos = new SourcePositions[1];
-                    Tree t = cont.getTreeUtilities().
-                            parseExpression(text, pos);
-                    cont.getTreeUtilities().
-                            attributeTree(t, context);
+                    Tree t = cont.getTreeUtilities().parseExpression(text, pos);
+                    cont.getTreeUtilities().attributeTree(t, context);
                     new ImportFQNsHack(cont).scan(new TreePath(path.getParentPath(), t), null);
                     cont.rewrite(path.getLeaf(), t);
                 }

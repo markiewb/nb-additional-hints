@@ -40,6 +40,7 @@
  */
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
+import de.markiewb.netbeans.plugins.hints.literals.joinliterals.JoinLiteralsFix;
 import com.sun.source.util.TreePath;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ import org.netbeans.spi.java.hints.Hint;
 import org.openide.ErrorManager;
 import org.openide.loaders.DataObject;
 import com.sun.source.tree.Tree.Kind;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle.Messages;
@@ -104,7 +106,6 @@ public class ReplacePlusHint {
 
     public ErrorDescription run(CompilationInfo compilationInfo, TreePath treePath) {
 
-        //TODO: generate unique 
         try {
             final DataObject od = DataObject.find(compilationInfo.getFileObject());
             final Document doc = compilationInfo.getDocument();
@@ -154,13 +155,17 @@ public class ReplacePlusHint {
             v.scan(treePath, null);
             BuildArgumentsVisitor.Result data = v.toResult();
 
+	    if (data.getArguments().isEmpty()) {
+		//only literals like "A"+"B" is not supported
+		return null;
+	    }
 	    //only join joinable terms, at least 2 terms are required
 	    if (data.get().size() >= 2) {
 		List<Fix> fixes = new NonNullArrayList();
 		fixes.add(ReplaceWithMessageFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 		fixes.add(ReplaceWithStringFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 		fixes.add(ReplaceWithStringBuilderFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-		fixes.add(ReplaceWithSingleStringFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+		fixes.add(JoinLiteralsFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 
 		return ErrorDescriptionFactory.
 			createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.

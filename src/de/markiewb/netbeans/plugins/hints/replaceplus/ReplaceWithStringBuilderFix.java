@@ -41,6 +41,8 @@
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
 import de.markiewb.netbeans.plugins.hints.common.StringUtils;
+import de.markiewb.netbeans.plugins.hints.literals.AbstractReplaceWithFix;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import org.netbeans.api.java.source.TreePathHandle;
