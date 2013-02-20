@@ -29,7 +29,8 @@ public class Example {
                 + "    }\n"
                 + "}\n";
     }
-        
+
+    @SuppressWarnings("A" + "B")
     private static void testBreakStrings() {
 //        String bar="select *"
 //                + "from"
