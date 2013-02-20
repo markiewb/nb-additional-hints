@@ -81,7 +81,7 @@ public class ReplaceWithStringFormatFix extends AbstractReplaceWithFix {
         return true;
     }
 
-    @NbBundle.Messages({"LBL_ReplaceWithStringFormatFix=Replace '+' with 'StringFormat.format()'"})
+    @NbBundle.Messages({"LBL_ReplaceWithStringFormatFix=Replace '+' with 'String.format()'"})
     @Override
     public String getText() {
         return Bundle.LBL_ReplaceWithStringFormatFix();
