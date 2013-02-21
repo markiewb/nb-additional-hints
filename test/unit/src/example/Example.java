@@ -5,7 +5,7 @@ import java.util.Date;
 public class Example {
 
     public static void testA() {
-        String foo = "Output contains " + 4 + " entries";
+         String foo  = "O   utput contains " + 4 + " entries";
 //        String foo = MessageFormat.format("Output contains {0} entries", 4);
 //        String foo = String.format("Output contains %s entries", 4);
 //        String foo = new StringBuilder().append("Output contains ").append(4).append(" entries").toString();
@@ -21,7 +21,7 @@ public class Example {
     }
 
         public static void testStringConcatWithLineBreaks() {
-                String foo="A\n"+"B\n"+"C";
+                String foo="A\n"+ "B\n"+"C";
                 String bar="package test;\n" 
                 + "public class Test {\n" 
                 + "    public static void main(String[] args) {\n"
@@ -37,7 +37,7 @@ public class Example {
 //                + table
 //                + "where"
 //                + "bla="+var;
-        String foo = "Hello,\n\r" + "world\n" + "!\n" + " ljlkj";  
+        String foo = 4+"Hello,\n\r" + "world\n" + "!\n" + " ljlkj";  
     }
     
 

@@ -60,6 +60,7 @@ import org.netbeans.spi.java.hints.Hint;
 import org.openide.ErrorManager;
 import org.openide.loaders.DataObject;
 import com.sun.source.tree.Tree.Kind;
+import de.markiewb.netbeans.plugins.hints.common.NonNullArrayList;
 import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
@@ -165,11 +166,12 @@ public class ReplacePlusHint {
 		fixes.add(ReplaceWithMessageFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 		fixes.add(ReplaceWithStringFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 		fixes.add(ReplaceWithStringBuilderFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-		fixes.add(JoinLiteralsFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 
-		return ErrorDescriptionFactory.
-			createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
-			getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+		if (!fixes.isEmpty()) {
+		    return ErrorDescriptionFactory.
+			    createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
+			    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+		}
 	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
@@ -184,18 +186,5 @@ public class ReplacePlusHint {
     private Set<Kind> getTreeKinds() {
         return TREEKINDS;
     }
-
-    private class NonNullArrayList extends ArrayList<Fix> {
-
-        public NonNullArrayList() {
-        }
-
-        @Override
-        public boolean add(Fix e) {
-            if (null != e) {
-                return super.add(e);
-            }
-            return false;
-        }
-    }
+    
 }

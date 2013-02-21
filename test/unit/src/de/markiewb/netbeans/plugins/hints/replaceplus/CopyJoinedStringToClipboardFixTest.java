@@ -37,8 +37,8 @@ public class CopyJoinedStringToClipboardFixTest {
                 + "        String foo=\"A\"+\"B\"+\"C\";\n"
                 + "    }\n"
                 + "}\n"). 
-                run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                run(CopyJoinedStringToClipboardHint.class).
+                findWarning("3:19-3:19:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
                 applyFix(Bundle.LBL_CopyJoinedStringToClipboardFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -60,8 +60,9 @@ public class CopyJoinedStringToClipboardFixTest {
                 + "        String foo=\"A\\n\"+\"B\\r\"+\"C\";"
                 + "    }\n"
                 + "}\n").
-                run(ReplacePlusHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_ReplacePlus()).
+                run(CopyJoinedStringToClipboardHint.class).
+//                findWarning("3:19-3:19:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
+                findWarning("3:19-3:19:hint:" + "").
                 applyFix(Bundle.LBL_CopyJoinedStringToClipboardFix()).
                 assertCompilable().
                 assertOutput("package test;\n"

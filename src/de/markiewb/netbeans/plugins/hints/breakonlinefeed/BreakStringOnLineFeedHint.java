@@ -127,10 +127,11 @@ public class BreakStringOnLineFeedHint {
 
             final List<Fix> fixes = new ArrayList<Fix>();
             fixes.add(BreakStringOnLineFeedFix.create(od, TreePathHandle.create(treePath, compilationInfo), text));
-
-            return ErrorDescriptionFactory.
-                    createErrorDescription(Severity.HINT, Bundle.DN_BreakStringOnLineFeed(), fixes, compilationInfo.
-                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+	    if (!fixes.isEmpty()) {
+		return ErrorDescriptionFactory.
+			createErrorDescription(Severity.HINT, Bundle.DN_BreakStringOnLineFeed(), fixes, compilationInfo.
+			getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
                     notify(ErrorManager.INFORMATIONAL, ex);

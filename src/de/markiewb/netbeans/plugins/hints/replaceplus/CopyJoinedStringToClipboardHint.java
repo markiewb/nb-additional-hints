@@ -59,6 +59,7 @@ import org.netbeans.spi.java.hints.Hint;
 import org.openide.ErrorManager;
 import org.openide.loaders.DataObject;
 import com.sun.source.tree.Tree.Kind;
+import de.markiewb.netbeans.plugins.hints.common.NonNullArrayList;
 import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
@@ -151,12 +152,14 @@ public class CopyJoinedStringToClipboardHint {
 
             v.scan(treePath, null);
             BuildArgumentsVisitor.Result data = v.toResult();
-            List<Fix> fixes = new ArrayList();
+            List<Fix> fixes = new NonNullArrayList();
             fixes.add(CopyJoinedStringToClipboardFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
 
+	    if (!fixes.isEmpty()){
             return ErrorDescriptionFactory.
                     createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
                     getFileObject(), (int) hardCodedOffset, (int) hardCodedOffset);
+	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
                     notify(ErrorManager.INFORMATIONAL, ex);

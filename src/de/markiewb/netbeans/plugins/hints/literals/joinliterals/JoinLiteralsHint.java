@@ -40,8 +40,12 @@
  */
 package de.markiewb.netbeans.plugins.hints.literals.joinliterals;
 
+import com.sun.source.tree.Tree.Kind;
+import com.sun.source.util.TreePath;
+import de.markiewb.netbeans.plugins.hints.common.NonNullArrayList;
+import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
+import static de.markiewb.netbeans.plugins.hints.literals.joinliterals.JoinLiteralsHint.TREEKINDS;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -55,14 +59,10 @@ import org.netbeans.spi.editor.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
 import org.netbeans.spi.java.hints.Hint;
-import org.openide.ErrorManager;
-import org.openide.loaders.DataObject;
-import com.sun.source.tree.Tree.Kind;
-import com.sun.source.util.TreePath;
-import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
-import static de.markiewb.netbeans.plugins.hints.literals.joinliterals.JoinLiteralsHint.TREEKINDS;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
+import org.openide.ErrorManager;
+import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 
 /**
@@ -144,12 +144,18 @@ public class JoinLiteralsHint {
 
 	    //only join joinable terms, at least 2 terms are required
 	    if (data.get().size() >= 2) {
-		List<Fix> fixes = new JoinLiteralsHint.NonNullArrayList();
-		fixes.add(JoinLiteralsFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+		final JoinLiteralsFix fix = JoinLiteralsFix.create(od, TreePathHandle.create(treePath, compilationInfo), data);
 
-		return ErrorDescriptionFactory.
-			createErrorDescription(Severity.HINT, Bundle.DN_JoinLiterals(), fixes, compilationInfo.
-			getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+
+		List<Fix> fixes = new NonNullArrayList();
+		fixes.add(fix);
+		if (!fixes.isEmpty()) {
+		    return ErrorDescriptionFactory.
+			    createErrorDescription(Severity.HINT, Bundle.DN_JoinLiterals(), fixes, compilationInfo.
+			    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+		} else {
+		    return null;
+		}
 	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
@@ -163,19 +169,5 @@ public class JoinLiteralsHint {
 
     private Set<Kind> getTreeKinds() {
         return TREEKINDS;
-    }
-
-    private class NonNullArrayList extends ArrayList<Fix> {
-
-        public NonNullArrayList() {
-        }
-
-        @Override
-        public boolean add(Fix e) {
-            if (null != e) {
-                return super.add(e);
-            }
-            return false;
-        }
     }
 }
