@@ -67,15 +67,28 @@ import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle.Messages;
 
 /**
- *
  * Based on http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n/src/org/netbeans/modules/editor/hints/i18n
  * from Jan Lahoda.
+ * 
+ * @author markiewb
  */
 @Hint(displayName = "#DN_ReplacePlus",
         description = "#DESC_ReplacePlus",
         category = "suggestions") //NOI18N
 @Messages({"DN_ReplacePlus=Replace + with ...", 
-    "DESC_ReplacePlus=Replace String concatenation with <ul><li><code>java.text.Message.format()</code> or</li><li><code>java.lang.String.format()</code> or</li><li><code>java.lang.StringBuilder().append()</code> or</li><li><code>joined String</code></li></ul>"})
+    "DESC_ReplacePlus=Replace String concatenation with "
+	+ "<ul>"
+	+ "<li><code>java.text.Message.format()</code> or</li>"
+	+ "<li><code>java.lang.String.format()</code> or</li>"
+	+ "<li><code>java.lang.StringBuilder().append()</code></li>"
+	+ "</ul>"
+	+ "For example: <code>\"Found \" + variable + \" entries\"</code> can be transformed into"
+	+ "<ul>"
+	+ "<li><code>Message.format(\"Found {0} entries\", variable)</code> or</li>"
+	+ "<li><code>String.format(\"Found %s entries\", variable)</code> or</li>"
+	+ "<li><code>new StringBuilder().append(\"Found \").append(variable).append(\" entries\").toString()</code></li>"
+	+ "</ul>"
+	+ ""})
 public class ReplacePlusHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);

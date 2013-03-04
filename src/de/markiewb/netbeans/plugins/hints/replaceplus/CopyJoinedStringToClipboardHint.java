@@ -73,7 +73,7 @@ import org.openide.util.NbBundle.Messages;
 @Hint(displayName = "#DN_CopyJoinedStringToClipboard",
         description = "#DESC_CopyJoinedStringToClipboard",
         category = "suggestions") //NOI18N
-@Messages({"DN_CopyJoinedStringToClipboard=Copy the joined literals to clipboard",
+@Messages({"DN_CopyJoinedStringToClipboard=Copy joined literals to clipboard",
     "DESC_CopyJoinedStringToClipboard=Copy the joined literals to clipboard. It converts escaped linebreaks into real linebreaks too."})
 public class CopyJoinedStringToClipboardHint {
 

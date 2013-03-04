@@ -78,7 +78,11 @@ import org.openide.util.NbBundle.Messages;
         description = "#DESC_BreakStringOnLineFeed",
         category = "suggestions") //NOI18N
 @Messages({"DN_BreakStringOnLineFeed=Split the String on line breaks",
-    "DESC_BreakStringOnLineFeed=Split the String on linebreaks symbols into separate concatenated literals."})
+    "DESC_BreakStringOnLineFeed="
+	+ "Split the String on linebreaks symbols into separate concatenated literals. For example"
+	+"<pre>\"FOO\\nBAR\"</pre> will be transformed into"
+	+"<pre>\"FOO\\n\" + \"BAR\"</pre><br/>"
+	})
 public class BreakStringOnLineFeedHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL);
