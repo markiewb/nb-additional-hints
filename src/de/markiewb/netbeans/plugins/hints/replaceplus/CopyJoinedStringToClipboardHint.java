@@ -73,8 +73,8 @@ import org.openide.util.NbBundle.Messages;
 @Hint(displayName = "#DN_CopyJoinedStringToClipboard",
         description = "#DESC_CopyJoinedStringToClipboard",
         category = "suggestions") //NOI18N
-@Messages({"DN_CopyJoinedStringToClipboard=Copy the joined String to clipboard",
-    "DESC_CopyJoinedStringToClipboard=Copy the joined String concatenation to clipboard. It converts escaped linebreaks into real linebreaks too."})
+@Messages({"DN_CopyJoinedStringToClipboard=Copy the joined literals to clipboard",
+    "DESC_CopyJoinedStringToClipboard=Copy the joined literals to clipboard. It converts escaped linebreaks into real linebreaks too."})
 public class CopyJoinedStringToClipboardHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);
@@ -130,10 +130,10 @@ public class CopyJoinedStringToClipboardHint {
                 return null;
             }
 
-            //@Annotation("..."):
-            if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
-                return null;
-            }
+//            //@Annotation("..."):
+//            if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
+//                return null;
+//            }
 
             //@Annotation({"...", "..."}):
             TreePath tp = treePath;
@@ -141,13 +141,16 @@ public class CopyJoinedStringToClipboardHint {
             while (tp != null) {
                 tp = tp.getParentPath();
             }
-            if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
-                return null;
-            }
+//            if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
+//                return null;
+//            }
 
             final long hardCodedOffset = compilationInfo.getTrees().
                     getSourcePositions().
                     getStartPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
+            final long hardCodedOffsetEnd = compilationInfo.getTrees().
+                    getSourcePositions().
+                    getEndPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
             BuildArgumentsVisitor v = new BuildArgumentsVisitor(compilationInfo);
 
             v.scan(treePath, null);
@@ -157,8 +160,8 @@ public class CopyJoinedStringToClipboardHint {
 
 	    if (!fixes.isEmpty()){
             return ErrorDescriptionFactory.
-                    createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
-                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffset);
+                    createErrorDescription(Severity.HINT, Bundle.DN_CopyJoinedStringToClipboard(), fixes, compilationInfo.
+                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
 	    }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().

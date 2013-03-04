@@ -52,6 +52,7 @@ import org.netbeans.api.java.source.WorkingCopy;
 import org.netbeans.spi.editor.hints.ChangeInfo;
 import org.netbeans.spi.editor.hints.Fix;
 import org.openide.ErrorManager;
+import org.openide.awt.StatusDisplayer;
 import org.openide.loaders.DataObject;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
@@ -99,7 +100,7 @@ public class CopyJoinedStringToClipboardFix implements Fix {
             return false;
         }
         if (data.getArguments().
-                isEmpty()) {
+                isEmpty() && data.get().size()>1) {
             //only literals can be joined
             return true;
         }
@@ -108,7 +109,7 @@ public class CopyJoinedStringToClipboardFix implements Fix {
         return false;
     }
 
-    @NbBundle.Messages({"LBL_CopyJoinedStringToClipboardFix=Copy joined String to clipboard"})
+    @NbBundle.Messages({"LBL_CopyJoinedStringToClipboardFix=Copy joined literals to clipboard"})
     @Override
     public String getText() {
         return Bundle.LBL_CopyJoinedStringToClipboardFix();
@@ -126,12 +127,7 @@ public class CopyJoinedStringToClipboardFix implements Fix {
         ExClipboard clipboard = Lookup.getDefault().
                 lookup(ExClipboard.class);
         clipboard.setContents(new StringSelection(text), null);
-    }
-
-    private String getClipboardContent() throws UnsupportedFlavorException, IOException {
-        ExClipboard clipboard = Lookup.getDefault().
-                lookup(ExClipboard.class);
-        return ((String) clipboard.getData(DataFlavor.stringFlavor));
+	StatusDisplayer.getDefault().setStatusText(String.format("Copied '%s' to clipboard", text));
     }
 
     protected String getNewExpression() {

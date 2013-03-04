@@ -85,7 +85,7 @@ public class JoinLiteralsFix extends AbstractReplaceWithFix {
         return false;
     }
 
-    @NbBundle.Messages({"LBL_JoinLiterals=Join separate literals"})
+    @NbBundle.Messages({"LBL_JoinLiterals=Join literals"})
     @Override
     public String getText() {
         return Bundle.LBL_JoinLiterals();

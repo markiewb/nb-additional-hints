@@ -38,7 +38,7 @@ public class CopyJoinedStringToClipboardFixTest {
                 + "    }\n"
                 + "}\n"). 
                 run(CopyJoinedStringToClipboardHint.class).
-                findWarning("3:19-3:19:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
+                findWarning("3:19-3:30:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
                 applyFix(Bundle.LBL_CopyJoinedStringToClipboardFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -61,8 +61,7 @@ public class CopyJoinedStringToClipboardFixTest {
                 + "    }\n"
                 + "}\n").
                 run(CopyJoinedStringToClipboardHint.class).
-//                findWarning("3:19-3:19:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
-                findWarning("3:19-3:19:hint:" + "").
+                findWarning("3:19-3:34:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
                 applyFix(Bundle.LBL_CopyJoinedStringToClipboardFix()).
                 assertCompilable().
                 assertOutput("package test;\n"

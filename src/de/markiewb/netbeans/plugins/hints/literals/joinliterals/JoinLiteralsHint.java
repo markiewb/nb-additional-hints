@@ -73,7 +73,7 @@ import org.openide.util.NbBundle.Messages;
 @Hint(displayName = "#DN_JoinLiterals",
         description = "#DESC_JoinLiterals",
         category = "suggestions") //NOI18N
-@Messages({"DN_JoinLiterals=Join separate literals", 
+@Messages({"DN_JoinLiterals=Join literals", 
     "DESC_JoinLiterals=Joins separate literals. <p>For example: <code>\"Foo \" + \"Bar\"</code> will be transformed into <code>\"Foo Bar\"</code> </p>"})
 public class JoinLiteralsHint {
 
@@ -118,16 +118,6 @@ public class JoinLiteralsHint {
 
 //            //@Annotation("..."):
 //            if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
-//                return null;
-//            }
-
-            //@Annotation({"...", "..."}):
-            TreePath tp = treePath;
-
-            while (tp != null) {
-                tp = tp.getParentPath();
-            }
-//            if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
 //                return null;
 //            }
 
