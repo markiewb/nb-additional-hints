@@ -1,9 +1,7 @@
-nb-additional-hints
+Additional java hints for NetBeans IDE
 ===================
 
-Additional java hints for NetBeans IDE
-
-Hints:
+Supported hints:
 * "Replace '+' with 'MessageFormat.format()'"
 * "Replace '+' with 'new StringBuilder().append()'"
 * "Replace '+' with 'String.format()'"
@@ -12,6 +10,11 @@ Hints:
 * "Split the String on linebreaks"
 
 All hints (including more detailed descriptions) are available in the "suggestions" category within the hint configuration.
+
+Example:
+--------
+
+![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/master/src/doc/screenshot.png)
 
 Further information:
 --------------------
