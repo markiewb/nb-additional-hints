@@ -77,7 +77,7 @@ import org.openide.util.NbBundle.Messages;
 @Hint(displayName = "#DN_BreakStringOnLineFeed",
         description = "#DESC_BreakStringOnLineFeed",
         category = "suggestions") //NOI18N
-@Messages({"DN_BreakStringOnLineFeed=Split the String on line breaks",
+@Messages({"DN_BreakStringOnLineFeed=Split the String on linebreaks",
     "DESC_BreakStringOnLineFeed="
 	+ "Split the String on linebreaks symbols into separate concatenated literals. For example"
 	+"<pre>\"FOO\\nBAR\"</pre> will be transformed into"
