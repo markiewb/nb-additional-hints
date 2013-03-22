@@ -42,6 +42,7 @@
  */
 package de.markiewb.netbeans.plugins.hints.literals.joinliterals;
 
+import de.markiewb.netbeans.plugins.hints.replaceplus.ReplacePlusHint;
 import org.junit.Test;
 import org.netbeans.modules.java.hints.test.api.HintTest;
 
@@ -119,5 +120,31 @@ public class JoinLiteralsFixTest {
 		+ "}\n").
 		run(JoinLiteralsHint.class).
 		assertNotContainsWarnings(Bundle.DN_JoinLiterals());
+    }
+    
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/1
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testFixWorkingQuotedStrings1() throws Exception {
+	HintTest.create().
+		input("package test;\n"
+		+ "public class Test {\n"
+		+ "    public static void main(String[] args) {\n"
+		+ "        String foo=\"A\\\"___\\\"\"+\"B\"+\"C\";\n"
+		+ "    }\n"
+		+ "}\n").
+		run(JoinLiteralsHint.class).
+		findWarning("3:19-3:37:hint:" + Bundle.DN_JoinLiterals()).
+		applyFix(Bundle.LBL_JoinLiterals()).
+		assertCompilable().
+		assertOutput("package test;\n"
+		+ "public class Test {\n"
+		+ "    public static void main(String[] args) {\n"
+		+ "     String foo=\"A\\\"___\\\"BC\";\n"
+		+ "    }\n"
+		+ "}\n");
     }
 }

@@ -78,4 +78,13 @@ public class StringUtils {
         return text.replace("\n", "\\n").
                 replace("\r", "\\r");
     }
+    
+    /**
+     * Escape quoted strings.
+     * @param text
+     * @return 
+     */
+    public static String escapeQuotes(final String text) {
+	return text.replace("\"", "\\\"");
+    }
 }

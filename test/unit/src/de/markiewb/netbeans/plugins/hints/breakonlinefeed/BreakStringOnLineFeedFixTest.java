@@ -79,6 +79,33 @@ public class BreakStringOnLineFeedFixTest {
                 + "    }\n"
                 + "}\n");
     }
+    
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/1
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testFixWorkingQuotedStrings1() throws Exception {
+        HintTest.create().
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo = \"Hel\\\"lo,\\n\\rworld\\n!\\n\";\n"
+                + "    }\n"
+                + "}\n").
+                run(BreakStringOnLineFeedHint.class).
+                findWarning("3:21-3:45:hint:" + Bundle.DN_BreakStringOnLineFeed()).
+                applyFix(Bundle.LBL_BreakStringOnLineFeedFix()).
+                assertCompilable().
+                assertOutput("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo = \"Hel\\\"lo,\\n\\r\" + \"world\\n\" + \"!\\n\";\n"
+                + "    }\n"
+                + "}\n"
+		);
+    }
 
 
 }

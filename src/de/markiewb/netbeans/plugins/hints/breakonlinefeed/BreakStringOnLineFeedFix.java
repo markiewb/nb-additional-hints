@@ -47,6 +47,7 @@ import com.sun.source.tree.Tree;
 import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
 import de.markiewb.netbeans.plugins.hints.common.ImportFQNsHack;
+import de.markiewb.netbeans.plugins.hints.common.StringUtils;
 import java.io.IOException;
 import org.netbeans.api.java.source.CancellableTask;
 import org.netbeans.api.java.source.JavaSource;
@@ -125,7 +126,7 @@ public class BreakStringOnLineFeedFix implements Fix {
     protected String getNewExpression() {
         StringBuilder formatBuilder = new StringBuilder();
         formatBuilder.append("\"");
-        String newText = text;
+        String newText = StringUtils.escapeQuotes(text);
         newText = newText.replace("\n\r", "\\n\\r\"+\"");
         newText = newText.replace("\n", "\\n\"+\"");
         newText = newText.replace("\r", "\\r\"+\"");

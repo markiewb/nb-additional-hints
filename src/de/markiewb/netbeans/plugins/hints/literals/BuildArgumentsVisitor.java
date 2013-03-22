@@ -48,6 +48,8 @@ import com.sun.source.tree.Tree;
 import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
 import com.sun.source.util.TreePathScanner;
+import de.markiewb.netbeans.plugins.hints.common.StringUtils;
+import static de.markiewb.netbeans.plugins.hints.common.StringUtils.escapeQuotes;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -147,7 +149,7 @@ public final class BuildArgumentsVisitor extends TreePathScanner<Void, Object> {
 	String value = tree.getValue().
 		toString();
 	if (!value.isEmpty()) {
-	    result.add(TokenPair.createLiteral(value));
+	    result.add(TokenPair.createLiteral(escapeQuotes(value)));
 	}
 	return null;
     }

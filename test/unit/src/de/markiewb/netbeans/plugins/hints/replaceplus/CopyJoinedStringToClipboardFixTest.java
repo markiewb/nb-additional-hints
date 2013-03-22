@@ -110,6 +110,33 @@ public class CopyJoinedStringToClipboardFixTest {
                 + "}\n");
         assertEquals("A\nB\rC", getClipboardContent());
     }
+    
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/1
+     * @throws Exception 
+     */
+    @Test
+    public void testFixWorkingQuotedStrings1() throws Exception {
+	HintTest.create().
+		input("package test;\n"
+		+ "public class Test {\n"
+		+ "    public static void main(String[] args) {\n"
+		+ "	String b = \"Hello \" + \"\\\"World\\\"\";"
+		+ "    }\n"
+		+ "}\n").
+		run(CopyJoinedStringToClipboardHint.class).
+		findWarning("3:12-3:34:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
+		applyFix(Bundle.LBL_CopyJoinedStringToClipboardFix()).
+		assertCompilable().
+		assertOutput("package test;\n"
+		+ "public class Test {\n"
+		+ "    public static void main(String[] args) {\n"
+		+ "	String b = \"Hello \" + \"\\\"World\\\"\";"
+		+ "    }\n"
+		+ "}\n");
+        assertEquals("Hello \\\"World\\\"", getClipboardContent());
+
+    }
 
     private String getClipboardContent() throws UnsupportedFlavorException, IOException {
         ExClipboard clipboard = Lookup.getDefault().

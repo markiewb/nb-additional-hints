@@ -208,4 +208,28 @@ public class ReplaceWithStringBuilderFixTest {
                 run(ReplacePlusHint.class).
 		assertNotContainsWarnings(Bundle.DN_ReplacePlus());
     }
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/1
+     * @throws Exception 
+     */
+    @Test
+    public void testFixWorkingQuotedStrings1() throws Exception {
+	HintTest.create().
+		input("package test;\n"
+		+ "public class Test {\n"
+		+ "    public static void main(String[] args) {\n"
+		+ "	String b = \"Hello \\\"\"+42+\"\\\"\";"
+		+ "    }\n"
+		+ "}\n").
+		run(ReplacePlusHint.class).
+		findWarning("3:12-3:30:hint:" + Bundle.DN_ReplacePlus()).
+		applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
+		assertCompilable().
+		assertOutput("package test;\n"
+		+ "public class Test {\n"
+		+ "    public static void main(String[] args) {\n"
+		+ "     String b = new StringBuilder().append(\"Hello \\\"\").append(42).append(\"\\\"\").toString();\n"
+		+ "    }\n"
+		+ "}\n");
+    }
 }
