@@ -21,6 +21,6 @@ Further information:
 This plugin is based on code from the _"I18N Checker"_ plugin from _Jan Lahoda_.
 The original sourcecode can be found at http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n
 
-License remains CDDL - http://www.netbeans.org/cddl-gplv2.html
+License remains CDDL-GPL-2-CP - http://www.netbeans.org/cddl-gplv2.html
 
 Compatible to NetBeans 7.2.1 and higher
