@@ -15,7 +15,7 @@ All hints (including more detailed descriptions) are available in the "suggestio
 Example:
 --------
 
-![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/master/src/doc/screenshot.png)
+![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/master/src/main/java/doc/screenshot.png)
 
 Further information:
 --------------------
