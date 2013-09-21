@@ -126,6 +126,7 @@
                     <keystorealias>myself</keystorealias>
                     <licenseFile>CDDL-GPL-2-CP</licenseFile>
                     <licenseName>CDDL-GPL-2-CP</licenseName>
+                    <requiresRestart>true</requiresRestart>
                 </configuration>
             </plugin>
 
