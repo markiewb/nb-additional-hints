@@ -8,6 +8,7 @@ Supported hints:
 * "Join literals"
 * "Copy joined literals to clipboard"
 * "Split the String on linebreaks"
+* "Split at caret" (new since 1.1)
 
 All hints (including more detailed descriptions) are available in the "suggestions" category within the hint configuration.
 
