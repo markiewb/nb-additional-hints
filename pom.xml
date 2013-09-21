@@ -214,7 +214,7 @@
 &lt;li&gt;"Split at caret"&lt;/li&gt;
 &lt;/ul&gt;&lt;p&gt;All hints (including more detailed descriptions) are available in the "suggestions" category within the hint configuration.&lt;/p&gt;
 &lt;h2&gt;Example:&lt;/h2&gt;
-&lt;img src="https://raw.github.com/markiewb/nb-additional-hints/master/src/doc/screenshot.png"/&gt;
+&lt;img src="https://raw.github.com/markiewb/nb-additional-hints/master/src/main/java/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
