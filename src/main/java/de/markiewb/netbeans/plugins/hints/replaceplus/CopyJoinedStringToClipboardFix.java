@@ -42,6 +42,7 @@
  */
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
+import de.markiewb.netbeans.plugins.hints.common.StringUtils;
 import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -139,6 +140,6 @@ public class CopyJoinedStringToClipboardFix implements Fix {
                 get()) {
             formatBuilder.append(pair.getText());
         }
-        return formatBuilder.toString();
+        return StringUtils.unescapeQuotes(formatBuilder.toString());
     }
 }

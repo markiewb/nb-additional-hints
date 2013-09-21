@@ -134,7 +134,34 @@ public class CopyJoinedStringToClipboardFixTest {
 		+ "	String b = \"Hello \" + \"\\\"World\\\"\";"
 		+ "    }\n"
 		+ "}\n");
-        assertEquals("Hello \\\"World\\\"", getClipboardContent());
+        assertEquals("Hello \"World\"", getClipboardContent());
+
+    }
+    
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/8
+     * @throws Exception 
+     */
+    @Test
+    public void testFixWorkingQuotedStrings2() throws Exception {
+	HintTest.create().
+		input("package test;"
+		+ "public class Test {"
+		+ "    public static void main(String[] args) {"
+		+ "	String b = \"Hello \" + \"\\\"Inner1\\\"+\\\"Inner2\\\"\" + \" World\";"
+		+ "    }"
+		+ "}").
+		run(CopyJoinedStringToClipboardHint.class).
+		findWarning("0:88-0:133:hint:" + Bundle.DN_CopyJoinedStringToClipboard()).
+		applyFix(Bundle.LBL_CopyJoinedStringToClipboardFix()).
+		assertCompilable().
+		assertOutput("package test;"
+		+ "public class Test {"
+		+ "    public static void main(String[] args) {"
+		+ "	String b = \"Hello \" + \"\\\"Inner1\\\"+\\\"Inner2\\\"\" + \" World\";"
+		+ "    }"
+		+ "}");
+        assertEquals("Hello \"Inner1\"+\"Inner2\" World", getClipboardContent());
 
     }
 

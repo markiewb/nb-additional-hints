@@ -87,4 +87,13 @@ public class StringUtils {
     public static String escapeQuotes(final String text) {
 	return text.replace("\"", "\\\"");
     }
+
+    /**
+     * Unescape quoted strings.
+     * @param text
+     * @return 
+     */
+    public static String unescapeQuotes(final String text) {
+	return text.replace("\\\"", "\"");
+    }
 }
