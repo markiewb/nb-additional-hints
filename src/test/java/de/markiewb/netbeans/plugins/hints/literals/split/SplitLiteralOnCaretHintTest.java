@@ -97,4 +97,72 @@ public class SplitLiteralOnCaretHintTest {
                         + "    }\n"
                         + "}\n");
     }
+    
+    @Test
+    public void testFixWorking_NoEscapeOfLF() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"foo|bar\\n\";\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(SplitLiteralOnCaretHint.class)
+                .findWarning("3:21-3:21:hint:" + Bundle.ERR_SplitLiteralOnCaretHint())
+                .applyFix()
+                .assertCompilable()
+                //TODO: change to match expected output
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"foo\" + \"bar\\n\";\n"
+                        + "    }\n"
+                        + "}\n");
+    }
+
+    @Test
+    public void testFixWorking_NoEscapeOfTabs() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"fo\\to|bar\";\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(SplitLiteralOnCaretHint.class)
+                .findWarning("3:23-3:23:hint:" + Bundle.ERR_SplitLiteralOnCaretHint())
+                .applyFix()
+                .assertCompilable()
+                //TODO: change to match expected output
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"fo\\to\" + \"bar\";\n"
+                        + "    }\n"
+                        + "}\n");
+    }
+    @Test
+    public void testFixWorking_NoEscapeOfQuotes() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"fo\\\"o|bar\";\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(SplitLiteralOnCaretHint.class)
+                .findWarning("3:23-3:23:hint:" + Bundle.ERR_SplitLiteralOnCaretHint())
+                .applyFix()
+                .assertCompilable()
+                //TODO: change to match expected output
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"fo\\\"o\" + \"bar\";\n"
+                        + "    }\n"
+                        + "}\n");
+    }
 }

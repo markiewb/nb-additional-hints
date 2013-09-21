@@ -1,29 +1,26 @@
 package de.markiewb.netbeans.plugins.hints.literals.split;
 
-import com.sun.source.tree.BinaryTree;
-import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
+import de.markiewb.netbeans.plugins.hints.common.StringUtils;
+import java.text.MessageFormat;
 import org.netbeans.api.java.source.CompilationInfo;
-import org.netbeans.api.java.source.TreeMaker;
 import org.netbeans.api.java.source.WorkingCopy;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
-import org.netbeans.spi.java.hints.ConstraintVariableType;
 import org.netbeans.spi.java.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.java.hints.Hint;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.JavaFix;
-import org.netbeans.spi.java.hints.TriggerPattern;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle.Messages;
 
 @Hint(displayName = "#DN_SplitLiteralOnCaretHint", description = "#DESC_SplitLiteralOnCaretHint", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
 @Messages({
-    "DN_SplitLiteralOnCaretHint=Split at caret",
+    "DN_SplitLiteralOnCaretHint=Split\t at caret",
     "DESC_SplitLiteralOnCaretHint=Splits the literal at the current caret.<p>For example: <code>\"Foo|Bar\"</code> will be transformed into <code>\"Foo\" + \"Bar\"</code></p>"
 }
 )
@@ -81,11 +78,14 @@ public class SplitLiteralOnCaretHint {
             String prefix = wc.getText().substring(posStart + 1, caretLocation);
             String postfix = wc.getText().substring(caretLocation, posEnd - 1);
 
+            prefix=StringUtils.escapeLF(prefix);
+            postfix=StringUtils.escapeLF(postfix);
+            
+            SourcePositions[] pos = new SourcePositions[1];
             //create "foo"+"bar"
-            final TreeMaker tm = wc.getTreeMaker();
-            BinaryTree newLiteral = tm.Binary(Tree.Kind.PLUS, tm.Literal(prefix), tm.Literal(postfix));
-
-            wc.rewrite(literal, newLiteral);
+            String newLiteral = MessageFormat.format("\"{0}\" + \"{1}\"", prefix, postfix);
+            Tree t = wc.getTreeUtilities().parseExpression(newLiteral, pos);
+            wc.rewrite(literal, t);
         }
     }
 }
