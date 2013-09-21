@@ -7,7 +7,7 @@
     <version>1.1.0-SNAPSHOT</version>
     <packaging>nbm</packaging>
 
-    <name>Adds additional Java hints</name>
+    <name>Additional Java hints</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -220,12 +220,13 @@
 &lt;h2&gt;Updates&lt;/h2&gt;
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;issue 5&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/7"&gt;issue 7&lt;/a&gt;]: Convert to maven based module&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;Feature 5&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/8"&gt;Bug  8&lt;/a&gt;]: Literals with quoted Strings won't be copied properly to clipboard&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/7"&gt;Refactoring 7&lt;/a&gt;]: Convert to maven based module&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.0.x:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/1"&gt;issue 1&lt;/a&gt;]: Literals with quoted Strings create uncompileable code&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/1"&gt;Bug 1&lt;/a&gt;]: Literals with quoted Strings create uncompileable code&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;
 &lt;a name="further-information" class="anchor" href="#further-information"&gt;&lt;span class="mini-icon mini-icon-link"&gt;&lt;/span&gt;&lt;/a&gt;Further information:&lt;/h2&gt;
