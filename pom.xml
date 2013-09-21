@@ -87,10 +87,28 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-java-hints-test</artifactId>
             <version>${netbeans.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-lib-nbjavac</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-libs-javacapi</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-libs-junit4</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-nbjunit</artifactId>
             <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
