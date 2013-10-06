@@ -225,6 +225,7 @@
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;Feature 5&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;Feature 13&lt;/a&gt;]: Convert to assertTrue/assertFalse&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/8"&gt;Bug  8&lt;/a&gt;]: Literals with quoted Strings won't be copied properly to clipboard&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/7"&gt;Refactoring 7&lt;/a&gt;]: Convert to maven based module&lt;/li&gt;
 &lt;/ul&gt;
