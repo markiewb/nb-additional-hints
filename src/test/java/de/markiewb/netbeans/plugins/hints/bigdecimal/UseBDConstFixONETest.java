@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.markiewb.netbeans.plugins.hints.bigdecimal;
 
 import org.junit.Test;
 import org.netbeans.modules.java.hints.test.api.HintTest;
 
-public class UseBigDecimalConstantsFixZEROTest {
+public class UseBDConstFixONETest {
 
     @Test
     public void testConvert_A() throws Exception {
@@ -16,18 +11,18 @@ public class UseBigDecimalConstantsFixZEROTest {
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=new java.math.BigDecimal(\"0\");\n"
+                        + "        java.math.BigDecimal a=new java.math.BigDecimal(\"1\");\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixZERO.class)
-                .findWarning("3:31-3:60:hint:" + Bundle.ERR_UseBigDecimalConstantsFixZERO())
+                .run(UseBDConstFixONE.class)
+                .findWarning("3:31-3:60:hint:" + Bundle.ERR_UseBDConstFixONE())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
                         + "import java.math.BigDecimal;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=BigDecimal.ZERO;\n"
+                        + "        java.math.BigDecimal a=BigDecimal.ONE;\n"
                         + "    }\n"
                         + "}\n");
 
@@ -38,18 +33,18 @@ public class UseBigDecimalConstantsFixZEROTest {
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=new java.math.BigDecimal(\"0.0\");\n"
+                        + "        java.math.BigDecimal a=new java.math.BigDecimal(\"1.0\");\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixZERO.class)
-                .findWarning("3:31-3:62:hint:" + Bundle.ERR_UseBigDecimalConstantsFixZERO())
+                .run(UseBDConstFixONE.class)
+                .findWarning("3:31-3:62:hint:" + Bundle.ERR_UseBDConstFixONE())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
                         + "import java.math.BigDecimal;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=BigDecimal.ZERO;\n"
+                        + "        java.math.BigDecimal a=BigDecimal.ONE;\n"
                         + "    }\n"
                         + "}\n");
 
@@ -60,18 +55,18 @@ public class UseBigDecimalConstantsFixZEROTest {
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=new java.math.BigDecimal(0.0);\n"
+                        + "        java.math.BigDecimal a=new java.math.BigDecimal(1.0);\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixZERO.class)
-                .findWarning("3:31-3:60:hint:" + Bundle.ERR_UseBigDecimalConstantsFixZERO())
+                .run(UseBDConstFixONE.class)
+                .findWarning("3:31-3:60:hint:" + Bundle.ERR_UseBDConstFixONE())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
                         + "import java.math.BigDecimal;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=BigDecimal.ZERO;\n"
+                        + "        java.math.BigDecimal a=BigDecimal.ONE;\n"
                         + "    }\n"
                         + "}\n");
 
@@ -82,18 +77,18 @@ public class UseBigDecimalConstantsFixZEROTest {
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=new java.math.BigDecimal(0.00d);\n"
+                        + "        java.math.BigDecimal a=new java.math.BigDecimal(1.00d);\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixZERO.class)
-                .findWarning("3:31-3:62:hint:" + Bundle.ERR_UseBigDecimalConstantsFixZERO())
+                .run(UseBDConstFixONE.class)
+                .findWarning("3:31-3:62:hint:" + Bundle.ERR_UseBDConstFixONE())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
                         + "import java.math.BigDecimal;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        java.math.BigDecimal a=BigDecimal.ZERO;\n"
+                        + "        java.math.BigDecimal a=BigDecimal.ONE;\n"
                         + "    }\n"
                         + "}\n");
 

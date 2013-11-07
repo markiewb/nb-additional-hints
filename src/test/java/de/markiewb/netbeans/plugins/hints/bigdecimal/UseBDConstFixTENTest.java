@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.markiewb.netbeans.plugins.hints.bigdecimal;
 
 import org.junit.Test;
 import org.netbeans.modules.java.hints.test.api.HintTest;
 
-public class UseBigDecimalConstantsFixTENTest {
+public class UseBDConstFixTENTest {
 
     @Test
     public void testConvert_A() throws Exception {
@@ -19,8 +14,8 @@ public class UseBigDecimalConstantsFixTENTest {
                         + "        java.math.BigDecimal a=new java.math.BigDecimal(\"10\");\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixTEN.class)
-                .findWarning("3:31-3:61:hint:" + Bundle.ERR_UseBigDecimalConstantsFixTEN())
+                .run(UseBDConstFixTEN.class)
+                .findWarning("3:31-3:61:hint:" + Bundle.ERR_UseBDConstFixTEN())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -41,8 +36,8 @@ public class UseBigDecimalConstantsFixTENTest {
                         + "        java.math.BigDecimal a=new java.math.BigDecimal(\"10.0\");\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixTEN.class)
-                .findWarning("3:31-3:63:hint:" + Bundle.ERR_UseBigDecimalConstantsFixTEN())
+                .run(UseBDConstFixTEN.class)
+                .findWarning("3:31-3:63:hint:" + Bundle.ERR_UseBDConstFixTEN())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -63,8 +58,8 @@ public class UseBigDecimalConstantsFixTENTest {
                         + "        java.math.BigDecimal a=new java.math.BigDecimal(10.0);\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixTEN.class)
-                .findWarning("3:31-3:61:hint:" + Bundle.ERR_UseBigDecimalConstantsFixTEN())
+                .run(UseBDConstFixTEN.class)
+                .findWarning("3:31-3:61:hint:" + Bundle.ERR_UseBDConstFixTEN())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -85,8 +80,8 @@ public class UseBigDecimalConstantsFixTENTest {
                         + "        java.math.BigDecimal a=new java.math.BigDecimal(10.00d);\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixTEN.class)
-                .findWarning("3:31-3:63:hint:" + Bundle.ERR_UseBigDecimalConstantsFixTEN())
+                .run(UseBDConstFixTEN.class)
+                .findWarning("3:31-3:63:hint:" + Bundle.ERR_UseBDConstFixTEN())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
