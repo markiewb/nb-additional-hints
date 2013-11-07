@@ -53,8 +53,8 @@ import org.openide.util.NbBundle;
 
 /**
  * Fix which converts patterns like
- * <pre>"Contains "+4+ "entries"</pre> into
- * <pre>new StringBuilder().append("Contains ").append(4).append(" entries").toString()</pre>.<br/>
+ * <tt>"Contains "+4+ "entries"</tt> into
+ * <tt>new StringBuilder().append("Contains ").append(4).append(" entries").toString()</tt>.<br/>
  * Based on http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n/src/org/netbeans/modules/editor/hints/i18n
  * from Jan Lahoda.
  *

@@ -80,15 +80,15 @@ import org.openide.util.NbBundle.Messages;
 @Messages({"DN_ReplacePlus=Replace + with ...", 
     "DESC_ReplacePlus=Replace String concatenation with "
 	+ "<ul>"
-	+ "<li><code>java.text.Message.format()</code> or</li>"
-	+ "<li><code>java.lang.String.format()</code> or</li>"
-	+ "<li><code>java.lang.StringBuilder().append()</code></li>"
+	+ "<li><tt>java.text.Message.format()</tt> or</li>"
+	+ "<li><tt>java.lang.String.format()</tt> or</li>"
+	+ "<li><tt>java.lang.StringBuilder().append()</tt></li>"
 	+ "</ul>"
-	+ "For example: <code>\"Found \" + variable + \" entries\"</code> can be transformed into"
+	+ "For example: <tt>\"Found \" + variable + \" entries\"</tt> can be transformed into"
 	+ "<ul>"
-	+ "<li><code>Message.format(\"Found {0} entries\", variable)</code> or</li>"
-	+ "<li><code>String.format(\"Found %s entries\", variable)</code> or</li>"
-	+ "<li><code>new StringBuilder().append(\"Found \").append(variable).append(\" entries\").toString()</code></li>"
+	+ "<li><tt>Message.format(\"Found {0} entries\", variable)</tt> or</li>"
+	+ "<li><tt>String.format(\"Found %s entries\", variable)</tt> or</li>"
+	+ "<li><tt>new StringBuilder().append(\"Found \").append(variable).append(\" entries\").toString()</tt></li>"
 	+ "</ul>"
 	+ ""})
 public class ReplacePlusHint {

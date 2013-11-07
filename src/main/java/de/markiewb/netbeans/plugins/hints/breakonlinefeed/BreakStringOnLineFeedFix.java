@@ -61,8 +61,8 @@ import org.openide.util.NbBundle;
 
 /**
  * Split the String on linebreaks symbols into separate concatenated literals. For example
- * <pre>"FOO\nBAR"</pre> will be transformed into
- * <pre>"FOO\n" + "BAR"</pre><br/>
+ * <tt>"FOO\nBAR"</tt> will be transformed into
+ * <tt>"FOO\n" + "BAR"</tt><br/>
  * Based on http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n/src/org/netbeans/modules/editor/hints/i18n
  * from Jan Lahoda.
  *

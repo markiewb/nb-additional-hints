@@ -76,7 +76,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#DESC_JoinLiterals",
         category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT) //NOI18N
 @Messages({"DN_JoinLiterals=Join literals", 
-    "DESC_JoinLiterals=Joins separate literals. <p>For example: <code>\"Foo \" + \"Bar\"</code> will be transformed into <code>\"Foo Bar\"</code> </p>"})
+    "DESC_JoinLiterals=Joins separate literals. <p>For example: <tt>\"Foo \" + \"Bar\"</tt> will be transformed into <tt>\"Foo Bar\"</tt> </p>"})
 public class JoinLiteralsHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);

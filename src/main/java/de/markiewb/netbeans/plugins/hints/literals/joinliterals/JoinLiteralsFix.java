@@ -51,8 +51,8 @@ import org.openide.util.NbBundle;
 
 /**
  * Fix which converts patterns like
- * <pre>"Foo "+"bar"+"bla"</pre> into
- * <pre>"Foo barbla"</pre>.<br/>
+ * <tt>"Foo "+"bar"+"bla"</tt> into
+ * <tt>"Foo barbla"</tt>.<br/>
  * Based on http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n/src/org/netbeans/modules/editor/hints/i18n
  * from Jan Lahoda.
  *

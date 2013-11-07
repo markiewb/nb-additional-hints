@@ -82,8 +82,8 @@ import org.openide.util.NbBundle.Messages;
 @Messages({"DN_BreakStringOnLineFeed=Split the String on linebreaks",
     "DESC_BreakStringOnLineFeed="
 	+ "Split the String on linebreaks symbols into separate concatenated literals. For example"
-	+"<pre>\"FOO\\nBAR\"</pre> will be transformed into"
-	+"<pre>\"FOO\\n\" + \"BAR\"</pre><br/>"
+	+"<tt>\"FOO\\nBAR\"</tt> will be transformed into"
+	+"<tt>\"FOO\\n\" + \"BAR\"</tt><br/>"
 	})
 public class BreakStringOnLineFeedHint {
 
