@@ -11,12 +11,12 @@ import org.netbeans.spi.java.hints.TriggerPatterns;
 import org.openide.util.NbBundle.Messages;
 
 @Messages({
-    "ERR_UseBigDecimalConstantsFixONE=Convert to <tt>BigDecimal.ONE</tt>",
-    "DN_UseBigDecimalConstantsONE=Convert to <tt>BigDecimal.ONE</tt>",
+    "ERR_UseBDConstFixONE=Convert to BigDecimal.ONE",
+    "DN_UseBigDecimalConstantsONE=Convert to BigDecimal.ONE",
     "DESC_UseBigDecimalConstantsONE=Converts expressions like <tt>new java.math.BigDecimal(1)</tt> to <tt>BigDecimal.ONE</tt> ",})
-public class UseBigDecimalConstantsFixONE {
+public class UseBDConstFixONE {
 
-    @Hint(displayName = "#DN_UseBigDecimalConstantsONE", description = "#DESC_UseBigDecimalConstantsONE", category = "Suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+    @Hint(displayName = "#DN_UseBigDecimalConstantsONE", description = "#DESC_UseBigDecimalConstantsONE", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
     @TriggerPatterns(
             {
                 @TriggerPattern("new java.math.BigDecimal(\"1\")"),
@@ -39,10 +39,10 @@ public class UseBigDecimalConstantsFixONE {
                 @TriggerPattern("java.math.BigDecimal.valueOf(1.0d)"),
                 @TriggerPattern("java.math.BigDecimal.valueOf(1.00d)"),}
     )
-    public static ErrorDescription convertToZero(HintContext ctx) {
-
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_UseBigDecimalConstantsFixONE(), ctx.getPath(), "java.math.BigDecimal.ONE");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_UseBigDecimalConstantsFixONE(), fix);
+    public static ErrorDescription convert(HintContext ctx) {
+//de.markiewb.netbeans.plugins.hints.bigdecimal.UseBDConstFixTEN.convert
+        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_UseBDConstFixONE(), ctx.getPath(), "java.math.BigDecimal.ONE");
+        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_UseBDConstFixONE(), fix);
     }
 
    

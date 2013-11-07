@@ -11,12 +11,12 @@ import org.netbeans.spi.java.hints.TriggerPatterns;
 import org.openide.util.NbBundle.Messages;
 
 @Messages({
-    "ERR_UseBigDecimalConstantsFixZERO=Convert to <tt>BigDecimal.ZERO</tt>",
-    "DN_UseBigDecimalConstantsZERO=Convert to <tt>BigDecimal.ZERO</tt>",
+    "ERR_UseBDConstFixZERO=Convert to BigDecimal.ZERO",
+    "DN_UseBigDecimalConstantsZERO=Convert to BigDecimal.ZERO",
     "DESC_UseBigDecimalConstantsZERO=Converts expressions like <tt>new java.math.BigDecimal(0)</tt> to use <tt>BigDecimal.ZERO</tt> ",})
-public class UseBigDecimalConstantsFixZERO {
+public class UseBDConstFixZERO {
 
-    @Hint(displayName = "#DN_UseBigDecimalConstantsZERO", description = "#DESC_UseBigDecimalConstantsZERO", category = "Suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+    @Hint(displayName = "#DN_UseBigDecimalConstantsZERO", description = "#DESC_UseBigDecimalConstantsZERO", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
     @TriggerPatterns(
             {
                 @TriggerPattern("new java.math.BigDecimal(\"0\")"),
@@ -39,10 +39,10 @@ public class UseBigDecimalConstantsFixZERO {
                 @TriggerPattern("java.math.BigDecimal.valueOf(0.0d)"),
                 @TriggerPattern("java.math.BigDecimal.valueOf(0.00d)"),}
     )
-    public static ErrorDescription convertToZero(HintContext ctx) {
+    public static ErrorDescription convert(HintContext ctx) {
 
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_UseBigDecimalConstantsFixZERO(), ctx.getPath(), "java.math.BigDecimal.ZERO");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_UseBigDecimalConstantsFixZERO(), fix);
+        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_UseBDConstFixZERO(), ctx.getPath(), "java.math.BigDecimal.ZERO");
+        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_UseBDConstFixZERO(), fix);
     }
 
 }
