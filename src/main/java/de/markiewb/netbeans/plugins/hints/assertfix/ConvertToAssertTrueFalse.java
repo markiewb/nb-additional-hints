@@ -7,6 +7,7 @@ package de.markiewb.netbeans.plugins.hints.assertfix;
 
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
+import org.netbeans.spi.editor.hints.Severity;
 import org.netbeans.spi.java.hints.ConstraintVariableType;
 import org.netbeans.spi.java.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.java.hints.Hint;
@@ -18,7 +19,7 @@ import org.openide.util.NbBundle.Messages;
     "DN_SimplifyAssertMethods=Convert to assertTrue/assertFalse",
     "DESC_SimplifyAssertMethods=Converts <tt>assertEquals</tt> expressions to their <tt>assertTrue/assertFalse</tt> counterparts. <br>For example: <tt>org.junit.Assert.assertEquals($msg, true, $var)</tt> will be transformed to <tt>org.junit.Assert.assertTrue($msg, $var)</tt>",
 })
-@Hint(displayName = "#DN_SimplifyAssertMethods", description = "#DESC_SimplifyAssertMethods", category = "testing")
+@Hint(displayName = "#DN_SimplifyAssertMethods", description = "#DESC_SimplifyAssertMethods", category = "testing", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
 public class ConvertToAssertTrueFalse {
 
     @TriggerPattern(value = "org.junit.Assert.assertEquals(true, $var)")

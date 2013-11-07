@@ -74,7 +74,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @Hint(displayName = "#DN_JoinLiterals",
         description = "#DESC_JoinLiterals",
-        category = "suggestions") //NOI18N
+        category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT) //NOI18N
 @Messages({"DN_JoinLiterals=Join literals", 
     "DESC_JoinLiterals=Joins separate literals. <p>For example: <code>\"Foo \" + \"Bar\"</code> will be transformed into <code>\"Foo Bar\"</code> </p>"})
 public class JoinLiteralsHint {

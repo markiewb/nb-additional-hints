@@ -16,7 +16,7 @@ import org.openide.util.NbBundle.Messages;
     "DESC_UseBigDecimalConstantsZERO=Converts expressions like <tt>new java.math.BigDecimal(0)</tt> to use <tt>BigDecimal.ZERO</tt> ",})
 public class UseBDConstFixZERO {
 
-    @Hint(displayName = "#DN_UseBigDecimalConstantsZERO", description = "#DESC_UseBigDecimalConstantsZERO", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+    @Hint(displayName = "#DN_UseBigDecimalConstantsZERO", description = "#DESC_UseBigDecimalConstantsZERO", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerPatterns(
             {
                 @TriggerPattern("new java.math.BigDecimal(\"0\")"),

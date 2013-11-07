@@ -76,7 +76,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @Hint(displayName = "#DN_ReplacePlus",
         description = "#DESC_ReplacePlus",
-        category = "suggestions") //NOI18N
+        category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT) //NOI18N
 @Messages({"DN_ReplacePlus=Replace + with ...", 
     "DESC_ReplacePlus=Replace String concatenation with "
 	+ "<ul>"
