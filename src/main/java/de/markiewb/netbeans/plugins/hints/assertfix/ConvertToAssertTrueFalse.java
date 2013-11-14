@@ -17,7 +17,7 @@ import org.openide.util.NbBundle.Messages;
 
 @Messages({
     "DN_SimplifyAssertMethods=Convert to assertTrue/assertFalse",
-    "DESC_SimplifyAssertMethods=Converts <tt>assertEquals</tt> expressions to their <tt>assertTrue/assertFalse</tt> counterparts. <br>For example: <tt>org.junit.Assert.assertEquals($msg, true, $var)</tt> will be transformed to <tt>org.junit.Assert.assertTrue($msg, $var)</tt>",
+    "DESC_SimplifyAssertMethods=Converts <tt>assertEquals</tt> expressions to their <tt>assertTrue/assertFalse</tt> counterparts. <br>For example: <tt>org.junit.Assert.assertEquals($msg, true, $var)</tt> will be transformed to <tt>org.junit.Assert.assertTrue($msg, $var)</tt><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",
 })
 @Hint(displayName = "#DN_SimplifyAssertMethods", description = "#DESC_SimplifyAssertMethods", category = "testing", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
 public class ConvertToAssertTrueFalse {

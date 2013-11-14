@@ -76,7 +76,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#DESC_CopyJoinedStringToClipboard",
         category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT) //NOI18N
 @Messages({"DN_CopyJoinedStringToClipboard=Copy joined literals to clipboard",
-    "DESC_CopyJoinedStringToClipboard=Copy the joined literals to clipboard. It converts escaped linebreaks into real linebreaks too."})
+    "DESC_CopyJoinedStringToClipboard=Copy the joined literals to clipboard. It converts escaped linebreaks into real linebreaks too.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
 public class CopyJoinedStringToClipboardHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);

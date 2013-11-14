@@ -90,7 +90,7 @@ import org.openide.util.NbBundle.Messages;
 	+ "<li><tt>String.format(\"Found %s entries\", variable)</tt> or</li>"
 	+ "<li><tt>new StringBuilder().append(\"Found \").append(variable).append(\" entries\").toString()</tt></li>"
 	+ "</ul>"
-	+ ""})
+	+ "<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
 public class ReplacePlusHint {
 
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);

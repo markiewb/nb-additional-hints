@@ -13,7 +13,7 @@ import org.openide.util.NbBundle.Messages;
 @Messages({
     "ERR_UseBDConstFixTEN=Convert to BigDecimal.TEN",
     "DN_UseBigDecimalConstantsTEN=Convert to BigDecimal.TEN",
-    "DESC_UseBigDecimalConstantsTEN=Converts expressions like <tt>new java.math.BigDecimal(10)</tt> to <tt>BigDecimal.TEN</tt> ",})
+    "DESC_UseBigDecimalConstantsTEN=Converts expressions like <tt>new java.math.BigDecimal(10)</tt> to <tt>BigDecimal.TEN</tt><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p> ",})
 public class UseBDConstFixTEN {
 
     @Hint(displayName = "#DN_UseBigDecimalConstantsTEN", description = "#DESC_UseBigDecimalConstantsTEN", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)

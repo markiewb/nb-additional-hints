@@ -21,7 +21,7 @@ import org.openide.util.NbBundle.Messages;
 @Hint(displayName = "#DN_SplitLiteralOnCaretHint", description = "#DESC_SplitLiteralOnCaretHint", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
 @Messages({
     "DN_SplitLiteralOnCaretHint=Split\t at caret",
-    "DESC_SplitLiteralOnCaretHint=Splits the literal at the current caret.<p>For example: <tt>\"Foo|Bar\"</tt> will be transformed into <tt>\"Foo\" + \"Bar\"</tt></p>"
+    "DESC_SplitLiteralOnCaretHint=Splits the literal at the current caret.<p>For example: <tt>\"Foo|Bar\"</tt> will be transformed into <tt>\"Foo\" + \"Bar\"</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"
 }
 )
 public class SplitLiteralOnCaretHint {

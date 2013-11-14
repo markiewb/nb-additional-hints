@@ -76,7 +76,7 @@ import org.openide.util.NbBundle;
     "ERR_RemoveModsFromInterfaceParam=Remove {0} {1,choice,0#modifiers|1#modifier|1<modifiers}",
     "ERR_RemoveModsFromInterface=Remove public/abstract modifiers",
     "DN_RemoveModsFromInterface=Remove public/abstract modifiers from method declarations within interfaces",
-    "DESC_RemoveModsFromInterface=Remove public/abstract modifiers from method declarations within interfaces. <p>JLS 9.4: <i>It is permitted, but discouraged as a matter of style, to redundantly specify the public and/or abstract modifier for a method declared in an interface.</i></p>",})
+    "DESC_RemoveModsFromInterface=Remove public/abstract modifiers from method declarations within interfaces. <p>JLS 9.4: <i>It is permitted, but discouraged as a matter of style, to redundantly specify the public and/or abstract modifier for a method declared in an interface.</i></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class RemoveMethodModsFromIntf {
 
     @Hint(displayName = "#DN_RemoveModsFromInterface", description = "#DESC_RemoveModsFromInterface", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
