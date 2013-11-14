@@ -16,7 +16,7 @@ import org.openide.util.NbBundle.Messages;
     "DESC_UseBigDecimalConstantsONE=Converts expressions like <tt>new java.math.BigDecimal(1)</tt> to <tt>BigDecimal.ONE</tt> ",})
 public class UseBDConstFixONE {
 
-    @Hint(displayName = "#DN_UseBigDecimalConstantsONE", description = "#DESC_UseBigDecimalConstantsONE", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
+    @Hint(displayName = "#DN_UseBigDecimalConstantsONE", description = "#DESC_UseBigDecimalConstantsONE", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
     @TriggerPatterns(
             {
                 @TriggerPattern("new java.math.BigDecimal(\"1\")"),

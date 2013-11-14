@@ -22,7 +22,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalse.class)
-                .findWarning("3:25-3:37:verifier:" + Bundle.ERR_computeAssertTrueWithoutMessage())
+                .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertTrueWithoutMessage())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -45,7 +45,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalse.class)
-                .findWarning("3:25-3:37:verifier:" + Bundle.ERR_computeAssertTrueWithMessage())
+                .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertTrueWithMessage())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -68,7 +68,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalse.class)
-                .findWarning("3:25-3:37:verifier:" + Bundle.ERR_computeAssertFalseWithoutMessage())
+                .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertFalseWithoutMessage())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -91,7 +91,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalse.class)
-                .findWarning("3:25-3:37:verifier:" + Bundle.ERR_computeAssertFalseWithMessage())
+                .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertFalseWithMessage())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
