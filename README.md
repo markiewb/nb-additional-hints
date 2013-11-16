@@ -7,15 +7,17 @@ Supported hints:
 * "Replace '+' with 'String.format()'"
 * "Join literals"
 * "Copy joined literals to clipboard"
-* "Split the String on linebreaks"
-* "Split at caret" (new since 1.1)
+* "Split at linebreaks"
+* "Split at caret" (since 1.1)
+* " Convert to assertTrue/assertFalse" (since 1.1)
+* "Support transformation to BigDecimal constants" (since 1.1)
+* "Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)
 
-All hints (including more detailed descriptions) are available in the "suggestions" category within the hint configuration.
 
 Example:
 --------
 
-![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/master/src/main/java/doc/screenshot.png)
+![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/master/doc/screenshot-1.1.0.png)
 
 Further information:
 --------------------
