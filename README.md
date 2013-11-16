@@ -9,7 +9,7 @@ Supported hints:
 * "Copy joined literals to clipboard"
 * "Split at linebreaks"
 * "Split at caret" (since 1.1)
-* " Convert to assertTrue/assertFalse" (since 1.1)
+* "Convert to assertTrue/assertFalse" (since 1.1)
 * "Support transformation to BigDecimal constants" (since 1.1)
 * "Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)
 
@@ -21,7 +21,7 @@ Example:
 
 Further information:
 --------------------
-This plugin is based on code from the _"I18N Checker"_ plugin from _Jan Lahoda_.
+This plugin is originally based on code from the _"I18N Checker"_ plugin from _Jan Lahoda_.
 The original sourcecode can be found at http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n
 
 License remains CDDL-GPL-2-CP - http://www.netbeans.org/cddl-gplv2.html

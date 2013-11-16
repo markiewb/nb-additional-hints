@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -223,7 +223,7 @@
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
-&lt;img src="https://raw.github.com/markiewb/nb-additional-hints/master/src/main/java/doc/screenshot.png"/&gt;
+&lt;img src="https://raw.github.com/markiewb/nb-additional-hints/master/doc/screenshot-1.1.0.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
@@ -243,7 +243,7 @@
 &lt;h2&gt;
 &lt;a name="further-information" class="anchor" href="#further-information"&gt;&lt;span class="mini-icon mini-icon-link"&gt;&lt;/span&gt;&lt;/a&gt;Further information:&lt;/h2&gt;
 
-&lt;p&gt;This plugin is based on code from the &lt;em&gt;"I18N Checker"&lt;/em&gt; plugin from &lt;em&gt;Jan Lahoda&lt;/em&gt;.
+&lt;p&gt;This plugin is orginally based on code from the &lt;em&gt;"I18N Checker"&lt;/em&gt; plugin from &lt;em&gt;Jan Lahoda&lt;/em&gt;.
 The original sourcecode can be found at &lt;a href="http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n"&gt;http://hg.netbeans.org/main/contrib/file/tip/editor.hints.i18n&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;License remains CDDL-GPL-2-CP - &lt;a href="http://www.netbeans.org/cddl-gplv2.html"&gt;http://www.netbeans.org/cddl-gplv2.html&lt;/a&gt;&lt;/p&gt;
