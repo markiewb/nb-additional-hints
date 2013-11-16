@@ -215,32 +215,30 @@
 &lt;li&gt;"Replace '+' with 'String.format()'"&lt;/li&gt;
 &lt;li&gt;"Join literals"&lt;/li&gt;
 &lt;li&gt;"Copy joined literals to clipboard"&lt;/li&gt;
-&lt;li&gt;"Split the String on linebreaks"&lt;/li&gt;
+&lt;li&gt;"Split at linebreaks"&lt;/li&gt;
 &lt;li&gt;"Split at caret" (since 1.1)&lt;/li&gt;
 &lt;li&gt;" Convert to assertTrue/assertFalse" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Support transformation to BigDecimal constants" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;All hints (including more detailed descriptions) are available in the "suggestions" category within the hint configuration.&lt;/p&gt;
 &lt;h2&gt;Example:&lt;/h2&gt;
 &lt;img src="https://raw.github.com/markiewb/nb-additional-hints/master/src/main/java/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/11"&gt;Feature&lt;/a&gt;]: Support transformation to BigDecimal constants&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;Feature&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/13"&gt;Feature&lt;/a&gt;]: Convert to assertTrue/assertFalse&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/14"&gt;Feature&lt;/a&gt;]: Remove "public abstract" modifiers from method declarations within interfaces&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/11"&gt;New Hint&lt;/a&gt;]: Support transformation to BigDecimal constants&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;New Hint&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/13"&gt;New Hint&lt;/a&gt;]: Convert to assertTrue/assertFalse&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/14"&gt;New Hint&lt;/a&gt;]: Remove "public abstract" modifiers from method declarations within interfaces&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/8"&gt;Bugfix&lt;/a&gt;]: Literals with quoted Strings won't be copied properly to clipboard&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/7"&gt;Refactoring&lt;/a&gt;]: Convert to maven based module&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/18"&gt;Refactoring&lt;/a&gt;]: Hints should be proposals instead of errors/warnings&lt;/li&gt;
-
 &lt;/ul&gt;
 &lt;h3&gt;1.0.x:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/1"&gt;Bug 1&lt;/a&gt;]: Literals with quoted Strings create uncompileable code&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/1"&gt;Bugfix&lt;/a&gt;]: Literals with quoted Strings create uncompileable code&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;
 &lt;a name="further-information" class="anchor" href="#further-information"&gt;&lt;span class="mini-icon mini-icon-link"&gt;&lt;/span&gt;&lt;/a&gt;Further information:&lt;/h2&gt;

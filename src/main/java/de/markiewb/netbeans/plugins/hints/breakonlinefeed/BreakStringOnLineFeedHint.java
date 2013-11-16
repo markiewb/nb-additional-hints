@@ -79,11 +79,11 @@ import org.openide.util.NbBundle.Messages;
 @Hint(displayName = "#DN_BreakStringOnLineFeed",
         description = "#DESC_BreakStringOnLineFeed",
         category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT) //NOI18N
-@Messages({"DN_BreakStringOnLineFeed=Split the String on linebreaks",
+@Messages({"DN_BreakStringOnLineFeed=Split at linebreaks",
     "DESC_BreakStringOnLineFeed="
-	+ "Split the String on linebreaks symbols into separate concatenated literals. For example"
+	+ "Split the String at linebreaks symbols into separate concatenated literals. <p> For example"
 	+"<tt>\"FOO\\nBAR\"</tt> will be transformed into"
-	+"<tt>\"FOO\\n\" + \"BAR\"</tt><br/><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"
+	+"<tt>\"FOO\\n\" + \"BAR\"</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"
 	})
 public class BreakStringOnLineFeedHint {
 

@@ -83,7 +83,7 @@ public class BreakStringOnLineFeedFix implements Fix {
         this.text = text;
     }
 
-    @NbBundle.Messages({"LBL_BreakStringOnLineFeedFix=Split on line breaks"})
+    @NbBundle.Messages({"LBL_BreakStringOnLineFeedFix=Split at linebreaks"})
     @Override
     public String getText() {
         return Bundle.LBL_BreakStringOnLineFeedFix();
