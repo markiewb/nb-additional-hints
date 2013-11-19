@@ -11,6 +11,25 @@ import org.netbeans.modules.java.hints.test.api.HintTest;
 public class MakePrivateTest {
 
     @Test
+    public void testFixWorking_Protected_Method() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    protected static void main(String[] args) {\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(MakePrivate.class)
+                .findWarning("2:4-2:20:hint:" + Bundle.ERR_MakePrivate())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    private static void main(String[] args) {\n"
+                        + "    }\n"
+                        + "}\n");
+    }
+
+    @Test
     public void testFixWorking_Public_Method() throws Exception {
         HintTest.create()
                 .input("package test;\n"
@@ -26,6 +45,23 @@ public class MakePrivateTest {
                         + "public class Test {\n"
                         + "    private static void main(String[] args) {\n"
                         + "    }\n"
+                        + "}\n");
+    }
+
+    @Test
+    public void testFixWorking_Protected_Field() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    protected String s = null;\n"
+                        + "}\n")
+                .run(MakePrivate.class)
+                .findWarning("2:4-2:13:hint:" + Bundle.ERR_MakePrivate())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    private String s = null;\n"
                         + "}\n");
     }
 
