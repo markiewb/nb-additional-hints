@@ -42,60 +42,78 @@
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
 
+import com.sun.source.tree.ClassTree;
+import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
+import com.sun.source.tree.VariableTree;
 import com.sun.source.util.TreePath;
-import java.util.Set;
+import java.util.EnumSet;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
-import org.netbeans.api.java.source.TreeMaker;
-import org.netbeans.api.java.source.TreePathHandle;
-import org.netbeans.api.java.source.WorkingCopy;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
 import org.netbeans.spi.java.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.java.hints.Hint;
 import org.netbeans.spi.java.hints.HintContext;
-import org.netbeans.spi.java.hints.JavaFix;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
+import org.netbeans.spi.java.hints.support.FixFactory;
 import org.openide.util.NbBundle;
 
-/**
- * Turns a class, method of field private.
- */
 @NbBundle.Messages({
     "ERR_MakePrivate=Make Private",
     "DN_MakePrivate=Make Private",
     "DESC_MakePrivate=Makes a class, method or field private."})
 public class MakePrivate {
 
+    private static final EnumSet<Modifier> opositeModifiers = EnumSet.of(Modifier.PUBLIC, Modifier.PROTECTED);
+
     @Hint(displayName = "#DN_MakePrivate", description = "#DESC_MakePrivate", category = "suggestions",
             hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
-    @TriggerTreeKind(Tree.Kind.MODIFIERS)
+    @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.METHOD, Tree.Kind.VARIABLE})
     public static ErrorDescription convert(HintContext ctx) {
 
-        TreePath path = ctx.getPath();
-        final Set<Modifier> flags = ((ModifiersTree) path.getLeaf()).getFlags();
+        Element element = ctx.getInfo().getTrees().getElement(ctx.getPath());
 
-        if (flags.contains(Modifier.PRIVATE)) {
+        if (element == null) {
             return null;
         }
 
-        TreePath parentPath = path.getParentPath();
-        if (isTopLevelClass(ctx, parentPath)) {
+        ModifiersTree modifiers;
+
+        switch (element.getKind()) {
+            case FIELD:
+                VariableTree vt = (VariableTree) ctx.getPath().getLeaf();
+                modifiers = vt.getModifiers();
+                break;
+            case CLASS:
+                if (isTopLevelClass(element)) {
+                    return null;
+                }
+                ClassTree ct = (ClassTree) ctx.getPath().getLeaf();
+                modifiers = ct.getModifiers();
+                break;
+            case METHOD:
+                MethodTree mt = (MethodTree) ctx.getPath().getLeaf();
+                modifiers = mt.getModifiers();
+                break;
+            default:
+                return null;
+        }
+
+        if (modifiers.getFlags().contains(Modifier.PRIVATE)) {
             return null;
         }
 
-        Fix fix = new FixImpl(TreePathHandle.create(ctx.getPath(), ctx.getInfo())).toEditorFix();
-        return ErrorDescriptionFactory.forTree(ctx, ctx.getPath(), Bundle.ERR_MakePrivate(), fix);
+        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(ctx.getPath(), modifiers), EnumSet.of(Modifier.PRIVATE), opositeModifiers, Bundle.ERR_MakePrivate());
+        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_MakePrivate(), fix);
     }
 
-    private static boolean isTopLevelClass(HintContext ctx, TreePath path) {
-        Element element = ctx.getInfo().getTrees().getElement(path);
+    private static boolean isTopLevelClass(Element element) {
 
         if (element == null) {
             return false;
@@ -109,33 +127,5 @@ public class MakePrivate {
         }
 
         return false;
-    }
-
-    private static class FixImpl extends JavaFix {
-
-        FixImpl(TreePathHandle handle) {
-            super(handle);
-        }
-
-        @Override
-        protected String getText() {
-            return Bundle.ERR_MakePrivate();
-        }
-
-        @Override
-        protected void performRewrite(JavaFix.TransformationContext ctx) throws Exception {
-            TreePath path = ctx.getPath();
-
-            WorkingCopy copy = ctx.getWorkingCopy();
-            TreeMaker make = ctx.getWorkingCopy().getTreeMaker();
-            ModifiersTree oldModifiersTree = (ModifiersTree) path.getLeaf();
-
-            ModifiersTree newModifiersTree = oldModifiersTree;
-            newModifiersTree = make.removeModifiersModifier(newModifiersTree, Modifier.PROTECTED);
-            newModifiersTree = make.removeModifiersModifier(newModifiersTree, Modifier.PUBLIC);
-            newModifiersTree = make.addModifiersModifier(newModifiersTree, Modifier.PRIVATE);
-
-            copy.rewrite(oldModifiersTree, newModifiersTree);
-        }
     }
 }

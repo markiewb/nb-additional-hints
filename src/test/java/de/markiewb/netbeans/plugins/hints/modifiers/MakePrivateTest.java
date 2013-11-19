@@ -19,7 +19,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:4-2:20:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:26-2:30:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -38,7 +38,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:4-2:17:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:23-2:27:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -56,7 +56,7 @@ public class MakePrivateTest {
                         + "    protected String s = null;\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:4-2:13:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:21-2:22:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -73,7 +73,7 @@ public class MakePrivateTest {
                         + "    public String s = null;\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:4-2:10:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:18-2:19:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -90,7 +90,7 @@ public class MakePrivateTest {
                         + "    public class Inner {}\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:4-2:10:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:17-2:22:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
