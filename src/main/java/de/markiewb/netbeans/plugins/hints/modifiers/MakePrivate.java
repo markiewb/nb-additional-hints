@@ -42,18 +42,12 @@
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
 
-import com.sun.source.tree.ClassTree;
-import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
-import com.sun.source.tree.VariableTree;
 import com.sun.source.util.TreePath;
 import java.util.EnumSet;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.NestingKind;
-import javax.lang.model.element.TypeElement;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -77,55 +71,24 @@ public class MakePrivate {
     @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.METHOD, Tree.Kind.VARIABLE})
     public static ErrorDescription convert(HintContext ctx) {
 
-        Element element = ctx.getInfo().getTrees().getElement(ctx.getPath());
+        TreePath path = ctx.getPath();
+        Element element = ctx.getInfo().getTrees().getElement(path);
 
         if (element == null) {
             return null;
         }
 
-        ModifiersTree modifiers;
-
-        switch (element.getKind()) {
-            case FIELD:
-                VariableTree vt = (VariableTree) ctx.getPath().getLeaf();
-                modifiers = vt.getModifiers();
-                break;
-            case CLASS:
-                if (isTopLevelClass(element)) {
-                    return null;
-                }
-                ClassTree ct = (ClassTree) ctx.getPath().getLeaf();
-                modifiers = ct.getModifiers();
-                break;
-            case METHOD:
-                MethodTree mt = (MethodTree) ctx.getPath().getLeaf();
-                modifiers = mt.getModifiers();
-                break;
-            default:
-                return null;
-        }
-
-        if (modifiers.getFlags().contains(Modifier.PRIVATE)) {
+        if (ModifierUtils.isTopLevelClass(element)) {
             return null;
         }
 
-        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(ctx.getPath(), modifiers), EnumSet.of(Modifier.PRIVATE), opositeModifiers, Bundle.ERR_MakePrivate());
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_MakePrivate(), fix);
-    }
+        ModifiersTree modifiers = ModifierUtils.getModifiersTree(path, element);
 
-    private static boolean isTopLevelClass(Element element) {
-
-        if (element == null) {
-            return false;
+        if (modifiers == null || modifiers.getFlags().contains(Modifier.PRIVATE)) {
+            return null;
         }
 
-        if (element.getKind() == ElementKind.CLASS) {
-            TypeElement clazz = (TypeElement) element;
-            if (clazz.getNestingKind() == NestingKind.TOP_LEVEL) {
-                return true;
-            }
-        }
-
-        return false;
+        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), EnumSet.of(Modifier.PRIVATE), opositeModifiers, Bundle.ERR_MakePrivate());
+        return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakePrivate(), fix);
     }
 }
