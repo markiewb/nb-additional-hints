@@ -13,14 +13,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <netbeans.version>RELEASE721</netbeans.version>
-        <netbeans.run.params.ide />
-        <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
     </properties>
     <organization>
         <name>Benno Markiewicz (benno.markiewicz@googlemail.com)</name>
     </organization>
     <url>https://github.com/markiewb/nb-additional-hints</url>
-    
+
     <repositories>
         <!--
         Repository hosting NetBeans modules, especially APIs.
@@ -120,7 +118,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
-                <version>3.11</version>
+                <version>3.11.1</version>
                 <extensions>true</extensions>
                 <configuration>
                     <!-- keep this id, else the update from existing versions will fail
