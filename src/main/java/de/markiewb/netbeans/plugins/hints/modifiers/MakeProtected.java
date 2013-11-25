@@ -38,6 +38,7 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  * 
+ * "Portions Copyrighted 2013 rasa-silva"
  * "Portions Copyrighted 2013 Benno Markiewicz"
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
@@ -60,14 +61,15 @@ import org.openide.util.NbBundle;
 
 /**
  * Turns a class, method of field public.
+ * @author https://github.com/rasa-silva
  */
 @NbBundle.Messages({
     "ERR_MakeProtected=Make Protected",
     "DN_MakeProtected=Make Protected",
-    "DESC_MakeProtected=Makes a class, method or field protected."})
+    "DESC_MakeProtected=Makes a class, method or field protected.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
 public class MakeProtected {
 
-    private static final EnumSet<Modifier> opositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC);
+    private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC);
 
     @Hint(displayName = "#DN_MakeProtected", description = "#DESC_MakeProtected", category = "suggestions",
             hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
@@ -81,6 +83,7 @@ public class MakeProtected {
             return null;
         }
 
+        //XXX top level classes cannot be made protected
         if (ModifierUtils.isTopLevelClass(element)) {
             return null;
         }
@@ -90,8 +93,10 @@ public class MakeProtected {
         if (modifiers == null || modifiers.getFlags().contains(Modifier.PROTECTED)) {
             return null;
         }
+        final EnumSet<Modifier> toAdd = EnumSet.of(Modifier.PROTECTED);
+        final EnumSet<Modifier> toRemove = oppositeModifiers;
 
-        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), EnumSet.of(Modifier.PROTECTED), opositeModifiers, Bundle.ERR_MakeProtected());
+        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), toAdd, toRemove, Bundle.ERR_MakeProtected());
         return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakeProtected(), fix);
     }
 }

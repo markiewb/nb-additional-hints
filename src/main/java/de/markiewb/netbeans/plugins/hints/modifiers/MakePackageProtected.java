@@ -38,6 +38,7 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  * 
+ * "Portions Copyrighted 2013 rasa-silva"
  * "Portions Copyrighted 2013 Benno Markiewicz"
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
@@ -60,14 +61,15 @@ import org.openide.util.NbBundle;
 
 /**
  * Turns a class, method of field public.
+ * @author https://github.com/rasa-silva
  */
 @NbBundle.Messages({
     "ERR_MakePackageProtected=Make Package Protected",
     "DN_MakePackageProtected=Make Package Protected",
-    "DESC_MakePackageProtected=Makes a class, method or field package protected."})
+    "DESC_MakePackageProtected=Makes a class, method or field package protected.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
 public class MakePackageProtected {
 
-    private static final EnumSet<Modifier> opositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC, Modifier.PROTECTED);
+    private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC, Modifier.PROTECTED);
 
     @Hint(displayName = "#DN_MakePackageProtected", description = "#DESC_MakePackageProtected", category = "suggestions",
             hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
@@ -88,8 +90,10 @@ public class MakePackageProtected {
                 && !modifiers.getFlags().contains(Modifier.PUBLIC))) {
             return null;
         }
+        final EnumSet<Modifier> toAdd = EnumSet.noneOf(Modifier.class);
+        final EnumSet<Modifier> toRemove = oppositeModifiers;
 
-        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), EnumSet.of(Modifier.PROTECTED), opositeModifiers, Bundle.ERR_MakePackageProtected());
+        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), toAdd, toRemove, Bundle.ERR_MakePackageProtected());
         return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakePackageProtected(), fix);
     }
 }

@@ -38,6 +38,7 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  * 
+ * "Portions Copyrighted 2013 rasa-silva"
  * "Portions Copyrighted 2013 Benno Markiewicz"
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
@@ -60,14 +61,15 @@ import org.openide.util.NbBundle;
 
 /**
  * Turns a class, method of field public.
+ * @author https://github.com/rasa-silva
  */
 @NbBundle.Messages({
     "ERR_MakePublic=Make Public",
     "DN_MakePublic=Make Public",
-    "DESC_MakePublic=Makes a class, method or field public."})
+    "DESC_MakePublic=Makes a class, method or field public.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
 public class MakePublic {
 
-    private static final EnumSet<Modifier> opositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PROTECTED);
+    private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PROTECTED);
 
     @Hint(displayName = "#DN_MakePublic", description = "#DESC_MakePublic", category = "suggestions",
             hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
@@ -86,8 +88,10 @@ public class MakePublic {
         if (modifiers == null || modifiers.getFlags().contains(Modifier.PUBLIC)) {
             return null;
         }
+        final EnumSet<Modifier> toAdd = EnumSet.of(Modifier.PUBLIC);
+        final EnumSet<Modifier> toRemove = oppositeModifiers;
 
-        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), EnumSet.of(Modifier.PUBLIC), opositeModifiers, Bundle.ERR_MakePublic());
+        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), toAdd, toRemove, Bundle.ERR_MakePublic());
         return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakePublic(), fix);
     }
 }

@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -218,12 +218,18 @@
 &lt;li&gt;" Convert to assertTrue/assertFalse" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Support transformation to BigDecimal constants" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)&lt;/li&gt;
+&lt;li&gt;"Change modifiers" (since 1.2)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
 &lt;img src="https://raw.github.com/markiewb/nb-additional-hints/master/doc/screenshot-1.1.0.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
+&lt;h3&gt;1.2.0:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/pull/22"&gt;New Hint&lt;/a&gt;]: Change the modifier of a class/method/field to public/package protected/protected/private  (by &lt;a href="https://github.com/rasa-silva"&gt;rasa-silva&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/11"&gt;New Hint&lt;/a&gt;]: Support transformation to BigDecimal constants&lt;/li&gt;

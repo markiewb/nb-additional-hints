@@ -38,6 +38,7 @@
  * Version 2 license, then the option applies only if the new code is
  * made subject to such option by the copyright holder.
  * 
+ * "Portions Copyrighted 2013 rasa-silva"
  * "Portions Copyrighted 2013 Benno Markiewicz"
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
@@ -58,13 +59,17 @@ import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.netbeans.spi.java.hints.support.FixFactory;
 import org.openide.util.NbBundle;
 
+/**
+ * 
+ * @author https://github.com/rasa-silva
+ */
 @NbBundle.Messages({
     "ERR_MakePrivate=Make Private",
     "DN_MakePrivate=Make Private",
-    "DESC_MakePrivate=Makes a class, method or field private."})
+    "DESC_MakePrivate=Makes a class, method or field private.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
 public class MakePrivate {
 
-    private static final EnumSet<Modifier> opositeModifiers = EnumSet.of(Modifier.PUBLIC, Modifier.PROTECTED);
+    private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PUBLIC, Modifier.PROTECTED);
 
     @Hint(displayName = "#DN_MakePrivate", description = "#DESC_MakePrivate", category = "suggestions",
             hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
@@ -78,6 +83,7 @@ public class MakePrivate {
             return null;
         }
 
+        //XXX top level classes cannot be made private
         if (ModifierUtils.isTopLevelClass(element)) {
             return null;
         }
@@ -87,8 +93,10 @@ public class MakePrivate {
         if (modifiers == null || modifiers.getFlags().contains(Modifier.PRIVATE)) {
             return null;
         }
+        final EnumSet<Modifier> toAdd = EnumSet.of(Modifier.PRIVATE);
+        final EnumSet<Modifier> toRemove = oppositeModifiers;
 
-        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), EnumSet.of(Modifier.PRIVATE), opositeModifiers, Bundle.ERR_MakePrivate());
+        Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), toAdd, toRemove, Bundle.ERR_MakePrivate());
         return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakePrivate(), fix);
     }
 }
