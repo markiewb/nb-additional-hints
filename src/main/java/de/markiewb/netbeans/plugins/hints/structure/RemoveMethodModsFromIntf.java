@@ -143,8 +143,9 @@ class FixImpl extends JavaFix {
         ModifiersTree oldModifiersTree = ((MethodTree) path.getLeaf()).getModifiers();
 
         ModifiersTree newModifiersTree = oldModifiersTree;
-        newModifiersTree = make.removeModifiersModifier(newModifiersTree, Modifier.ABSTRACT);
-        newModifiersTree = make.removeModifiersModifier(newModifiersTree, Modifier.PUBLIC);
+        for (Modifier modifier : modifiers) {
+            newModifiersTree = make.removeModifiersModifier(newModifiersTree, modifier);
+        }
 
         copy.rewrite(oldModifiersTree, newModifiersTree);
     }
