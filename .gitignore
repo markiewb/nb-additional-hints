@@ -8,3 +8,6 @@
 /build/
 /private/
 /target/
+/.idea/
+/*.iml
+/src/main/resources/rebel.xml
