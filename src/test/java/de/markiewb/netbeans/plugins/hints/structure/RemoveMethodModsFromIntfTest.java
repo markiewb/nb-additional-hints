@@ -26,6 +26,146 @@ public class RemoveMethodModsFromIntfTest {
     }
 
     @Test
+    public void testMatchFields_publicstaticfinal() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    public static final String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:41:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
+    public void testMatchFields_publicstatic() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    public static String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:35:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
+    public void testMatchFields_publicfinal() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    public final String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:34:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
+    public void testMatchFields_staticfinal() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    static final String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:34:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
+    public void testMatchFields_static() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    static String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:28:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
+    public void testMatchFields_public() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    public String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:28:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
+    public void testMatchFields_final() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public interface Test {\n"
+                        + "    final String FOO=\"XXX\";\n"
+                        + "}"
+                )
+                .run(RemoveFieldModsFromIntf.class)
+                .findWarning("2:4-2:27:hint:" + Bundle.ERR_RemoveModsFromField())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package example;\n"
+                        + "public interface Test {\n"
+                        + "    String FOO=\"XXX\";\n"
+                        + "}");
+
+    }
+
+    @Test
     public void testMatchInterfaces_public() throws Exception {
         HintTest.create()
                 .input(
@@ -84,7 +224,7 @@ public class RemoveMethodModsFromIntfTest {
                         + "}");
 
     }
-    
+
     @Test
     public void testShouldNotMatchClasses_public_abstract() throws Exception {
         HintTest.create()
@@ -98,6 +238,7 @@ public class RemoveMethodModsFromIntfTest {
                 .assertWarnings();
 
     }
+
     @Test
     public void testShouldNotMatchClasses_abstract_public() throws Exception {
         HintTest.create()
@@ -111,6 +252,7 @@ public class RemoveMethodModsFromIntfTest {
                 .assertWarnings();
 
     }
+
     @Test
     public void testShouldNotMatchClasses_public() throws Exception {
         HintTest.create()
@@ -124,6 +266,7 @@ public class RemoveMethodModsFromIntfTest {
                 .assertWarnings();
 
     }
+
     @Test
     public void testShouldNotMatchClasses_abstract() throws Exception {
         HintTest.create()
