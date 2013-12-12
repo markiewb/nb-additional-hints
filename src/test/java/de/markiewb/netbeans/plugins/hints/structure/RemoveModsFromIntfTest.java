@@ -3,7 +3,7 @@ package de.markiewb.netbeans.plugins.hints.structure;
 import org.junit.Test;
 import org.netbeans.modules.java.hints.test.api.HintTest;
 
-public class RemoveMethodModsFromIntfTest {
+public class RemoveModsFromIntfTest {
 
     @Test
     public void testMatchInterfaces_abstract() throws Exception {

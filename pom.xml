@@ -13,6 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <netbeans.version>RELEASE721</netbeans.version>
+        <netbeans.run.params.ide/>
+        <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
     </properties>
     <organization>
         <name>Benno Markiewicz (benno.markiewicz@googlemail.com)</name>

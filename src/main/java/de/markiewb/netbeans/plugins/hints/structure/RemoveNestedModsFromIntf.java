@@ -42,12 +42,14 @@
  */
 package de.markiewb.netbeans.plugins.hints.structure;
 
+import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.tree.VariableTree;
 import com.sun.source.util.TreePath;
 import de.markiewb.netbeans.plugins.hints.common.StringUtils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,49 +68,49 @@ import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle;
 
 /**
- * Removes superfluous modifiers (public, abstract, final) from field declarations within interfaces.
+ * Removes superfluous public modifiers from nested classes/interfaces within
+ * interfaces.
  *
  * @author markiewb
  */
 @NbBundle.Messages({
     "# {0} - modifiers ",
     "# {1} - number of modifiers",
-    "ERR_RemoveModsFromFieldParam=Remove {0} {1,choice,0#modifiers|1#modifier|1<modifiers}",
-    "ERR_RemoveModsFromField=Remove public/abstract/final modifiers",
-    "DN_RemoveModsFromField=Remove public/abstract/final modifiers from field declarations within interfaces",
-    "DESC_RemoveModsFromField=Remove public/abstract/final modifiers from field declarations within interfaces. <p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
-public class RemoveFieldModsFromIntf {
+    "ERR_RemoveNestedModsFromIntfParam=Remove {0} {1,choice,0#modifiers|1#modifier|1<modifiers}",
+    "ERR_RemoveNestedModsFromIntf=Remove public/static modifier",
+    "DN_RemoveNestedModsFromIntf=Remove public/static modifiers from nested class/interface within interfaces",
+    "DESC_RemoveNestedModsFromIntf=Remove public/static modifiers from nested class/interface within interfaces. Nested declaration within interfaces are always <tt>public</tt> and <tt>static</tt><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
+public class RemoveNestedModsFromIntf {
 
-    @Hint(displayName = "#DN_RemoveModsFromField", description = "#DESC_RemoveModsFromField", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
-    @TriggerTreeKind(Tree.Kind.VARIABLE)
+    @Hint(displayName = "#DN_RemoveNestedModsFromIntf", description = "#DESC_RemoveNestedModsFromIntf", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+    @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.INTERFACE})
     public static ErrorDescription convert(HintContext ctx) {
 
         TreePath path = ctx.getPath();
 
-        if (path.getLeaf().getKind() != Tree.Kind.VARIABLE) {
+        if (!Arrays.asList(Tree.Kind.CLASS, Tree.Kind.INTERFACE).contains(path.getLeaf().getKind())) {
             return null;
         }
+        // is nested within an interface
         if (path.getParentPath().getLeaf().getKind() != Tree.Kind.INTERFACE) {
             return null;
         }
 
-        ModifiersTree modifiers = ((VariableTree) path.getLeaf()).getModifiers();
+        ModifiersTree modifiers = ((ClassTree) path.getLeaf()).getModifiers();
 
         Set<Modifier> toBeRemoved = new HashSet<Modifier>();
         final Set<Modifier> flags = modifiers.getFlags();
         if (flags.contains(Modifier.PUBLIC)) {
             toBeRemoved.add(Modifier.PUBLIC);
         }
+        //FIXME static is always contained
         if (flags.contains(Modifier.STATIC)) {
             toBeRemoved.add(Modifier.STATIC);
         }
-        if (flags.contains(Modifier.FINAL)) {
-            toBeRemoved.add(Modifier.FINAL);
-        }
         Fix fix;
         if (!toBeRemoved.isEmpty()) {
-            fix = new RemoveFieldModsFromIntfFix(TreePathHandle.create(ctx.getPath(), ctx.getInfo()), toBeRemoved).toEditorFix();
-            return ErrorDescriptionFactory.forTree(ctx, ctx.getPath(), Bundle.ERR_RemoveModsFromField(), fix);
+            fix = new RemoveNestedModsFromIntfFix(TreePathHandle.create(ctx.getPath(), ctx.getInfo()), toBeRemoved).toEditorFix();
+            return ErrorDescriptionFactory.forTree(ctx, ctx.getPath(), Bundle.ERR_RemoveNestedModsFromIntf(), fix);
         } else {
             return null;
         }
@@ -116,11 +118,11 @@ public class RemoveFieldModsFromIntf {
 
 }
 
-class RemoveFieldModsFromIntfFix extends JavaFix {
+class RemoveNestedModsFromIntfFix extends JavaFix {
 
     private final Set<Modifier> modifiers;
 
-    RemoveFieldModsFromIntfFix(TreePathHandle handle, Set<Modifier> modifiers) {
+    RemoveNestedModsFromIntfFix(TreePathHandle handle, Set<Modifier> modifiers) {
         super(handle);
         this.modifiers = modifiers;
     }
@@ -132,7 +134,7 @@ class RemoveFieldModsFromIntfFix extends JavaFix {
             list.add(modifier.toString());
         }
 
-        return Bundle.ERR_RemoveModsFromFieldParam(StringUtils.join(list, ", "), modifiers.size());
+        return Bundle.ERR_RemoveNestedModsFromIntfParam(StringUtils.join(list, ", "), modifiers.size());
     }
 
     @Override
@@ -141,7 +143,7 @@ class RemoveFieldModsFromIntfFix extends JavaFix {
 
         WorkingCopy copy = ctx.getWorkingCopy();
         TreeMaker make = ctx.getWorkingCopy().getTreeMaker();
-        ModifiersTree oldModifiersTree = ((VariableTree) path.getLeaf()).getModifiers();
+        ModifiersTree oldModifiersTree = ((ClassTree) path.getLeaf()).getModifiers();
 
         ModifiersTree newModifiersTree = oldModifiersTree;
         for (Modifier modifier : modifiers) {

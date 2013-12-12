@@ -17,4 +17,20 @@ public interface IFoo {
     abstract void getFooC();
 
     void getFooD();
+
+    public interface InnerFooPublic {
+
+    }
+
+    interface InnerFoo {
+
+    }
+
+    public class InnerClassPublic {
+
+    }
+
+    class InnerClass {
+
+    }
 }
