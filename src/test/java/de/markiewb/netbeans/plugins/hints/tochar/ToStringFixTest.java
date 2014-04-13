@@ -12,22 +12,44 @@ import org.netbeans.modules.java.hints.test.api.HintTest;
 public class ToStringFixTest {
 
     @Test
-    public void testConvert() throws Exception {
+    public void testConvertToString() throws Exception {
+        String a="bor"+"a";
         HintTest.create()
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        char a='a';\n"
+                        + "        String a=\"bor\"+'a';\n"
                         + "    }\n"
                         + "}\n")
-                .run(UseBigDecimalConstantsFixONE.class)
-                .findWarning("3:31-3:60:hint:" + Bundle.ERR_ToStringFix())
+                .run(ToStringFix.class)
+                .findWarning("3:23-3:26:hint:" + Bundle.ERR_ToStringFix())
                 .applyFix()
-//                .assertCompilable()
+                .assertCompilable()
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        char a=\"a\";\n"
+                        + "        String a=\"bor\"+\"a\";\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testConvertToChar() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"bor\"+\"a\";\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(ToStringFix.class)
+                .findWarning("3:23-3:26:hint:" + Bundle.ERR_ToCharFix())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String a=\"bor\"+'a';\n"
                         + "    }\n"
                         + "}\n");
 
