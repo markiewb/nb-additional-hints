@@ -60,15 +60,15 @@ public class ReplaceWithStringFormatFixTest {
 
     @Test
     public void testFixWorkingMixedA() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"Output contains \"+4+\" entries\";\n"
+                + "        String foo=\"Output contains \"|+4+\" entries\";\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:50:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:37-3:37:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -81,15 +81,15 @@ public class ReplaceWithStringFormatFixTest {
 
     @Test
     public void testFixWorkingLiteralPrefix() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"A\"+4;\n"
+                + "        String foo=\"A\"+|4;\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:24:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:23-3:23:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -105,15 +105,15 @@ public class ReplaceWithStringFormatFixTest {
      */
     @Test
     public void testFixWorkingQuotedStrings1() throws Exception {
-	HintTest.create().
+	HintTest.create().setCaretMarker('|').
 		input("package test;\n"
 		+ "public class Test {\n"
 		+ "    public static void main(String[] args) {\n"
-		+ "	String b = \"Hello \\\"\"+42+\"\\\"\";"
+		+ "	String b = \"Hello \\\"\"+|42+\"\\\"\";"
 		+ "    }\n"
 		+ "}\n").
 		run(ReplacePlusHint.class).
-		findWarning("3:12-3:30:hint:" + Bundle.DN_ReplacePlus()).
+		findWarning("3:23-3:23:hint:" + Bundle.DN_ReplacePlus()).
 		applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
 		assertCompilable().
 		assertOutput("package test;\n"
@@ -126,15 +126,15 @@ public class ReplaceWithStringFormatFixTest {
 
     @Test
     public void testFixWorkingLiteralPostfix() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=4+\"A\";\n"
+                + "        String foo=4+\"|A\";\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:24:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:22-3:22:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -147,11 +147,11 @@ public class ReplaceWithStringFormatFixTest {
     
     @Test
     public void testOnlyLiterals() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"A\"+\"B\"+\"C\";\n"
+                + "        String foo=\"A\"|+\"B\"+\"C\";\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
@@ -160,15 +160,15 @@ public class ReplaceWithStringFormatFixTest {
 
     @Test
     public void testFixWorkingMixedB() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"Output contains \" + 4 + \" entries\" + \" and more at \" + new java.util.Date();\n"
+                + "        String foo=\"Output contains \" +| 4 + \" entries\" + \" and more at \" + new java.util.Date();\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:95:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:39-3:39:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -182,15 +182,15 @@ public class ReplaceWithStringFormatFixTest {
     }
 @Test
     public void testFixWorkingWithLineBreaks() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"ABC\\nDEF\\r\"+4+\"GHI\";\n"
+                + "        String foo=\"ABC\\nDEF\\r\"|+4+\"GHI\";\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
-                findWarning("3:19-3:39:hint:" + Bundle.DN_ReplacePlus()).
+                findWarning("3:31-3:31:hint:" + Bundle.DN_ReplacePlus()).
                 applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
                 assertCompilable().
                 assertOutput("package test;\n"
@@ -202,11 +202,11 @@ public class ReplaceWithStringFormatFixTest {
     }    
     @Test
     public void testSingleLiteral() throws Exception {
-        HintTest.create().
+        HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=\"A\";\n"
+                + "        String foo=\"A|\";\n"
                 + "    }\n"
                 + "}\n").
                 run(ReplacePlusHint.class).
