@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <netbeans.version>RELEASE721</netbeans.version>
+        <netbeans.run.params>-J-noverify -J-Xbootclasspath/p:C:\Users\markiewb\AppData\Local\Temp\rebelboot.jar -J-javaagent:"C:\Program Files\NetBeans 8.0\java2\griffin\jrebel\jrebel.jar" -J-Drebel.log=true</netbeans.run.params>
     </properties>
     <organization>
         <name>Benno Markiewicz (benno.markiewicz@googlemail.com)</name>
