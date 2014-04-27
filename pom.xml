@@ -215,7 +215,7 @@
 &lt;li&gt;"Copy joined literals to clipboard"&lt;/li&gt;
 &lt;li&gt;"Split at linebreaks"&lt;/li&gt;
 &lt;li&gt;"Split at caret" (since 1.1)&lt;/li&gt;
-&lt;li&gt;" Convert to assertTrue/assertFalse" (since 1.1)&lt;/li&gt;
+&lt;li&gt;"Convert to assertTrue/assertFalse" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Support transformation to BigDecimal constants" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Change modifiers" (since 1.2)&lt;/li&gt;
@@ -231,6 +231,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/pull/22"&gt;New Hint&lt;/a&gt;]: Change the modifier of a class/method/field to public/package protected/protected/private  (by &lt;a href="https://github.com/rasa-silva"&gt;rasa-silva&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/24"&gt;New Hint&lt;/a&gt;]: Remove public/abstract/final modifiers from field declarations within interfaces&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/9"&gt;New Hint&lt;/a&gt;]: Convert from char and string and back&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/29"&gt;Updated Hint&lt;/a&gt;]: "Convert to assertTrue/assertFalse" now supports junit.framework.Assert too&lt;/li&gt;
 
 &lt;/ul&gt;
 
