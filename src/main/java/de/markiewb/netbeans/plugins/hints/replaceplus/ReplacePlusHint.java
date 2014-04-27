@@ -42,10 +42,8 @@
  */
 package de.markiewb.netbeans.plugins.hints.replaceplus;
 
-import de.markiewb.netbeans.plugins.hints.literals.joinliterals.JoinLiteralsFix;
 import com.sun.source.util.TreePath;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -55,7 +53,6 @@ import javax.swing.text.Document;
 import org.netbeans.api.java.source.CompilationInfo;
 import org.netbeans.api.java.source.TreePathHandle;
 import org.netbeans.spi.editor.hints.ErrorDescription;
-import org.netbeans.spi.editor.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
 import org.netbeans.spi.java.hints.Hint;
@@ -64,6 +61,7 @@ import org.openide.loaders.DataObject;
 import com.sun.source.tree.Tree.Kind;
 import de.markiewb.netbeans.plugins.hints.common.NonNullArrayList;
 import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
+import org.netbeans.spi.java.hints.BooleanOption;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle.Messages;
@@ -90,19 +88,58 @@ import org.openide.util.NbBundle.Messages;
 	+ "<li><tt>String.format(\"Found %s entries\", variable)</tt> or</li>"
 	+ "<li><tt>new StringBuilder().append(\"Found \").append(variable).append(\" entries\").toString()</tt></li>"
 	+ "</ul>"
-	+ "<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
+	+ "<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",
+        "OPTNAME_SupportMessageFormat=<html>support <tt>Message.format()</tt>",
+        "OPTDESC_SupportMessageFormat=",
+        "OPTNAME_SupportStringFormat=<html>support <tt>String.format()</tt>",
+        "OPTDESC_SupportStringFormat=",
+        "OPTNAME_SupportStringBuilder=<html>support <tt>StringBuilder().append()</tt>",
+        "OPTDESC_SupportStringBuilder="
+})
 public class ReplacePlusHint {
+    
+    private static final boolean DEFAULT_SUPPORTMESSAGEFORMAT = true;
+    @BooleanOption(displayName = "#OPTNAME_SupportMessageFormat",tooltip = "#OPTDESC_SupportMessageFormat",defaultValue = DEFAULT_SUPPORTMESSAGEFORMAT)
+    public static final String OPTION_SUPPORTMESSAGEFORMAT = "support.messageformat";
 
+    private static final boolean DEFAULT_SUPPORTSTRINGFORMAT = true;
+    @BooleanOption(displayName = "#OPTNAME_SupportStringFormat",tooltip = "#OPTDESC_SupportStringFormat",defaultValue = DEFAULT_SUPPORTSTRINGFORMAT)
+    public static final String OPTION_SUPPORTSTRINGFORMAT = "support.stringformat";
+
+    private static final boolean DEFAULT_SUPPORTSTRINGBUILDER = true;
+    @BooleanOption(displayName = "#OPTNAME_SupportStringBuilder",tooltip = "#OPTDESC_SupportStringBuilder",defaultValue = DEFAULT_SUPPORTSTRINGBUILDER)
+    public static final String OPTION_SUPPORTSTRINGBUILDER = "support.stringbuilder";
+    
     public static final EnumSet<Kind> TREEKINDS = EnumSet.of(Kind.STRING_LITERAL, Kind.PLUS);
+    
+    
+    private HintContext ctx;
 
+    public ReplacePlusHint(HintContext ctx) {
+        this.ctx = ctx;
+    }
+    
+
+//    @UseOptions({OPTION_SUPPORTMESSAGEFORMAT})
     @TriggerTreeKind(value = {Kind.STRING_LITERAL, Kind.PLUS})
     public static ErrorDescription computeHint(HintContext ctx) {
-        ErrorDescription run = new ReplacePlusHint().run(ctx.getInfo(), ctx.getPath());
+        Config config = new Config();
+        config.supportMessageFormat = ctx.getPreferences().getBoolean(OPTION_SUPPORTMESSAGEFORMAT, DEFAULT_SUPPORTMESSAGEFORMAT);
+        config.supportStringFormat = ctx.getPreferences().getBoolean(OPTION_SUPPORTSTRINGFORMAT, DEFAULT_SUPPORTSTRINGFORMAT);
+        config.supportStringBuilder = ctx.getPreferences().getBoolean(OPTION_SUPPORTSTRINGBUILDER, DEFAULT_SUPPORTSTRINGBUILDER);
+
+        ErrorDescription run = new ReplacePlusHint(ctx).run(config);
         return run;
     }
     static Logger LOG = Logger.getLogger(ReplacePlusHint.class.getName());
     private AtomicBoolean cancelled = new AtomicBoolean(false);
 
+    static class Config{
+        boolean supportMessageFormat;
+        boolean supportStringFormat;
+        boolean supportStringBuilder;
+    }
+    
     public void cancel() {
         cancelled.set(true);
     }
@@ -120,8 +157,10 @@ public class ReplacePlusHint {
                 getKind() == requiredKind;
     }
 
-    public ErrorDescription run(CompilationInfo compilationInfo, TreePath treePath) {
+    public ErrorDescription run(Config config) {
 
+        TreePath treePath = ctx.getPath();
+        CompilationInfo compilationInfo = ctx.getInfo();
         try {
             final DataObject od = DataObject.find(compilationInfo.getFileObject());
             final Document doc = compilationInfo.getDocument();
@@ -160,32 +199,33 @@ public class ReplacePlusHint {
                 return null;
             }
 
-            final long hardCodedOffset = compilationInfo.getTrees().
-                    getSourcePositions().
-                    getStartPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
-            final long hardCodedOffsetEnd = compilationInfo.getTrees().
-                    getSourcePositions().
-                    getEndPosition(compilationInfo.getCompilationUnit(), treePath.getLeaf());
             BuildArgumentsVisitor v = new BuildArgumentsVisitor(compilationInfo);
 
             v.scan(treePath, null);
             BuildArgumentsVisitor.Result data = v.toResult();
 
 	    if (data.getArguments().isEmpty()) {
-		//only literals like "A"+"B" is not supported
+		//only literals like "A"+"B" (without variable) is not supported
 		return null;
 	    }
 	    //only join joinable terms, at least 2 terms are required
 	    if (data.get().size() >= 2) {
 		List<Fix> fixes = new NonNullArrayList();
-		fixes.add(ReplaceWithMessageFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-		fixes.add(ReplaceWithStringFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
-		fixes.add(ReplaceWithStringBuilderFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+                if (config.supportMessageFormat) {
+                    fixes.add(ReplaceWithMessageFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+                }
+                if (config.supportStringFormat) {
 
+                    fixes.add(ReplaceWithStringFormatFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+                }
+                if (config.supportStringBuilder) {
+
+                    fixes.add(ReplaceWithStringBuilderFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+                }
 		if (!fixes.isEmpty()) {
-		    return ErrorDescriptionFactory.
-			    createErrorDescription(Severity.HINT, Bundle.DN_ReplacePlus(), fixes, compilationInfo.
-			    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+                    Fix[] fixs = fixes.toArray(new Fix[fixes.size()]);
+                    
+                    return org.netbeans.spi.java.hints.ErrorDescriptionFactory.forName(ctx, treePath, Bundle.DN_ReplacePlus(), fixs);
 		}
 	    }
         } catch (IndexOutOfBoundsException ex) {
