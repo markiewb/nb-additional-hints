@@ -21,7 +21,7 @@ import org.openide.util.NbBundle.Messages;
     "DESC_ToChar=Converts a single string literal to a char. For example <tt>\"c\"</tt> will be transformed to <tt>'c'</tt>",})
 public class ToStringFix {
 
-    @Hint(displayName = "#DN_ToString", description = "#DESC_ToString", category = "Suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
+    @Hint(displayName = "#DN_ToString", description = "#DESC_ToString", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerTreeKind(Tree.Kind.CHAR_LITERAL)
     public static ErrorDescription convertFromCharToString(HintContext ctx) {
 
@@ -29,7 +29,7 @@ public class ToStringFix {
         return forName(ctx, ctx.getPath(), Bundle.ERR_ToStringFix(), fix);
     }
 
-    @Hint(displayName = "#DN_ToChar", description = "#DESC_ToChar", category = "Suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
+    @Hint(displayName = "#DN_ToChar", description = "#DESC_ToChar", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerTreeKind(Tree.Kind.STRING_LITERAL)
     public static ErrorDescription convertFromStringToChar(HintContext ctx) {
 
