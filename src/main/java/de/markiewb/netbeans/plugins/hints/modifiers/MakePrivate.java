@@ -72,7 +72,7 @@ public class MakePrivate {
     private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PUBLIC, Modifier.PROTECTED);
 
     @Hint(displayName = "#DN_MakePrivate", description = "#DESC_MakePrivate", category = "suggestions",
-            hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+            hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.METHOD, Tree.Kind.VARIABLE})
     public static ErrorDescription convert(HintContext ctx) {
 

@@ -72,7 +72,7 @@ public class MakePackageProtected {
     private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC, Modifier.PROTECTED);
 
     @Hint(displayName = "#DN_MakePackageProtected", description = "#DESC_MakePackageProtected", category = "suggestions",
-            hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+            hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.METHOD, Tree.Kind.VARIABLE})
     public static ErrorDescription convert(HintContext ctx) {
 

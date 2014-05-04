@@ -7,7 +7,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_PackageProtected_Field() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    String s = null;\n"
@@ -24,7 +24,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_PackageProtected_Inner_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    class Inner {}\n"
@@ -41,7 +41,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_PackageProtected_Method() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    static void main(String[] args) {\n"
@@ -64,7 +64,7 @@ public class MakePrivateTest {
      */
     @Test
     public void testFixWorking_PackageProtected_TopLevel_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test; class Test {}")
                 .run(MakePrivate.class)
                 .assertNotContainsWarnings("0:20-0:24:hint:" + Bundle.ERR_MakePrivate());
@@ -72,7 +72,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_Protected_Field() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    protected String s = null;\n"
@@ -83,7 +83,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_Protected_Inner_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    protected class Inner {}\n"
@@ -94,7 +94,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_Protected_Method() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    protected static void main(String[] args) {\n"
@@ -111,14 +111,14 @@ public class MakePrivateTest {
      */
     @Test(expected = AssertionError.class)
     public void testFixWorking_Protected_TopLevel_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test; protected class Test {}")
                 .run(MakePrivate.class);
     }
 
     @Test
     public void testFixWorking_Public_Field() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public String s = null;\n"
@@ -136,7 +136,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_Public_Inner_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public class Inner {}\n"
@@ -153,7 +153,7 @@ public class MakePrivateTest {
 
     @Test
     public void testFixWorking_Public_Method() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    static void main(String[] args) {\n"
@@ -177,7 +177,7 @@ public class MakePrivateTest {
      */
     @Test
     public void testFixWorking_Public_TopLevel_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|').setCaretMarker('|')
                 .input("package test; public class Test {}")
                 .run(MakePrivate.class)
                 .assertNotContainsWarnings("0:27-1:31:hint:" + Bundle.ERR_MakePrivate());
