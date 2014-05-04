@@ -13,16 +13,16 @@ public class ToStringFixTest {
 
     @Test
     public void testConvertToString() throws Exception {
-        String a="bor"+"a";
         HintTest.create()
+                .setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        String a=\"bor\"+'a';\n"
+                        + "        String a=\"bor\"+'a|';\n"
                         + "    }\n"
                         + "}\n")
                 .run(ToStringFix.class)
-                .findWarning("3:23-3:26:hint:" + Bundle.ERR_ToStringFix())
+                .findWarning("3:25-3:25:hint:" + Bundle.ERR_ToStringFix())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -36,14 +36,15 @@ public class ToStringFixTest {
     @Test
     public void testConvertToChar() throws Exception {
         HintTest.create()
+                .setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        String a=\"bor\"+\"a\";\n"
+                        + "        String a=\"bor\"+\"|a\";\n"
                         + "    }\n"
                         + "}\n")
                 .run(ToStringFix.class)
-                .findWarning("3:23-3:26:hint:" + Bundle.ERR_ToCharFix())
+                .findWarning("3:24-3:24:hint:" + Bundle.ERR_ToCharFix())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
