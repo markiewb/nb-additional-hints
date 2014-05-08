@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/markiewb/nb-additional-hints.svg?branch=master)](https://travis-ci.org/markiewb/nb-additional-hints)
+
 Additional java hints for NetBeans IDE
 ===================
 
