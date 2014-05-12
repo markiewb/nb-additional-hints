@@ -110,6 +110,12 @@
             <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -220,6 +226,7 @@
 &lt;li&gt;"Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Change modifiers" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Convert char to string and back" (since 1.2)&lt;/li&gt;
+&lt;li&gt;"Convert to StringUtils.isBlank()/StringUtils.isNotBlank()/StringUtils.isEmpty()" (since 1.2)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
@@ -232,6 +239,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/24"&gt;New Hint&lt;/a&gt;]: Remove public/abstract/final modifiers from field declarations within interfaces&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/9"&gt;New Hint&lt;/a&gt;]: Convert from char and string and back&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/10"&gt;New Hint&lt;/a&gt;]: Convert number in literal to number and back&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/12"&gt;New Hint&lt;/a&gt;]: Convert to StringUtils.isBlank()/StringUtils.isNotBlank()/StringUtils.isEmpty()&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/29"&gt;Updated Hint&lt;/a&gt;]: "Convert to assertTrue/assertFalse" now supports junit.framework.Assert too&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/20"&gt;Updated Hint&lt;/a&gt;]: "Replace +..." hints can now be configured&lt;/li&gt;
 &lt;/ul&gt;
