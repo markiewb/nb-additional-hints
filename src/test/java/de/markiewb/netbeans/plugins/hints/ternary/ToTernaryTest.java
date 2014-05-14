@@ -36,6 +36,30 @@ public class ToTernaryTest {
                         + "}\n");
 
     }
+
+    @Test
+    public void testToIfElseReturn() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static int main(String[] args) {\n"
+                        + "        return (tr|ue) ? 1 : 0;\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(ToTernary.class)
+                .findWarning("3:18-3:18:hint:" + Bundle.ERR_ToIfElseReturn())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static int main(String[] args) {\n"
+                        + "        if (true) { return 1; } else { return 0; }\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
     @Test
     public void testToTernaryAssign() throws Exception {
         HintTest.create()
@@ -56,6 +80,30 @@ public class ToTernaryTest {
                         + "    public static void main(String[] args) {\n"
                         + "        int s;\n"
                         + "        s = (true) ? 1 : 0;\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testToIfElseAssign() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s;\n"
+                        + "        s = (t|rue) ? 1 : 0;\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(ToTernary.class)
+                .findWarning("4:14-4:14:hint:" + Bundle.ERR_ToIfElseAssign())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s;\n"
+                        + "        if (true) { s = 1; } else { s = 0; }\n"
                         + "    }\n"
                         + "}\n");
 
