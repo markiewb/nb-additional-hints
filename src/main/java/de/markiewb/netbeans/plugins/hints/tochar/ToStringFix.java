@@ -57,10 +57,10 @@ import org.openide.util.NbBundle.Messages;
 @Messages({
     "ERR_ToStringFix=Convert char to string",
     "DN_ToString=Convert char to string",
-    "DESC_ToString=Converts a char to a string. For example <tt>'c'</tt> will be transformed to <tt>\"c\"</tt>",
+    "DESC_ToString=Converts a char to a string. For example <tt>'c'</tt> will be transformed to <tt>\"c\"</tt><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",
     "ERR_ToCharFix=Convert string to char",
     "DN_ToChar=Convert string to char",
-    "DESC_ToChar=Converts a single string literal to a char. For example <tt>\"c\"</tt> will be transformed to <tt>'c'</tt>",})
+    "DESC_ToChar=Converts a single string literal to a char. For example <tt>\"c\"</tt> will be transformed to <tt>'c'</tt><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class ToStringFix {
 
     @Hint(displayName = "#DN_ToString", description = "#DESC_ToString", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
