@@ -224,6 +224,7 @@
 &lt;li&gt;"Convert to assertTrue/assertFalse" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Support transformation to BigDecimal constants" (since 1.1)&lt;/li&gt;
 &lt;li&gt;"Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)&lt;/li&gt;
+&lt;li&gt;"Remove public/abstract/final modifiers from field declarations within interfaces" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Change modifiers" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Convert char to string and back" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Convert number in literal to number and back" (since 1.2)&lt;/li&gt;
