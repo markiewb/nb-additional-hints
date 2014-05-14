@@ -229,6 +229,7 @@
 &lt;li&gt;"Convert number in literal to number and back" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Convert to StringUtils.isBlank()/StringUtils.isNotBlank()/StringUtils.isEmpty()" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Convert from if/else to ternary and back" (since 1.2)&lt;/li&gt;
+&lt;li&gt;"Invert ternary if/else" (since 1.2)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
@@ -243,6 +244,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/10"&gt;New Hint&lt;/a&gt;]: Convert number in literal to number and back&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/12"&gt;New Hint&lt;/a&gt;]: Convert to StringUtils.isBlank()/StringUtils.isNotBlank()/StringUtils.isEmpty()&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/31"&gt;New Hint&lt;/a&gt;]: Convert from if/else to ternary and back&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/32"&gt;New Hint&lt;/a&gt;]: Invert ternary if/else&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/29"&gt;Updated Hint&lt;/a&gt;]: "Convert to assertTrue/assertFalse" now supports junit.framework.Assert too&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/20"&gt;Updated Hint&lt;/a&gt;]: "Replace +..." hints can now be configured&lt;/li&gt;
 &lt;/ul&gt;
