@@ -5,18 +5,8 @@
  */
 package de.markiewb.netbeans.plugins.hints.ternary;
 
-import de.markiewb.netbeans.plugins.hints.apache.commons.ToBlankFix;
-import org.apache.commons.lang.StringUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.netbeans.modules.java.hints.test.api.HintTest;
-import org.netbeans.spi.editor.hints.ErrorDescription;
-import org.netbeans.spi.java.hints.HintContext;
-import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -25,23 +15,47 @@ import org.openide.filesystems.FileUtil;
 public class ToTernaryTest {
 
     @Test
-    public void testToTernaryAssign() throws Exception {
+    public void testToTernaryReturn() throws Exception {
         HintTest.create()
+                .setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    public static void main(String[] args) {\n"
-                        + "        int s; if (true){s = 1;}else{s = 0;};\n"
+                        + "    public static int main(String[] args) {\n"
+                        + "        if (tr|ue){return 1;}else{return 0;}\n"
                         + "    }\n"
                         + "}\n")
                 .run(ToTernary.class)
-                .findWarning("4:18-4:53:hint:" + Bundle.ERR_ToTernaryAssign())
+                .findWarning("3:14-3:14:hint:" + Bundle.ERR_ToTernaryReturn())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static int main(String[] args) {\n"
+                        + "        return (true) ? 1 : 0;\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testToTernaryAssign() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s;\n"
+                        + "        if (t|rue){s = 1;}else{s = 0;}\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(ToTernary.class)
+                .findWarning("4:13-4:13:hint:" + Bundle.ERR_ToTernaryAssign())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
-                        + "        String s=null;\n"
-                        + "        int s = (true)?1:0;\n"
+                        + "        int s;\n"
+                        + "        s = (true) ? 1 : 0;\n"
                         + "    }\n"
                         + "}\n");
 
