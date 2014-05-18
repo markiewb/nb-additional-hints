@@ -14,12 +14,13 @@ Supported hints:
 * "Convert to assertTrue/assertFalse" (since 1.1)
 * "Support transformation to BigDecimal constants" (since 1.1)
 * "Remove "public abstract" modifiers from method declarations within interfaces" (since 1.1)
+* ... and more see http://plugins.netbeans.org/plugin/47589/?show=true
 
 
 Example:
 --------
 
-![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/master/doc/screenshot-1.1.0.png)
+![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/1.2.0/doc/screenshot.png)
 
 Further information:
 --------------------
