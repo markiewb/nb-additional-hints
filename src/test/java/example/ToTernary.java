@@ -14,7 +14,13 @@ public class ToTernary {
     static int s;
 
     public static int main(String[] args) {
-        s = (true) ? 1 : 0;
+        boolean b=true;
+        int b1 = (b) ? 1 : 0;  //
+        int b2 = (!b) ? 1 : 0;
+        int b3 = (true) ? 1 : 0;
+        int b4 = (false) ? 1 : 0;
+        int b5 = (!true) ? 1 : 0;
+        int b6 = (!false) ? 1 : 0;
         return (true) ? 1 : 0;
     }
 }

@@ -42,6 +42,9 @@
  */
 package de.markiewb.netbeans.plugins.hints.ternary;
 
+import com.sun.source.tree.LiteralTree;
+import com.sun.source.tree.Tree;
+import com.sun.source.util.TreePath;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -62,22 +65,24 @@ import org.openide.util.NbBundle;
 public class InvertTernary {
 
     @TriggerPatterns({
-        @TriggerPattern(value = "($var1 != null) ? $a : $b"),
-        @TriggerPattern(value = "($var2 == null) ? $a : $b"),
+        @TriggerPattern(value = "($var1 != $c) ? $a : $b"),
+        @TriggerPattern(value = "($var2 == $c) ? $a : $b"),
         @TriggerPattern(value = "($var3 > $c) ? $a : $b"),
         @TriggerPattern(value = "($var4 < $c) ? $a : $b"),
         @TriggerPattern(value = "($var5 >= $c) ? $a : $b"),
         @TriggerPattern(value = "($var6 <= $c) ? $a : $b"),
+        @TriggerPattern(value = "(!$var7) ? $a : $b"),
+        @TriggerPattern(value = "($var8) ? $a : $b"),
     })
     @Hint(displayName = "#DN_InvertTernary", description = "#DESC_InvertTernary", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @NbBundle.Messages("ERR_InvertTernary=Invert ternary if/else")
     public static ErrorDescription toTernary(HintContext ctx) {
         String result = null;
         if (ctx.getVariables().containsKey("$var1")) {
-            result = "($var1 == null) ? $b : $a";
+            result = "($var1 == $c) ? $b : $a";
         }
         if (ctx.getVariables().containsKey("$var2")) {
-            result = "($var2 != null) ? $b : $a";
+            result = "($var2 != $c) ? $b : $a";
         }
         if (ctx.getVariables().containsKey("$var3")) {
             result = "($var3 <= $c) ? $b : $a";
@@ -90,6 +95,48 @@ public class InvertTernary {
         }
         if (ctx.getVariables().containsKey("$var6")) {
             result = "($var6 > $c) ? $b : $a";
+        }
+        //negated !var7
+        if (ctx.getVariables().containsKey("$var7")) {
+            TreePath get = ctx.getVariables().get("$var7");
+            if (get.getLeaf().getKind() == Tree.Kind.IDENTIFIER) 
+            {
+                //var is a boolean variable
+                result = "($var7) ? $b : $a";
+            }
+            if (get.getLeaf().getKind() == Tree.Kind.BOOLEAN_LITERAL) 
+            {
+                //var is a boolean literal like 'true'/'false'
+                //!true?a:b -> true?b:a
+                LiteralTree tree=(LiteralTree) get.getLeaf();
+                if ("true".equals(tree.getValue().toString())){
+                    result = "(true) ? $b : $a";
+                }
+                //!true?a:b -> false?b:a
+                if ("false".equals(tree.getValue().toString())){
+                    result = "(false) ? $b : $a";
+                }
+            }
+        }
+        //non-negated var8
+        if (ctx.getVariables().containsKey("$var8")) {
+            TreePath get = ctx.getVariables().get("$var8");
+            if (get.getLeaf().getKind() == Tree.Kind.IDENTIFIER) {
+                //var is a boolean variable
+                result = "(!$var8) ? $b : $a";
+            }
+            if (get.getLeaf().getKind() == Tree.Kind.BOOLEAN_LITERAL) 
+            {
+                //var is a boolean literal like 'true'/'false'
+                LiteralTree tree=(LiteralTree) get.getLeaf();
+                if ("true".equals(tree.getValue().toString())){
+                    result = "(false) ? $b : $a";
+                }
+                if ("false".equals(tree.getValue().toString())){
+                    result = "(true) ? $b : $a";
+                }
+            }
+
         }
         if (result != null) {
             Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_InvertTernary(), ctx.getPath(), result);
