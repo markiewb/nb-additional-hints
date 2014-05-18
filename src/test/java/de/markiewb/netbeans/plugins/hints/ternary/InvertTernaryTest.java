@@ -21,12 +21,14 @@ import org.netbeans.spi.java.hints.TriggerPattern;
  * @author markiewb
  */
 public class InvertTernaryTest {
-//        "($var1 != null) ? $a : $b"),
-//        "($var2 == null) ? $a : $b"),
-//        "($var3 > $c) ? $a : $b"),
-//        "($var4 < $c) ? $a : $b"),
-//        "($var5 >= $c) ? $a : $b"),
-//        "($var6 =< $c) ? $a : $b"),
+//        @TriggerPattern(value = "($var1 != $c) ? $a : $b"),
+//        @TriggerPattern(value = "($var2 == $c) ? $a : $b"),
+//        @TriggerPattern(value = "($var3 > $c) ? $a : $b"),
+//        @TriggerPattern(value = "($var4 < $c) ? $a : $b"),
+//        @TriggerPattern(value = "($var5 >= $c) ? $a : $b"),
+//        @TriggerPattern(value = "($var6 <= $c) ? $a : $b"),
+//        @TriggerPattern(value = "(!$var7) ? $a : $b"),
+//        @TriggerPattern(value = "($var8) ? $a : $b"),
 
     @Test
     public void testNotEquals() throws Exception {
@@ -36,7 +38,7 @@ public class InvertTernaryTest {
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
                         + "        Double val = null;\n"
-                        + "        int a = (v|al != null) ? 1 : 0; \n"
+                        + "        int a = (v|al != 9.0) ? 1 : 0; \n"
                         + "    }\n"
                         + "}\n")
                 .run(InvertTernary.class)
@@ -47,7 +49,7 @@ public class InvertTernaryTest {
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
                         + "        Double val = null;\n"
-                        + "        int a = (val == null) ? 0 : 1; \n"
+                        + "        int a = (val == 9.0) ? 0 : 1; \n"
                         + "    }\n"
                         + "}\n");
 
@@ -61,7 +63,7 @@ public class InvertTernaryTest {
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
                         + "        Double val = null;\n"
-                        + "        int a = (v|al == null) ? 1 : 0; \n"
+                        + "        int a = (v|al == 9.0) ? 1 : 0; \n"
                         + "    }\n"
                         + "}\n")
                 .run(InvertTernary.class)
@@ -72,7 +74,7 @@ public class InvertTernaryTest {
                         + "public class Test {\n"
                         + "    public static void main(String[] args) {\n"
                         + "        Double val = null;\n"
-                        + "        int a = (val != null) ? 0 : 1; \n"
+                        + "        int a = (val != 9.0) ? 0 : 1; \n"
                         + "    }\n"
                         + "}\n");
 
@@ -173,6 +175,146 @@ public class InvertTernaryTest {
                         + "    public static void main(String[] args) {\n"
                         + "        Double val = null;\n"
                         + "        int a = (val > 42.0) ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testTrueVariable() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = (b|) ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:18-4:18:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = (!b) ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testTrueLiteral() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (tru|e) ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:20-3:20:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (false) ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testTrueLiteralNot() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (!tru|e) ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:21-3:21:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (true) ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testFalseVariable() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = (!|b) ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:18-4:18:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = (b) ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testFalseLiteral() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (fa|lse) ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:19-3:19:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (true) ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testFalseLiteralNot() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (!fa|lse) ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:20-3:20:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = (false) ? 0 : 1; \n"
                         + "    }\n"
                         + "}\n");
 

@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -239,6 +239,11 @@
 &lt;img src="https://raw.github.com/markiewb/nb-additional-hints/1.2.0/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
+&lt;h3&gt;1.3.0:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/36"&gt;Updated Hint&lt;/a&gt;]: "Invert ternary if/else" now supports more patterns&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h3&gt;1.2.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/pull/22"&gt;New Hint&lt;/a&gt;]: Change the modifier of a class/method/field to public/package protected/protected/private  (by &lt;a href="https://github.com/rasa-silva"&gt;rasa-silva&lt;/a&gt;)&lt;/li&gt;
