@@ -242,6 +242,7 @@
 &lt;h3&gt;1.3.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/36"&gt;Updated Hint&lt;/a&gt;]: "Invert ternary if/else" now supports more patterns&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/39"&gt;New Hint&lt;/a&gt;]: Add "this." to methods and variables (disabled by default)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3&gt;1.2.0:&lt;/h3&gt;
