@@ -16,6 +16,7 @@ public class AddThisToMemberTest {
                         + "    void getMember(){\n"
                         + "         staticMember();\n"
                         + "         getMember();\n"
+                        + "         this.getMember();\n"
                         + "         variable = 43;\n"
                         + "    };\n"
                         + "}"
@@ -32,6 +33,7 @@ public class AddThisToMemberTest {
                         + "    static void staticMember() {};\n"
                         + "    void getMember(){\n"
                         + "         staticMember();\n"
+                        + "         this.getMember();\n"
                         + "         this.getMember();\n"
                         + "         variable = 43;\n"
                         + "    };\n"
@@ -51,6 +53,7 @@ public class AddThisToMemberTest {
                         + "         staticMember();\n"
                         + "         getMember();\n"
                         + "         variable = 43;\n"
+                        + "         this.variable = 43;\n"
                         + "    };\n"
                         + "}"
                 )
@@ -67,6 +70,7 @@ public class AddThisToMemberTest {
                         + "    void getMember(){\n"
                         + "         staticMember();\n"
                         + "         getMember();\n"
+                        + "         this.variable = 43;\n"
                         + "         this.variable = 43;\n"
                         + "    };\n"
                         + "}");
