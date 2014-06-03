@@ -67,7 +67,7 @@ import org.openide.util.NbBundle;
     "DESC_AddThisToMember=Adds \"this.\" as prefix for non-static member variables/methods.<p>The hint is disabled by default, because there are only a few specific usecases for this hint.</p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class AddThisToMember {
 
-    private static EnumSet<ElementKind> supportedKinds = EnumSet.of(ElementKind.FIELD, ElementKind.METHOD);
+    private static final EnumSet<ElementKind> supportedKinds = EnumSet.of(ElementKind.FIELD, ElementKind.METHOD);
 
     @Hint(displayName = "#DN_AddThisToMember", description = "#DESC_AddThisToMember", category = "suggestions", hintKind = Hint.Kind.INSPECTION, severity = Severity.WARNING, enabled = false)
     @NbBundle.Messages("ERR_AddThisToMember=Add \"this.\" prefix")
@@ -82,8 +82,13 @@ public class AddThisToMember {
         if (!supportedKinds.contains(element.getKind())) {
             return null;
         }
+        //do not transform patterns like "this.dialog" to "this.this.dialog"
+        final String memberName = ((IdentifierTree) path.getLeaf()).getName().toString();
+        if ("this".equals(memberName)) {
+            return null;
+        }
 
-        String result = "this." + ((IdentifierTree) path.getLeaf()).getName().toString();
+        String result = "this." + memberName;
         if (result != null) {
             Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_AddThisToMember(), path, result);
             return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_AddThisToMember(), fix);
