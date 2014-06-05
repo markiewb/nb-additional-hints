@@ -104,4 +104,80 @@ public class AddThisToMemberTest {
 
     }
 
+    @Test
+    public void testMemberVariable_Super() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public class Test{void member(){};}\n"
+                        + "class SubClass extends Test{\n"
+                        + "    void init(){\n"
+                        + "         super.member();\n"
+                        + "    };\n"
+                        + "}"
+                )
+                .run(AddThisToMember.class)
+                .assertWarnings();
+
+    }
+
+    @Test
+    public void testMemberVariable_MemberInAnnotation_TypeA() throws Exception {
+        HintTest.create()
+                .input(
+                        "    public class Test {\n"
+                        + "        @SuppressWarnings(\"ABC\")\n"
+                        + "        void method() {\n"
+                        + "        }\n"
+                        + "    }"
+                )
+                .run(AddThisToMember.class)
+                .assertWarnings();
+    }
+
+    @Test
+    public void testMemberVariable_MemberInAnnotation_TypeB() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public class Test {\n"
+                        + "    @SuppressWarnings(value=\"ABC\")\n"
+                        + "    void getMember(){\n"
+                        + "    }\n"
+                        + "}"
+                )
+                .run(AddThisToMember.class)
+                .assertWarnings();
+    }
+
+    @Test
+    public void testMemberVariable_MemberInAnnotation_TypeC() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public class Test {\n"
+                        + "    @SuppressWarnings({\"ABC\"})\n"
+                        + "    void getMember(){\n"
+                        + "    }\n"
+                        + "}"
+                )
+                .run(AddThisToMember.class)
+                .assertWarnings();
+    }
+
+    @Test
+    public void testMemberVariable_MemberInAnnotation_TypeD() throws Exception {
+        HintTest.create()
+                .input(
+                        "package example;\n"
+                        + "public class Test {\n"
+                        + "    @SuppressWarnings(value={\"ABC\"})\n"
+                        + "    void getMember(){\n"
+                        + "    }\n"
+                        + "}"
+                )
+                .run(AddThisToMember.class)
+                .assertWarnings();
+    }
+
 }
