@@ -44,6 +44,7 @@ package de.markiewb.netbeans.plugins.hints.structure;
 
 import com.sun.source.tree.IdentifierTree;
 import com.sun.source.tree.Tree;
+import static com.sun.source.tree.Tree.Kind.ANNOTATION;
 import com.sun.source.util.TreePath;
 import java.util.EnumSet;
 import javax.lang.model.element.Element;
@@ -82,9 +83,19 @@ public class AddThisToMember {
         if (!supportedKinds.contains(element.getKind())) {
             return null;
         }
+
+        //do not tranform @SuppressWarnings("ABC") to @SuppressWarnings(this."ABC")
+        if (isWithinAnnotation(path)) {
+            return null;
+        }
+
         //do not transform patterns like "this.dialog" to "this.this.dialog"
         final String memberName = ((IdentifierTree) path.getLeaf()).getName().toString();
         if ("this".equals(memberName)) {
+            return null;
+        }
+        //do not transform patterns like "super.dialog" to "this.super().dialog"
+        if ("super".equals(memberName)) {
             return null;
         }
 
@@ -94,6 +105,16 @@ public class AddThisToMember {
             return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_AddThisToMember(), fix);
         }
         return null;
+    }
+
+    private static boolean isWithinAnnotation(TreePath path) {
+
+        for (TreePath p = path; null != p; p = p.getParentPath()) {
+            if (ANNOTATION.equals(p.getLeaf().getKind())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
