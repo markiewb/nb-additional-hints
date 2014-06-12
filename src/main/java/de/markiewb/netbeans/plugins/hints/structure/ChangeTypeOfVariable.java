@@ -45,8 +45,12 @@ package de.markiewb.netbeans.plugins.hints.structure;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.TreePath;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
@@ -75,47 +79,36 @@ public class ChangeTypeOfVariable {
     private static EnumSet<ElementKind> supportedKinds = EnumSet.of(ElementKind.LOCAL_VARIABLE, ElementKind.CLASS, ElementKind.INTERFACE);
 
     @Hint(displayName = "#DN_ChangeTypeOfVariable", description = "#DESC_ChangeTypeOfVariable", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT, enabled = true)
-    @NbBundle.Messages({"# {0} - from","# {1} - to",
+    @NbBundle.Messages({"# {0} - from", "# {1} - to",
         "ERR_ChangeTypeOfVariable=Change <b>{0}</b> to <b>{1}</b>"})
     @TriggerTreeKind(Tree.Kind.IDENTIFIER)
     public static ErrorDescription toTernary(HintContext ctx) {
         TreePath path = ctx.getPath();
 
-//        if (!Tree.Kind.VARIABLE.equals(path.getParentPath().getLeaf().getKind()) ){
-//            return null;
-//        }
         supportedKinds = EnumSet.of(ElementKind.LOCAL_VARIABLE, ElementKind.CLASS, ElementKind.INTERFACE);
         Element element = ctx.getInfo().getTrees().getElement(path);
         if (!supportedKinds.contains(element.getKind())) {
             return null;
         }
 
-//        //do not tranform @SuppressWarnings("ABC") to @SuppressWarnings(this."ABC")
-//        if (isWithinAnnotation(path)) {
-//            return null;
-//        }
         TypeMirror asType = element.asType();
         DeclaredType originaldt = (DeclaredType) asType;
 
         Types types = ctx.getInfo().getTypes();
-//        TypeUtilities typeUtilities = ctx.getInfo().getTypeUtilities();
         List<Fix> fixes = new ArrayList<Fix>();
-        List<? extends TypeMirror> directSupertypes = types.directSupertypes(asType);
-        for (TypeMirror typeMirror : directSupertypes) {
+        Set<TypeMirrorWrapper> superTypes = new LinkedHashSet<TypeMirrorWrapper>();
+        superTypes.addAll(getSuperTypes(types, asType, ElementKind.INTERFACE));
+        superTypes.addAll(getSuperTypes(types, asType, ElementKind.CLASS));
+        for (TypeMirrorWrapper typeMirrorWrapper : superTypes) {
 
+            TypeMirror typeMirror = typeMirrorWrapper.getDelegate();
             if (typeMirror.getKind() != TypeKind.DECLARED) {
                 continue;
             }
-            //FIXME group by depth by interfaces
-            //FIXME support more super super super types
             DeclaredType dt = (DeclaredType) typeMirror;
             TypeElement e = (TypeElement) dt.asElement();
             String qn = e.getQualifiedName().toString();
 
-//            Element asElement = types.asElement(typeMirror);
-//            if (asElement.getKind()!=Typ){
-//            types.getDeclaredType(null, typeArgs)
-//            String typeName = typeMirror.toString()+asElement.getKind();
             String typeName = qn;
 
             //FIXME add option for this
@@ -132,16 +125,20 @@ public class ChangeTypeOfVariable {
                 //also replace typeparameters
                 myPath = path.getParentPath();
             }
+            //FIXME cornercase
+            //String -> Comparable<String>
+            StringBuilder newTypeName=new StringBuilder();
+            newTypeName.append(typeName);
             //add type arguments like Map<String, Integer>
             StringBuilder sb = new StringBuilder();
-//            sb.append(typeName.replace("<", "&lt;"));
             sb.append(typeName);
             if (!newTypeArguments.isEmpty()) {
-                sb.append("&lt;").append(newTypeArguments).append(">");
+                sb.append("<").append(newTypeArguments).append(">");
             }
-            String newTypeFormatted = sb.toString();
+//             String newTypeFormatted = newTypeName.toString().replace("<", "&lt;");
+             String newTypeFormatted = sb.toString().replace("<", "&lt;");
             String oldTypeFormatted = asType.toString().replace("<", "&lt;");
-            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ChangeTypeOfVariable(oldTypeFormatted, newTypeFormatted), myPath, typeName);
+            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ChangeTypeOfVariable(oldTypeFormatted, newTypeFormatted), myPath, newTypeName.toString());
             fixes.add(fix);
         }
         if (!fixes.isEmpty()) {
@@ -150,6 +147,57 @@ public class ChangeTypeOfVariable {
             return ErrorDescriptionFactory.forName(ctx, path, Bundle.DN_ChangeTypeOfVariable(), fixs);
         }
         return null;
+    }
+
+    static class TypeMirrorWrapper implements Comparable<TypeMirrorWrapper> {
+
+        private TypeMirror delegate;
+        private Types types;
+
+        private TypeMirrorWrapper(TypeMirror delegate, Types types) {
+            this.delegate = delegate;
+            this.types = types;
+        }
+
+        public TypeMirror getDelegate() {
+            return delegate;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return this.delegate.toString().equals(((TypeMirrorWrapper) obj).delegate.toString());
+        }
+
+        @Override
+        public int hashCode() {
+            return this.delegate.toString().hashCode();
+        }
+
+        @Override
+        public int compareTo(TypeMirrorWrapper o) {
+            TypeMirror a = this.delegate;
+            TypeMirror b = o.delegate;
+
+            return ((types.isAssignable(b, a)) ? +1 : -1);
+        }
+
+    }
+
+    private static Collection<TypeMirrorWrapper> getSuperTypes(Types types, TypeMirror asType, ElementKind type) {
+
+        Collection<TypeMirrorWrapper> result = new TreeSet<TypeMirrorWrapper>();
+
+        List<? extends TypeMirror> directSupertypes = types.directSupertypes(asType);
+        for (TypeMirror typeMirror : directSupertypes) {
+            if (type.equals(types.asElement(typeMirror).getKind())) {
+                result.add(new TypeMirrorWrapper(typeMirror, types));
+            }
+        }
+        //recursion to get super super super types
+        for (TypeMirror typeMirror : directSupertypes) {
+            result.addAll(getSuperTypes(types, typeMirror, type));
+        }
+        return result;
     }
 
 }
