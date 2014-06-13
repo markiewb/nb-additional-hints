@@ -79,10 +79,10 @@ public class ChangeTypeOfVariable {
     private static EnumSet<ElementKind> supportedKinds = EnumSet.of(ElementKind.LOCAL_VARIABLE, ElementKind.CLASS, ElementKind.INTERFACE);
 
     @Hint(displayName = "#DN_ChangeTypeOfVariable", description = "#DESC_ChangeTypeOfVariable", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT, enabled = true)
-    @NbBundle.Messages({"# {0} - from", "# {1} - to",
-        "ERR_ChangeTypeOfVariable=Change <b>{0}</b> to <b>{1}</b>"})
+    @NbBundle.Messages({"# {0} - to",
+        "ERR_ChangeTypeOfVariable=Change to {0}"})
     @TriggerTreeKind(Tree.Kind.IDENTIFIER)
-    public static ErrorDescription toTernary(HintContext ctx) {
+    public static ErrorDescription hint(HintContext ctx) {
         TreePath path = ctx.getPath();
 
         supportedKinds = EnumSet.of(ElementKind.LOCAL_VARIABLE, ElementKind.CLASS, ElementKind.INTERFACE);
@@ -117,8 +117,14 @@ public class ChangeTypeOfVariable {
             }
 
             TreePath myPath = path;
-            final List<? extends TypeMirror> newTypeArguments = dt.getTypeArguments();
             final List<? extends TypeMirror> oldTypeArguments = originaldt.getTypeArguments();
+            final List<? extends TypeMirror> newTypeArguments = dt.getTypeArguments();
+            
+            if (!oldTypeArguments.isEmpty()) {
+                //ignore types with type arguments like List<String>
+                //FIXME: had to disable this because of issues
+                continue;
+            }
             //Cornercase:
             if (newTypeArguments.isEmpty() && !oldTypeArguments.isEmpty()) {
                 //HashMap<String, Integer> -> Cloneable
@@ -137,8 +143,7 @@ public class ChangeTypeOfVariable {
             }
 //             String newTypeFormatted = newTypeName.toString().replace("<", "&lt;");
              String newTypeFormatted = sb.toString().replace("<", "&lt;");
-            String oldTypeFormatted = asType.toString().replace("<", "&lt;");
-            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ChangeTypeOfVariable(oldTypeFormatted, newTypeFormatted), myPath, newTypeName.toString());
+            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ChangeTypeOfVariable(newTypeFormatted), myPath, newTypeName.toString());
             fixes.add(fix);
         }
         if (!fixes.isEmpty()) {
@@ -151,8 +156,8 @@ public class ChangeTypeOfVariable {
 
     static class TypeMirrorWrapper implements Comparable<TypeMirrorWrapper> {
 
-        private TypeMirror delegate;
-        private Types types;
+        private final TypeMirror delegate;
+        private final Types types;
 
         private TypeMirrorWrapper(TypeMirror delegate, Types types) {
             this.delegate = delegate;
