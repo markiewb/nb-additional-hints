@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.3.0.2-SNAPSHOT</version>
+    <version>1.4.0.0-SNAPSHOT</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -232,6 +232,8 @@
 &lt;li&gt;"Convert from if/else to ternary and back" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Invert ternary if/else" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Report methods that have class name" (since 1.2, no transformation)&lt;/li&gt;
+&lt;li&gt;"Add "this." to methods and variables" (since 1.3, disabled by default)&lt;/li&gt;
+&lt;li&gt;"Detect dead instanceof-expressions" (since 1.4, no transformation)&lt;/li&gt;
 
 &lt;/ul&gt;
 
@@ -239,32 +241,36 @@
 &lt;img src="https://raw.github.com/markiewb/nb-additional-hints/1.2.0/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
+&lt;h3&gt;1.4.0:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/44"&gt;New Hint&lt;/a&gt;]: Detect dead instanceof-expressions&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3&gt;1.3.0:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/36"&gt;Updated Hint&lt;/a&gt;]: "Invert ternary if/else" now supports more patterns&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/36"&gt;Updated Fix&lt;/a&gt;]: "Invert ternary if/else" now supports more patterns&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/39"&gt;New Hint&lt;/a&gt;]: Add "this." to methods and variables (disabled by default)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3&gt;1.2.0:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/pull/22"&gt;New Hint&lt;/a&gt;]: Change the modifier of a class/method/field to public/package protected/protected/private  (by &lt;a href="https://github.com/rasa-silva"&gt;rasa-silva&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/24"&gt;New Hint&lt;/a&gt;]: Remove public/abstract/final modifiers from field declarations within interfaces&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/9"&gt;New Hint&lt;/a&gt;]: Convert from char and string and back&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/10"&gt;New Hint&lt;/a&gt;]: Convert number in literal to number and back&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/12"&gt;New Hint&lt;/a&gt;]: Convert to StringUtils.isBlank()/StringUtils.isNotBlank()/StringUtils.isEmpty()&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/31"&gt;New Hint&lt;/a&gt;]: Convert from if/else to ternary and back&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/32"&gt;New Hint&lt;/a&gt;]: Invert ternary if/else&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/pull/22"&gt;New Fix&lt;/a&gt;]: Change the modifier of a class/method/field to public/package protected/protected/private  (by &lt;a href="https://github.com/rasa-silva"&gt;rasa-silva&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/24"&gt;New Fix&lt;/a&gt;]: Remove public/abstract/final modifiers from field declarations within interfaces&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/9"&gt;New Fix&lt;/a&gt;]: Convert from char and string and back&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/10"&gt;New Fix&lt;/a&gt;]: Convert number in literal to number and back&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/12"&gt;New Fix&lt;/a&gt;]: Convert to StringUtils.isBlank()/StringUtils.isNotBlank()/StringUtils.isEmpty()&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/31"&gt;New Fix&lt;/a&gt;]: Convert from if/else to ternary and back&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/32"&gt;New Fix&lt;/a&gt;]: Invert ternary if/else&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/34"&gt;New Hint&lt;/a&gt;]: Report methods that have class name&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/29"&gt;Updated Hint&lt;/a&gt;]: "Convert to assertTrue/assertFalse" now supports junit.framework.Assert too&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/20"&gt;Updated Hint&lt;/a&gt;]: "Replace +..." hints can now be configured&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/29"&gt;Updated Fix&lt;/a&gt;]: "Convert to assertTrue/assertFalse" now supports junit.framework.Assert too&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/20"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." hints can now be configured&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3&gt;1.1.0:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/11"&gt;New Hint&lt;/a&gt;]: Support transformation to BigDecimal constants&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;New Hint&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/13"&gt;New Hint&lt;/a&gt;]: Convert to assertTrue/assertFalse&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/14"&gt;New Hint&lt;/a&gt;]: Remove "public abstract" modifiers from method declarations within interfaces&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/11"&gt;New Fix&lt;/a&gt;]: Support transformation to BigDecimal constants&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/5"&gt;New Fix&lt;/a&gt;]: Split a string at caret&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/13"&gt;New Fix&lt;/a&gt;]: Convert to assertTrue/assertFalse&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/14"&gt;New Fix&lt;/a&gt;]: Remove "public abstract" modifiers from method declarations within interfaces&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/8"&gt;Bugfix&lt;/a&gt;]: Literals with quoted Strings won't be copied properly to clipboard&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/7"&gt;Refactoring&lt;/a&gt;]: Convert to maven based module&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/18"&gt;Refactoring&lt;/a&gt;]: Hints should be proposals instead of errors/warnings&lt;/li&gt;
