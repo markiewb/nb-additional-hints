@@ -42,30 +42,57 @@
  */
 package de.markiewb.netbeans.plugins.hints.structure;
 
+import com.sun.source.tree.ExpressionTree;
+import com.sun.source.tree.ModifiersTree;
+import com.sun.source.tree.ParameterizedTypeTree;
 import com.sun.source.tree.Tree;
+import com.sun.source.tree.VariableTree;
 import com.sun.source.util.TreePath;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
+import org.netbeans.api.java.source.CancellableTask;
+import org.netbeans.api.java.source.CompilationInfo;
+import org.netbeans.api.java.source.JavaSource;
+import org.netbeans.api.java.source.SourceUtils;
+import org.netbeans.api.java.source.TreeMaker;
+import org.netbeans.api.java.source.TreePathHandle;
+import org.netbeans.api.java.source.TreeUtilities;
+import org.netbeans.api.java.source.TypeUtilities;
+import org.netbeans.api.java.source.WorkingCopy;
+import static org.netbeans.modules.java.hints.spiimpl.Utilities.resolveCapturedTypeInt;
+import org.netbeans.modules.parsing.api.Source;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
 import org.netbeans.spi.java.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.java.hints.Hint;
 import org.netbeans.spi.java.hints.HintContext;
+import org.netbeans.spi.java.hints.JavaFix;
+import org.netbeans.spi.java.hints.JavaFixUtilities;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle;
+import org.openide.util.Utilities;
 
 /**
  *
@@ -116,24 +143,45 @@ public class ChangeTypeOfVariable {
                 continue;
             }
 
-            TreePath myPath = path;
+//            TreePath myPath = path.getParentPath();
+            TreePath myPath = path.getParentPath();
             final List<? extends TypeMirror> oldTypeArguments = originaldt.getTypeArguments();
             final List<? extends TypeMirror> newTypeArguments = dt.getTypeArguments();
-            
+            for (TypeMirror newTypeMirror : newTypeArguments) {
+//                newTypeMirror.getKind()==TypeKind.TYPEVAR;
+                TypeMirror resolveCapturedTypeInt = resolveCapturedTypeInt(ctx.getInfo(), newTypeMirror);
+                Logger.getLogger(ChangeTypeOfVariable.class.getName()).log(Level.INFO, "{0} {1}", new Object[]{resolveCapturedTypeInt, newTypeMirror});
+            }
+
+            //ArrayList<String> -> List<E> -> List<String>
+//            SourceUtils.
+//            org.netbeans.modules.java.hints.spiimpl.Utilities.
+//            TypeUtilities tu;
+//            tu.
             if (!oldTypeArguments.isEmpty()) {
                 //ignore types with type arguments like List<String>
                 //FIXME: had to disable this because of issues
-                continue;
+                if (oldTypeArguments.size() == 1 && newTypeArguments.size() == 1) {
+                    TypeMirror next = newTypeArguments.iterator().next();
+                    TypeMirror old = newTypeArguments.iterator().next();
+                    boolean checkTypesAssignable = SourceUtils.checkTypesAssignable(ctx.getInfo(), old, next);
+                    if (!checkTypesAssignable) {
+                        continue;
+                    }
+                } else {
+
+                    continue;
+                }
             }
             //Cornercase:
             if (newTypeArguments.isEmpty() && !oldTypeArguments.isEmpty()) {
                 //HashMap<String, Integer> -> Cloneable
                 //also replace typeparameters
-                myPath = path.getParentPath();
+//                myPath = path.getParentPath();
             }
             //FIXME cornercase
             //String -> Comparable<String>
-            StringBuilder newTypeName=new StringBuilder();
+            StringBuilder newTypeName = new StringBuilder();
             newTypeName.append(typeName);
             //add type arguments like Map<String, Integer>
             StringBuilder sb = new StringBuilder();
@@ -142,8 +190,13 @@ public class ChangeTypeOfVariable {
                 sb.append("<").append(newTypeArguments).append(">");
             }
 //             String newTypeFormatted = newTypeName.toString().replace("<", "&lt;");
-             String newTypeFormatted = sb.toString().replace("<", "&lt;");
-            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ChangeTypeOfVariable(newTypeFormatted), myPath, newTypeName.toString());
+            String newTypeFormatted = sb.toString().replace("<", "&lt;");
+            Logger.getLogger(ChangeTypeOfVariable.class.getName()).log(Level.INFO, "message{0}", newTypeName.toString());
+
+            final TreePathHandle create = TreePathHandle.create(myPath, ctx.getInfo());
+
+//            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ChangeTypeOfVariable(newTypeFormatted), myPath, sb.toString());
+            Fix fix=new MyFix(ctx.getInfo(), myPath, typeName, dt).toEditorFix();
             fixes.add(fix);
         }
         if (!fixes.isEmpty()) {
@@ -154,41 +207,95 @@ public class ChangeTypeOfVariable {
         return null;
     }
 
-    static class TypeMirrorWrapper implements Comparable<TypeMirrorWrapper> {
+    static class MyFix extends JavaFix {
+        private String typeName;
+        private DeclaredType dt;
 
-        private final TypeMirror delegate;
-        private final Types types;
-
-        private TypeMirrorWrapper(TypeMirror delegate, Types types) {
-            this.delegate = delegate;
-            this.types = types;
-        }
-
-        public TypeMirror getDelegate() {
-            return delegate;
+        MyFix(CompilationInfo info, TreePath tp, String typeName, DeclaredType dt) {
+            super(info, tp);
+            this.typeName = typeName;
+            this.dt = dt;
         }
 
         @Override
-        public boolean equals(Object obj) {
-            return this.delegate.toString().equals(((TypeMirrorWrapper) obj).delegate.toString());
+        protected String getText() {
+            return "XXX;" + typeName;
         }
 
         @Override
-        public int hashCode() {
-            return this.delegate.toString().hashCode();
+        protected void performRewrite(TransformationContext ctx) throws Exception {
+            WorkingCopy wc = ctx.getWorkingCopy();
+
+            wc.toPhase(JavaSource.Phase.RESOLVED);
+            
+            
+            TypeElement e = (TypeElement) dt.asElement();
+            String qn = e.getQualifiedName().toString();
+            TreePath resolve = ctx.getPath();
+            if (Tree.Kind.PARAMETERIZED_TYPE != resolve.getLeaf().getKind()) {
+                return;
+            }
+
+            ParameterizedTypeTree oldVar = (ParameterizedTypeTree) resolve.getLeaf();
+//oldVar.
+            TreeMaker tm = wc.getTreeMaker();
+            List<? extends Tree> typeArguments = oldVar.getTypeArguments();
+//            ModifiersTree mods = oldVar.getModifiers();
+//            Name name = oldVar.getName();
+            Tree type = oldVar.getType();
+//                        ExpressionTree init = oldVar.getInitializer();
+//            ExpressionTree init = null;
+            ExpressionTree QualIdent = tm.QualIdent(typeName);
+            List<? extends TypeMirror> typeArguments1 = dt.getTypeArguments();
+            List<Tree> typeMirrorList = new ArrayList<Tree>();
+            
+
+            for (TypeMirror typeMirror : typeArguments1) {
+                Tree t = tm.Type(typeMirror);
+                typeMirrorList.add(t);
+            }
+            
+            ParameterizedTypeTree newVar = tm.ParameterizedType(QualIdent, typeMirrorList);
+            wc.rewrite(oldVar, newVar);
+//                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-
-        @Override
-        public int compareTo(TypeMirrorWrapper o) {
-            TypeMirror a = this.delegate;
-            TypeMirror b = o.delegate;
-
-            return ((types.isAssignable(b, a)) ? +1 : -1);
-        }
-
     }
 
-    private static Collection<TypeMirrorWrapper> getSuperTypes(Types types, TypeMirror asType, ElementKind type) {
+static class TypeMirrorWrapper implements Comparable<TypeMirrorWrapper> {
+
+    private final TypeMirror delegate;
+    private final Types types;
+
+    private TypeMirrorWrapper(TypeMirror delegate, Types types) {
+        this.delegate = delegate;
+        this.types = types;
+    }
+
+    public TypeMirror getDelegate() {
+        return delegate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.delegate.toString().equals(((TypeMirrorWrapper) obj).delegate.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.delegate.toString().hashCode();
+    }
+
+    @Override
+    public int compareTo(TypeMirrorWrapper o) {
+        TypeMirror a = this.delegate;
+        TypeMirror b = o.delegate;
+
+        return ((types.isAssignable(b, a)) ? +1 : -1);
+    }
+
+}
+
+private static Collection<TypeMirrorWrapper> getSuperTypes(Types types, TypeMirror asType, ElementKind type) {
 
         Collection<TypeMirrorWrapper> result = new TreeSet<TypeMirrorWrapper>();
 
