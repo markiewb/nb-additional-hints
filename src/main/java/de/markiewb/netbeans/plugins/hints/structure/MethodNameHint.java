@@ -55,8 +55,7 @@ import org.openide.util.NbBundle;
  * Portions Copyrighted 2014 benno.markiewicz@googlemail.com
  */
 /**
- * Removes superfluous modifiers (public, abstract, final) from field
- * declarations within interfaces.
+ * Checks whether methods are named like constructors.
  *
  * @author markiewb
  */
