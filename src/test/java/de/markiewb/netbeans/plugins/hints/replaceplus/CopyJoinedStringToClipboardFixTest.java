@@ -108,7 +108,9 @@ public class CopyJoinedStringToClipboardFixTest {
                 + "        String foo=\"A\\n\"+\"B\\r\"+\"C\";"
                 + "    }\n"
                 + "}\n");
-        assertEquals("A\nB\rC", getClipboardContent());
+        final String expected = "A\nB\rC";
+        final String actual = getClipboardContent();
+        assertEquals(expected, actual);
     }
     
     /**

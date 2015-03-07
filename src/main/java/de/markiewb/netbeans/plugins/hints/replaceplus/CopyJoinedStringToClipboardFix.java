@@ -44,17 +44,11 @@ package de.markiewb.netbeans.plugins.hints.replaceplus;
 
 import de.markiewb.netbeans.plugins.hints.common.StringUtils;
 import de.markiewb.netbeans.plugins.hints.literals.BuildArgumentsVisitor;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import org.netbeans.api.java.source.CancellableTask;
 import org.netbeans.api.java.source.JavaSource;
-import org.netbeans.api.java.source.TreePathHandle;
-import org.netbeans.api.java.source.WorkingCopy;
 import org.netbeans.spi.editor.hints.ChangeInfo;
 import org.netbeans.spi.editor.hints.Fix;
-import org.openide.ErrorManager;
 import org.openide.awt.StatusDisplayer;
 import org.openide.loaders.DataObject;
 import org.openide.util.Lookup;
@@ -79,19 +73,17 @@ import org.openide.util.datatransfer.ExClipboard;
  */
 public class CopyJoinedStringToClipboardFix implements Fix {
 
-    public static CopyJoinedStringToClipboardFix create(DataObject od, TreePathHandle handle, BuildArgumentsVisitor.Result data) {
+    public static CopyJoinedStringToClipboardFix create(DataObject od, BuildArgumentsVisitor.Result data) {
         if (CopyJoinedStringToClipboardFix.supports(data)) {
-            return new CopyJoinedStringToClipboardFix(od, handle, data);
+            return new CopyJoinedStringToClipboardFix(od, data);
         }
         return null;
     }
     private final DataObject od;
-    private final TreePathHandle handle;
     private final BuildArgumentsVisitor.Result data;
 
-    private CopyJoinedStringToClipboardFix(DataObject od, TreePathHandle handle, BuildArgumentsVisitor.Result data) {
+    private CopyJoinedStringToClipboardFix(DataObject od, BuildArgumentsVisitor.Result data) {
         this.od = od;
-        this.handle = handle;
         this.data = data;
     }
 

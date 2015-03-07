@@ -93,19 +93,6 @@ public class CopyJoinedStringToClipboardHint {
         cancelled.set(true);
     }
 
-    private static boolean checkParentKind(TreePath tp, int parentIndex, Kind requiredKind) {
-        while (parentIndex-- > 0 && tp != null) {
-            tp = tp.getParentPath();
-        }
-
-        if (tp == null) {
-            return false;
-        }
-
-        return tp.getLeaf().
-                getKind() == requiredKind;
-    }
-
     public ErrorDescription run(CompilationInfo compilationInfo, TreePath treePath) {
 
         //TODO: generate unique 
@@ -132,20 +119,12 @@ public class CopyJoinedStringToClipboardHint {
                 return null;
             }
 
-//            //@Annotation("..."):
-//            if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
-//                return null;
-//            }
-
             //@Annotation({"...", "..."}):
             TreePath tp = treePath;
 
             while (tp != null) {
                 tp = tp.getParentPath();
             }
-//            if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
-//                return null;
-//            }
 
             final long hardCodedOffset = compilationInfo.getTrees().
                     getSourcePositions().
@@ -158,13 +137,13 @@ public class CopyJoinedStringToClipboardHint {
             v.scan(treePath, null);
             BuildArgumentsVisitor.Result data = v.toResult();
             List<Fix> fixes = new NonNullArrayList();
-            fixes.add(CopyJoinedStringToClipboardFix.create(od, TreePathHandle.create(treePath, compilationInfo), data));
+            fixes.add(CopyJoinedStringToClipboardFix.create(od, data));
 
-	    if (!fixes.isEmpty()){
-            return ErrorDescriptionFactory.
-                    createErrorDescription(Severity.HINT, Bundle.DN_CopyJoinedStringToClipboard(), fixes, compilationInfo.
-                    getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
-	    }
+            if (!fixes.isEmpty()) {
+                return ErrorDescriptionFactory.
+                        createErrorDescription(Severity.HINT, Bundle.DN_CopyJoinedStringToClipboard(), fixes, compilationInfo.
+                                getFileObject(), (int) hardCodedOffset, (int) hardCodedOffsetEnd);
+            }
         } catch (IndexOutOfBoundsException ex) {
             ErrorManager.getDefault().
                     notify(ErrorManager.INFORMATIONAL, ex);
