@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.4.0.0-SNAPSHOT</version>
+    <version>1.4.0.0</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -238,13 +238,14 @@
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
-&lt;img src="https://raw.github.com/markiewb/nb-additional-hints/1.2.0/doc/screenshot.png"/&gt;
+&lt;img src="https://raw.githubusercontent.com/markiewb/nb-additional-hints/v1.4.0/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
 &lt;h3&gt;1.4.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/44"&gt;New Hint&lt;/a&gt;]: Detect dead instanceof-expressions&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/2"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." hints can now supports chars too&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/47"&gt;Meta&lt;/a&gt;]: Add donation link (for those who want to support this project)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.3.0:&lt;/h3&gt;
 &lt;ul&gt;
@@ -291,7 +292,11 @@ The original sourcecode can be found at &lt;a href="http://hg.netbeans.org/main/
 &lt;p&gt;
 Provide defects, request for enhancements and feedback at &lt;a href=https://github.com/markiewb/nb-additional-hints/issues"&gt;https://github.com/markiewb/nb-additional-hints/issues&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;Compatible to NetBeans 7.2.1 and higher&lt;/p&gt;</description>
+&lt;p&gt;Compatible to NetBeans 7.2.1 and higher&lt;/p&gt;
+&lt;p&gt;
+&lt;a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=K4CMP92RZELE2"&gt;&lt;img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="btn_donate_SM.gif"&gt;&lt;/a&gt;
+
+&lt;/p&gt;</description>
     <scm>
         
         <connection>scm:git:https://github.com/markiewb/nb-additional-hints.git</connection>
