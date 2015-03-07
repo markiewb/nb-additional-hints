@@ -244,6 +244,7 @@
 &lt;h3&gt;1.4.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/44"&gt;New Hint&lt;/a&gt;]: Detect dead instanceof-expressions&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/2"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." hints can now supports chars too&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.3.0:&lt;/h3&gt;
 &lt;ul&gt;
