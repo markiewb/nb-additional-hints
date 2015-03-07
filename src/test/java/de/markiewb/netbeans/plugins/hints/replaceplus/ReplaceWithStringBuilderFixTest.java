@@ -115,7 +115,7 @@ public class ReplaceWithStringBuilderFixTest {
                 assertOutput("package test;\n"
                 + "public class Test {\n"
                 + "    public static void main(String[] args) {\n"
-                + "        String foo=new StringBuilder().append(\"A\").append(4).append(9.0).append('c').toString();\n"
+                + "        String foo=new StringBuilder().append(\"A\").append(4).append(9.0).append(\"c\").toString();\n"
                 + "    }\n"
                 + "}\n");
     }
@@ -141,6 +141,34 @@ public class ReplaceWithStringBuilderFixTest {
                 + "}\n");
     }
     
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/2
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testFixWorkingChars() throws Exception {
+        HintTest.create().setCaretMarker('|').
+                input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String name =null, x = null, y = null;\n"
+                        + "        String v2 = nam|e + \" (\" + x + \", \" + y + ')';\n"
+                        + "    }\n"
+                        + "}\n").
+                run(ReplacePlusHint.class).
+                findWarning("4:23-4:23:hint:" + Bundle.DN_ReplacePlus()).
+                applyFix(Bundle.LBL_ReplaceWithStringBuilderFix()).
+                assertCompilable().
+                assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String name =null, x = null, y = null;\n"
+                        + "        String v2 = new StringBuilder().append(name).append(\" (\").append(x).append(\", \").append(y).append(\")\").toString();\n"
+                        + "    }\n"
+                        + "}\n");
+    }
+
     @Test
     public void testOnlyLiterals() throws Exception {
         HintTest.create().setCaretMarker('|').

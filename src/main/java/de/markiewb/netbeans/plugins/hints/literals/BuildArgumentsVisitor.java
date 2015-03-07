@@ -153,7 +153,7 @@ public final class BuildArgumentsVisitor extends TreePathScanner<Void, Object> {
 	}
 	return null;
     }
-    private static final EnumSet<Tree.Kind> TREEKINDS = EnumSet.of(Tree.Kind.STRING_LITERAL, Tree.Kind.PLUS);
+    private static final EnumSet<Tree.Kind> TREEKINDS = EnumSet.of(Tree.Kind.STRING_LITERAL, Tree.Kind.PLUS, Tree.Kind.CHAR_LITERAL);
 
     public void handleTree(TreePath tp) {
 	Tree tree = tp.getLeaf();

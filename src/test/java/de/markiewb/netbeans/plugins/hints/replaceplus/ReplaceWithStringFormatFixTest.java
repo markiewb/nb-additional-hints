@@ -78,6 +78,32 @@ public class ReplaceWithStringFormatFixTest {
                 + "    }\n"
                 + "}\n");
     }
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/2
+     * @throws Exception 
+     */
+    @Test
+    public void testFixWorkingChars() throws Exception {
+        HintTest.create().setCaretMarker('|').
+                input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String name =null, x = null, y = null;\n"
+                        + "        String v2 = nam|e + \" (\" + x + \", \" + y + ')';\n"
+                        + "    }\n"
+                        + "}\n").
+                run(ReplacePlusHint.class).
+                findWarning("4:23-4:23:hint:" + Bundle.DN_ReplacePlus()).
+                applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
+                assertCompilable().
+                assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        String name =null, x = null, y = null;\n"
+                        + "        String v2 = String.format(\"%s (%s, %s)\", name, x, y);\n"
+                        + "    }\n"
+                        + "}\n");
+    }
 
     @Test
     public void testFixWorkingLiteralPrefix() throws Exception {
