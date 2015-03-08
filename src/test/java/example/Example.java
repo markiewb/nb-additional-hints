@@ -69,4 +69,12 @@ public class Example {
 //        String foo = new StringBuilder().append("A").append(4).append(9.0).append('c').toString();
 
     }
+
+    public static void testString() {
+        System.out.println("a"+3+"B");
+        String barString="a"+3+"B";
+        String foo;
+        foo = "a"+3+"B";
+//        "a"+3+"B";
+    }
 }

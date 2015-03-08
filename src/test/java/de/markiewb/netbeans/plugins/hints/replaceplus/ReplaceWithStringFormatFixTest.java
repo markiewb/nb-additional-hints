@@ -59,7 +59,7 @@ import org.netbeans.modules.java.hints.test.api.HintTest;
 public class ReplaceWithStringFormatFixTest {
 
     @Test
-    public void testFixWorkingMixedA() throws Exception {
+    public void testFixWorkingMixedVARIABLE() throws Exception {
         HintTest.create().setCaretMarker('|').
                 input("package test;\n"
                 + "public class Test {\n"
@@ -78,6 +78,51 @@ public class ReplaceWithStringFormatFixTest {
                 + "    }\n"
                 + "}\n");
     }
+
+    @Test
+    public void testFixWorkingMixedASSIGNMENT() throws Exception {
+        HintTest.create().setCaretMarker('|').
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo;\n"
+                + "        foo=\"Output contains \"|+4+\" entries\";\n"
+                + "    }\n"
+                + "}\n").
+                run(ReplacePlusHint.class).
+                findWarning("4:30-4:30:hint:" + Bundle.DN_ReplacePlus()).
+                applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
+                assertCompilable().
+                assertOutput("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        String foo;\n"
+                + "        foo=String.format(\"Output contains %s entries\", 4);\n"
+                + "    }\n"
+                + "}\n");
+    }
+
+    @Test
+    public void testFixWorkingMixedMETHODINVOCATION() throws Exception {
+        HintTest.create().setCaretMarker('|').
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        System.out.println(\"Output contains \"|+4+\" entries\");\n"
+                + "    }\n"
+                + "}\n").
+                run(ReplacePlusHint.class).
+                findWarning("3:45-3:45:hint:" + Bundle.DN_ReplacePlus()).
+                applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
+                assertCompilable().
+                assertOutput("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        System.out.println(String.format(\"Output contains %s entries\", 4));\n"
+                + "    }\n"
+                + "}\n");
+    }
+    
     /**
      * https://github.com/markiewb/nb-additional-hints/issues/2
      * @throws Exception 
@@ -180,6 +225,20 @@ public class ReplaceWithStringFormatFixTest {
                 + "        String foo=\"A\"|+\"B\"+\"C\";\n"
                 + "    }\n"
                 + "}\n").
+                run(ReplacePlusHint.class).
+                assertNotContainsWarnings(Bundle.DN_ReplacePlus());
+    }
+
+    @Test
+    public void testNoAssignment() throws Exception {
+        boolean compilable = true;
+        HintTest.create().setCaretMarker('|').
+                input("package test;\n"
+                + "public class Test {\n"
+                + "    public static void main(String[] args) {\n"
+                + "        \"A\"|+42+\"C\";\n"
+                + "    }\n"
+                + "}\n", !compilable).
                 run(ReplacePlusHint.class).
                 assertNotContainsWarnings(Bundle.DN_ReplacePlus());
     }

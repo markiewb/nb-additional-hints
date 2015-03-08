@@ -184,18 +184,36 @@ public class ReplacePlusHint {
                 return null;
             }
 
-            //@Annotation("..."):
+            //ignore @Annotation("..."):
             if (checkParentKind(treePath, 1, Kind.ASSIGNMENT) && checkParentKind(treePath, 2, Kind.ANNOTATION)) {
                 return null;
             }
-
-            //@Annotation({"...", "..."}):
-            TreePath tp = treePath;
-
-            while (tp != null) {
-                tp = tp.getParentPath();
-            }
+            
+            //ignore @Annotation({"...", "..."}): ???
             if (checkParentKind(treePath, 1, Kind.NEW_ARRAY) && checkParentKind(treePath, 2, Kind.ASSIGNMENT) && checkParentKind(treePath, 3, Kind.ANNOTATION)) {
+                return null;
+            }
+
+            /**
+             * <pre>Method("B"+42);</pre>
+             */
+            final boolean isMethodInvocation = checkParentKind(treePath, 1, Kind.METHOD_INVOCATION);
+            /**
+             * <pre>String foo="B"+42;</pre>
+             */
+            final boolean isVariableAssignment = checkParentKind(treePath, 1, Kind.VARIABLE);
+            /**
+             * <pre>String foo; foo="B"+42;</pre>
+             */
+            final boolean isAssignment = checkParentKind(treePath, 1, Kind.ASSIGNMENT);
+
+            //ignore errornous expressions "a"+42+"b"; with no assignment
+            /**
+             * https://github.com/markiewb/nb-additional-hints/issues/3
+             * Detecting erroneous expressions via Kind.ERRONEOUS seems not to
+             * work so we use a whitelist here instead.
+             */
+            if (!isMethodInvocation && !isVariableAssignment && !isAssignment) {
                 return null;
             }
 
