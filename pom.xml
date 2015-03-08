@@ -244,7 +244,7 @@
 &lt;h3&gt;1.4.1:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/42"&gt;Updated Fix&lt;/a&gt;]: "Convert to if/else" now supports assignments to new variables&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/47"&gt;Updated Fix&lt;/a&gt;]: "Invert ternary"/"Convert to ternary" now support conditions without brackets&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/43"&gt;Updated Fix&lt;/a&gt;]: "Invert ternary"/"Convert to ternary" now support conditions without brackets&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.4.0:&lt;/h3&gt;
 &lt;ul&gt;
