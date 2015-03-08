@@ -21,7 +21,7 @@ Supported hints:
 Example:
 --------
 
-![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/1.2.0/doc/screenshot.png)
+![Screenshot](https://raw.github.com/markiewb/nb-additional-hints/v1.4.0/doc/screenshot.png)
 
 Further information:
 --------------------
