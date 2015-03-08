@@ -60,7 +60,7 @@ import org.openide.util.NbBundle;
  * @author markiewb
  */
 @NbBundle.Messages({
-    "DN_InvertTernary=Invert ternary if/else",
+    "DN_InvertTernary=Invert ternary",
     "DESC_InvertTernary=Negates the condition and switches the if/else blocks of a ternary statement. <p>For example: <tt>(a != null) ? \"foo\" : \"bar\"</tt> will be transformed to <tt>(a == null) ? \"bar\" : \"foo\"</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class InvertTernary {
 
@@ -75,7 +75,7 @@ public class InvertTernary {
         @TriggerPattern(value = "($var8) ? $a : $b"),
     })
     @Hint(displayName = "#DN_InvertTernary", description = "#DESC_InvertTernary", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
-    @NbBundle.Messages("ERR_InvertTernary=Invert ternary if/else")
+    @NbBundle.Messages("ERR_InvertTernary=Invert ternary")
     public static ErrorDescription toTernary(HintContext ctx) {
         String result = null;
         if (ctx.getVariables().containsKey("$var1")) {
