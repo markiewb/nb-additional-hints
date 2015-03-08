@@ -29,7 +29,8 @@ public class ToTernary {
         String var1;
         String suffix = null;
         var1 = (suffix == null) ? "A" : "B";
-        String var2;
-        var2 = (suffix != null) ? "A" : "B";
+        String var2 = (suffix != null) ? "A" : "B";
+        
+        String var3 = suffix != null ? "A" : "B";
     }
 }

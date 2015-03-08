@@ -95,7 +95,9 @@ public class ToTernary {
     @TriggerPatterns(
     {
         @TriggerPattern(value = "$var=($cond)?$a:$b;"),
-        @TriggerPattern(value = "$type $var=($cond)?$a:$b;")
+        @TriggerPattern(value = "$var=$cond?$a:$b;"),
+        @TriggerPattern(value = "$type $var=($cond)?$a:$b;"),
+        @TriggerPattern(value = "$type $var=$cond?$a:$b;")
         }
     )
     @Hint(displayName = "#DN_ToIfElseAssign", description = "#DESC_ToIfElseAssign", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)

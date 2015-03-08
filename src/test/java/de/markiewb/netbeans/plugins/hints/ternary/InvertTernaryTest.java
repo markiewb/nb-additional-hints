@@ -320,4 +320,293 @@ public class InvertTernaryTest {
 
     }
 
+    @Test
+    public void testNotEqualsWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = v|al != 9.0 ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = val == 9.0 ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testEqualsWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = v|al == 9.0 ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = val != 9.0 ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testGreaterWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = v|al > 42.0 ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = val <= 42.0 ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testLowerWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = v|al < 42.0 ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = val >= 42.0 ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testGreaterEqualsWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = v|al >= 42.0 ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = val < 42.0 ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testLowerEqualsWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = v|al <= 42.0 ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        Double val = null;\n"
+                        + "        int a = val > 42.0 ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testTrueVariableWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = b| ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = !b ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testTrueLiteralWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = tru|e ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:19-3:19:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = false ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testTrueLiteralNotWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = !tru|e ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:20-3:20:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = true ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    
+    @Test
+    public void testFalseVariableWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = !|b ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("4:17-4:17:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        boolean b = true;\n"
+                        + "        int a = b ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testFalseLiteralWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = fa|lse ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:18-3:18:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = true ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+    @Test
+    public void testFalseLiteralNotWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = !fa|lse ? 1 : 0; \n"
+                        + "    }\n"
+                        + "}\n")
+                .run(InvertTernary.class)
+                .findWarning("3:19-3:19:hint:" + Bundle.ERR_InvertTernary())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int a = false ? 0 : 1; \n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
 }

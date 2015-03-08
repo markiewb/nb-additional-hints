@@ -73,6 +73,14 @@ public class InvertTernary {
         @TriggerPattern(value = "($var6 <= $c) ? $a : $b"),
         @TriggerPattern(value = "(!$var7) ? $a : $b"),
         @TriggerPattern(value = "($var8) ? $a : $b"),
+        @TriggerPattern(value = "$var1b != $c ? $a : $b"),
+        @TriggerPattern(value = "$var2b == $c ? $a : $b"),
+        @TriggerPattern(value = "$var3b > $c ? $a : $b"),
+        @TriggerPattern(value = "$var4b < $c ? $a : $b"),
+        @TriggerPattern(value = "$var5b >= $c ? $a : $b"),
+        @TriggerPattern(value = "$var6b <= $c ? $a : $b"),
+        @TriggerPattern(value = "!$var7b ? $a : $b"),
+        @TriggerPattern(value = "$var8b ? $a : $b"),
     })
     @Hint(displayName = "#DN_InvertTernary", description = "#DESC_InvertTernary", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @NbBundle.Messages("ERR_InvertTernary=Invert ternary")
@@ -96,7 +104,7 @@ public class InvertTernary {
         if (ctx.getVariables().containsKey("$var6")) {
             result = "($var6 > $c) ? $b : $a";
         }
-        //negated !var7
+        //negated (!var7)
         if (ctx.getVariables().containsKey("$var7")) {
             TreePath get = ctx.getVariables().get("$var7");
             if (get.getLeaf().getKind() == Tree.Kind.IDENTIFIER) 
@@ -118,7 +126,7 @@ public class InvertTernary {
                 }
             }
         }
-        //non-negated var8
+        //non-negated (var8)
         if (ctx.getVariables().containsKey("$var8")) {
             TreePath get = ctx.getVariables().get("$var8");
             if (get.getLeaf().getKind() == Tree.Kind.IDENTIFIER) {
@@ -134,6 +142,67 @@ public class InvertTernary {
                 }
                 if ("false".equals(tree.getValue().toString())){
                     result = "(true) ? $b : $a";
+                }
+            }
+
+        }
+
+        if (ctx.getVariables().containsKey("$var1b")) {
+            result = "$var1b == $c ? $b : $a";
+        }
+        if (ctx.getVariables().containsKey("$var2b")) {
+            result = "$var2b != $c ? $b : $a";
+        }
+        if (ctx.getVariables().containsKey("$var3b")) {
+            result = "$var3b <= $c ? $b : $a";
+        }
+        if (ctx.getVariables().containsKey("$var4b")) {
+            result = "$var4b >= $c ? $b : $a";
+        }
+        if (ctx.getVariables().containsKey("$var5b")) {
+            result = "$var5b < $c ? $b : $a";
+        }
+        if (ctx.getVariables().containsKey("$var6b")) {
+            result = "$var6b > $c ? $b : $a";
+        }
+        //negated !var7b without brackets
+        if (ctx.getVariables().containsKey("$var7b")) {
+            TreePath get = ctx.getVariables().get("$var7b");
+            if (get.getLeaf().getKind() == Tree.Kind.IDENTIFIER) 
+            {
+                //var is a boolean variable
+                result = "$var7b ? $b : $a";
+            }
+            if (get.getLeaf().getKind() == Tree.Kind.BOOLEAN_LITERAL) 
+            {
+                //var is a boolean literal like 'true'/'false'
+                //!true?a:b -> true?b:a
+                LiteralTree tree=(LiteralTree) get.getLeaf();
+                if ("true".equals(tree.getValue().toString())){
+                    result = "true ? $b : $a";
+                }
+                //!true?a:b -> false?b:a
+                if ("false".equals(tree.getValue().toString())){
+                    result = "false ? $b : $a";
+                }
+            }
+        }
+        //non-negated var8 without brackets
+        if (ctx.getVariables().containsKey("$var8b")) {
+            TreePath get = ctx.getVariables().get("$var8b");
+            if (get.getLeaf().getKind() == Tree.Kind.IDENTIFIER) {
+                //var is a boolean variable
+                result = "!$var8b ? $b : $a";
+            }
+            if (get.getLeaf().getKind() == Tree.Kind.BOOLEAN_LITERAL) 
+            {
+                //var is a boolean literal like 'true'/'false'
+                LiteralTree tree=(LiteralTree) get.getLeaf();
+                if ("true".equals(tree.getValue().toString())){
+                    result = "false ? $b : $a";
+                }
+                if ("false".equals(tree.getValue().toString())){
+                    result = "true ? $b : $a";
                 }
             }
 

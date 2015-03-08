@@ -108,6 +108,30 @@ public class ToTernaryTest {
                         + "}\n");
 
     }
+    @Test
+    public void testToIfElseAssignWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s;\n"
+                        + "        s = t|rue ? 1 : 0;\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(ToTernary.class)
+                .findWarning("4:13-4:13:hint:" + Bundle.ERR_ToIfElseAssign())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s;\n"
+                        + "        if (true) { s = 1; } else { s = 0; }\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
     
     @Test
     public void testToIfElseAssignNewVariable() throws Exception {
@@ -133,4 +157,27 @@ public class ToTernaryTest {
 
     }
 
+    @Test
+    public void testToIfElseAssignNewVariableWithoutBrackets() throws Exception {
+        HintTest.create()
+                .setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s = t|rue ? 1 : 0;\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(ToTernary.class)
+                .findWarning("3:17-3:17:hint:" + Bundle.ERR_ToIfElseAssign())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        int s;\n"
+                        + "        if (true) { s = 1; } else { s = 0; }\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
 }
