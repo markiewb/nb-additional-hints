@@ -23,4 +23,13 @@ public class ToTernary {
         int b6 = (!false) ? 1 : 0;
         return (true) ? 1 : 0;
     }
+    private void method() {
+          String a = null,b = null;
+        //hints apply
+        String var1;
+        String suffix = null;
+        var1 = (suffix == null) ? "A" : "B";
+        String var2;
+        var2 = (suffix != null) ? "A" : "B";
+    }
 }

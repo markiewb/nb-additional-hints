@@ -42,6 +42,7 @@
  */
 package de.markiewb.netbeans.plugins.hints.ternary;
 
+import com.sun.source.util.TreePath;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -49,6 +50,7 @@ import org.netbeans.spi.java.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.java.hints.Hint;
 import org.netbeans.spi.java.hints.HintContext;
 import org.netbeans.spi.java.hints.TriggerPattern;
+import org.netbeans.spi.java.hints.TriggerPatterns;
 import org.openide.util.NbBundle;
 
 /**
@@ -60,9 +62,9 @@ import org.openide.util.NbBundle;
     "DESC_ToTernaryReturn=Converts if statement to ternary return statement. <p>For example: <tt>if ($cond) {return $a;} else {return $b;}</tt> will be transformed to <tt>return ($cond) ? $a : $b;</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",
     "DN_ToIfElseReturn=Convert to if/else return",
     "DESC_ToIfElseReturn=Converts ternary return statement to if/else statement. <p>For example: <tt>return ($cond) ? $a : $b;</tt> will be transformed to <tt>if ($cond) {return $a;} else {return $b;}</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",
-    "DN_ToTernaryAssign=Convert to ternary assignment",
+    "DN_ToTernaryAssign=Convert to ternary",
     "DESC_ToTernaryAssign=Converts if statement to ternary assignment statement. <p>For example: <tt>if ($cond) {$var = $a;} else {$var = $b;}</tt> will be transformed to <tt>$var = ($cond) ? $a : $b;</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",
-    "DN_ToIfElseAssign=Convert to if/else assignment",
+    "DN_ToIfElseAssign=Convert to if/else",
     "DESC_ToIfElseAssign=Converts ternary assignment statement to if/else statement. <p>For example: <tt>$var = ($cond) ? $a : $b;</tt> will be transformed to <tt>if ($cond) {$var = $a;} else {$var = $b;}</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class ToTernary {
 
@@ -84,17 +86,29 @@ public class ToTernary {
 
     @TriggerPattern(value = "if ($cond) {$var = $a;}else {$var = $b;}")
     @Hint(displayName = "#DN_ToTernaryAssign", description = "#DESC_ToTernaryAssign", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
-    @NbBundle.Messages("ERR_ToTernaryAssign=Convert to ternary assignment")
+    @NbBundle.Messages("ERR_ToTernaryAssign=Convert to ternary")
     public static ErrorDescription toTernaryAssign(HintContext ctx) {
         Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ToTernaryAssign(), ctx.getPath(), "$var=($cond)?$a:$b;");
         return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_ToTernaryAssign(), fix);
     }
 
-    @TriggerPattern(value = "$var=($cond)?$a:$b;")
+    @TriggerPatterns(
+    {
+        @TriggerPattern(value = "$var=($cond)?$a:$b;"),
+        @TriggerPattern(value = "$type $var=($cond)?$a:$b;")
+        }
+    )
     @Hint(displayName = "#DN_ToIfElseAssign", description = "#DESC_ToIfElseAssign", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
-    @NbBundle.Messages("ERR_ToIfElseAssign=Convert to if/else assignment")
+    @NbBundle.Messages("ERR_ToIfElseAssign=Convert to if/else")
     public static ErrorDescription toIfElseAssign(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ToIfElseAssign(), ctx.getPath(), "if ($cond) {$var = $a;}else {$var = $b;}");
+        TreePath type = ctx.getVariables().get("$type");
+        
+        Fix fix;
+        if (type != null) {
+            fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ToIfElseAssign(), ctx.getPath(), "$type $var; if ($cond) {$var = $a;} else {$var = $b;}");
+        } else {
+            fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_ToIfElseAssign(), ctx.getPath(), "if ($cond) {$var = $a;} else {$var = $b;}");
+        }
         return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_ToIfElseAssign(), fix);
     }
 }
