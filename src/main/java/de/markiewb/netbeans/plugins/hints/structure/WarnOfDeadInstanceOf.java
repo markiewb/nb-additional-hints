@@ -105,7 +105,10 @@ public class WarnOfDeadInstanceOf {
         final TypeMirror rightT = info.getTypes().erasure(((TypeElement) rightType).asType());
         //f.e. (new ArrayList() instanceof java.util.Set) is impossible
         final boolean assignable = info.getTypes().isAssignable(leftT, rightT);
-        if (!assignable) {
+        //f.e. (java.util.Set instanceof java.util.HashSet) is partially valid - often used in legacy code
+        final boolean isSubClass = info.getTypes().isSubtype(rightT, leftT);
+        if (assignable || isSubClass) {
+        } else {
             return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_WarnOfDeadInstanceOf(leftType.getSimpleName().toString(), rightType.getSimpleName().toString()));
         }
 
