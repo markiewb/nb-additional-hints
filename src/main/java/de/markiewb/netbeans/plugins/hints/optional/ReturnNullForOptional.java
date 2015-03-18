@@ -42,7 +42,6 @@
  */
 package de.markiewb.netbeans.plugins.hints.optional;
 
-import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.TreePath;
 import javax.lang.model.element.ExecutableElement;
@@ -74,24 +73,14 @@ public class ReturnNullForOptional {
     public static ErrorDescription nullForOpt(HintContext ctx) {
 
         final TreePath nullTP = ctx.getPath();
-        LiteralTree nullTree = (LiteralTree) nullTP.getLeaf();
-        final boolean isNullLiteral = null == nullTree.getValue();
-        if (!isNullLiteral) {
-            return null;
-        }
         final TreePath returnTP = nullTP.getParentPath();
-        if (Tree.Kind.RETURN != returnTP.getLeaf().getKind()) {
+        if (null == returnTP || Tree.Kind.RETURN != returnTP.getLeaf().getKind()) {
             return null;
         }
-        TreePath blockTP = returnTP.getParentPath();
-        if (Tree.Kind.BLOCK != blockTP.getLeaf().getKind()) {
+        TreePath methodTP = getSurroundingMethod(returnTP);
+        if (null == methodTP) {
             return null;
         }
-        TreePath methodTP = blockTP.getParentPath();
-        if (Tree.Kind.METHOD != methodTP.getLeaf().getKind()) {
-            return null;
-        }
-
         ExecutableElement method = (ExecutableElement) ctx.getInfo().getTrees().getElement(methodTP);
         final String returnTyp = method.getReturnType().toString();
         if (returnTyp.startsWith("java.util.Optional<") || returnTyp.equals("java.util.Optional")) {
@@ -100,6 +89,14 @@ public class ReturnNullForOptional {
 
         }
         return null;
+    }
+
+    private static TreePath getSurroundingMethod(final TreePath startingTreePath) {
+        TreePath tp = startingTreePath;
+        while (null != tp && tp.getLeaf().getKind() != Tree.Kind.METHOD) {
+            tp = tp.getParentPath();
+        }
+        return tp;
     }
 
 }

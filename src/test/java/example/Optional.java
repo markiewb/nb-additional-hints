@@ -11,10 +11,20 @@ package example;
  */
 public class Optional {
 
-//    public static Optional main(String[] args) {
+    public static Optional main(String[] args) {
 //        Optional<String> o = null;
 //        if (o != null) {
+//            return null;
+//
 //        }
-//        return null;
-//    }
+//        if (o != null) {
+//            {
+//                {
+//                    return null;
+//                }
+//            }
+//
+//        }
+        return null;
+    }
 }
