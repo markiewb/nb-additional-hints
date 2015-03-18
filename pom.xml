@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.4.1.1</version>
+    <version>1.5.0</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -13,6 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <netbeans.version>RELEASE721</netbeans.version>
+        <netbeans.run.params.ide/>
+        <netbeans.run.params>-J-javaagent:"${current.jrebel.agent.path}" -J-Drebel.log=true ${netbeans.run.params.ide}</netbeans.run.params>
     </properties>
     <organization>
         <name>Benno Markiewicz (benno.markiewicz@googlemail.com)</name>
@@ -234,19 +236,20 @@
 &lt;li&gt;"Report methods that have class name" (since 1.2, no transformation)&lt;/li&gt;
 &lt;li&gt;"Add "this." to methods and variables" (since 1.3, disabled by default)&lt;/li&gt;
 &lt;li&gt;"Detect dead instanceof-expressions" (since 1.4, no transformation)&lt;/li&gt;
-
+&lt;li&gt;"Replace with Optional.isPresent()/Convert return null to return Optional.empty()" (since 1.5)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
 &lt;img src="https://raw.githubusercontent.com/markiewb/nb-additional-hints/v1.4.0/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
-&lt;h3&gt;1.4.1:&lt;/h3&gt;
+&lt;h3&gt;1.5.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/42"&gt;Updated Fix&lt;/a&gt;]: "Convert to if/else" now supports assignments to new variables&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/43"&gt;Updated Fix&lt;/a&gt;]: "Invert ternary"/"Convert to ternary" now support conditions without brackets&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/3"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." is not proposed for erroneous conditions anymore&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/50"&gt;Updated Fix&lt;/a&gt;]: Remove false positive detected by "Detect dead instanceof"&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/56"&gt;New Fix&lt;/a&gt;]: Replace with Optional.isPresent()/Convert return null to return Optional.empty()&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.4.0:&lt;/h3&gt;
 &lt;ul&gt;
