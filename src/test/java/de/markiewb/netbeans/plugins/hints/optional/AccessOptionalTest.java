@@ -15,31 +15,104 @@ import org.netbeans.modules.java.hints.test.api.HintTest;
  */
 public class AccessOptionalTest {
 
-    @Ignore("Test does not work because we are still compiling with 1.7")
     @Test
     public void testCaseA() throws Exception {
         HintTest.create()
-//                .setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    public static int main(String[] args) {\n"
+                        + "    public static void main(String[] args) {\n"
                         + "        java.util.Optional<String> o = null;\n"
                         + "        if (null==o){}\n"
                         + "    }\n"
                         + "}\n")
                 .sourceLevel("1.8")
                 .run(AccessOptional.class)
-                .findWarning("3:14-3:14:hint:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
+                .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
-                        + "    public static int main(String[] args) {\n"
+                        + "    public static void main(String[] args) {\n"
                         + "        java.util.Optional<String> o = null;\n"
-                        + "        if (!o.isPresent){}\n"
+                        + "        if (!o.isPresent()){}\n"
                         + "    }\n"
                         + "}\n");
 
     }
-    
+
+    @Test
+    public void testCaseB() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        java.util.Optional<String> o = null;\n"
+                        + "        if (o==null){}\n"
+                        + "    }\n"
+                        + "}\n")
+                .sourceLevel("1.8")
+                .run(AccessOptional.class)
+                .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        java.util.Optional<String> o = null;\n"
+                        + "        if (!o.isPresent()){}\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testCaseC() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        java.util.Optional<String> o = null;\n"
+                        + "        if (null!=o){}\n"
+                        + "    }\n"
+                        + "}\n")
+                .sourceLevel("1.8")
+                .run(AccessOptional.class)
+                .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        java.util.Optional<String> o = null;\n"
+                        + "        if (o.isPresent()){}\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
+    @Test
+    public void testCaseD() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        java.util.Optional<String> o = null;\n"
+                        + "        if (o!=null){}\n"
+                        + "    }\n"
+                        + "}\n")
+                .sourceLevel("1.8")
+                .run(AccessOptional.class)
+                .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static void main(String[] args) {\n"
+                        + "        java.util.Optional<String> o = null;\n"
+                        + "        if (o.isPresent()){}\n"
+                        + "    }\n"
+                        + "}\n");
+
+    }
+
 }

@@ -45,6 +45,7 @@ package de.markiewb.netbeans.plugins.hints.optional;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.TreePath;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.type.TypeMirror;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -52,6 +53,7 @@ import static org.netbeans.spi.java.hints.ErrorDescriptionFactory.forName;
 import org.netbeans.spi.java.hints.Hint;
 import org.netbeans.spi.java.hints.HintContext;
 import static org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix;
+import org.netbeans.spi.java.hints.TriggerPattern;
 import org.netbeans.spi.java.hints.TriggerTreeKind;
 import org.openide.util.NbBundle.Messages;
 
@@ -84,7 +86,7 @@ public class ReturnNullForOptional {
         ExecutableElement method = (ExecutableElement) ctx.getInfo().getTrees().getElement(methodTP);
         final String returnTyp = method.getReturnType().toString();
         if (returnTyp.startsWith("java.util.Optional<") || returnTyp.equals("java.util.Optional")) {
-            Fix fix = rewriteFix(ctx, Bundle.DN_ReturnNullForOptional(), ctx.getPath(), "Optional.empty()");
+            Fix fix = rewriteFix(ctx, Bundle.DN_ReturnNullForOptional(), ctx.getPath(), "java.util.Optional.empty()");
             return forName(ctx, ctx.getPath(), Bundle.ERR_ReturnNullForOptional(), fix);
 
         }

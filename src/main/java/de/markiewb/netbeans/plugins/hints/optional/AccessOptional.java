@@ -54,8 +54,6 @@ import org.netbeans.spi.java.hints.TriggerPatterns;
 import org.openide.util.NbBundle;
 
 /**
- * FYI: Cannot create a unit test for this fix because we still compile with
- * JDK7, but we use JDK8 language features.
  *
  * @author markiewb
  */
