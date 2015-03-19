@@ -2,7 +2,7 @@ package example;
 
 import java.util.Date;
 
-public class Example {
+public class ReplacePlus {
 
     public static void testA() {
          String foo  = "O   utput contains " + 4 + " entries";
@@ -10,6 +10,15 @@ public class Example {
 //        String foo = String.format("Output contains %s entries", 4);
 //        String foo = new StringBuilder().append("Output contains ").append(4).append(" entries").toString();
 
+    }
+    
+    public static void testThrow() {
+        new RuntimeException("Output contains "+4+" entries");
+        throw new RuntimeException("Output contains "+4+" entries");
+    }
+
+    public static void testMethodInvocation() {
+        System.err.println("Output contains "+4+" entries");
     }
 
     public static void testStringConcat() {

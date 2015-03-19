@@ -248,6 +248,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/42"&gt;Updated Fix&lt;/a&gt;]: "Convert to if/else" now supports assignments to new variables&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/43"&gt;Updated Fix&lt;/a&gt;]: "Invert ternary"/"Convert to ternary" now support conditions without brackets&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/3"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." is not proposed for erroneous conditions anymore&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/51"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." works for more expressions&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/50"&gt;Updated Fix&lt;/a&gt;]: Remove false positive detected by "Detect dead instanceof"&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/56"&gt;New Fix&lt;/a&gt;]: Replace with Optional.isPresent()/Convert return null to return Optional.empty()&lt;/li&gt;
 &lt;li&gt;[Task]: Update requirements JDK7 and NB7.4&lt;/li&gt;
