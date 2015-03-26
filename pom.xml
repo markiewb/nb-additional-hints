@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -243,6 +243,10 @@
 &lt;img src="https://raw.githubusercontent.com/markiewb/nb-additional-hints/v1.4.0/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
+&lt;h3&gt;1.5.1:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/54"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." works for more expressions&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3&gt;1.5.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/42"&gt;Updated Fix&lt;/a&gt;]: "Convert to if/else" now supports assignments to new variables&lt;/li&gt;

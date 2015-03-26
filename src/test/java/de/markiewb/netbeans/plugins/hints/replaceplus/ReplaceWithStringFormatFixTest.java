@@ -236,6 +236,26 @@ public class ReplaceWithStringFormatFixTest {
                         + "    }\n"
                         + "}\n");
     }
+    @Test
+    public void testFixWorkingMixedRETURN() throws Exception {
+        HintTest.create().setCaretMarker('|').
+                input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static String main(String[] args) {\n"
+                        + "        return \"Output contains \"|+4+\" entries\";\n"
+                        + "    }\n"
+                        + "}\n").
+                run(ReplacePlusHint.class).
+                findWarning("3:33-3:33:hint:" + Bundle.DN_ReplacePlus()).
+                applyFix(Bundle.LBL_ReplaceWithStringFormatFix()).
+                assertCompilable().
+                assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    public static String main(String[] args) {\n"
+                        + "        return String.format(\"Output contains %s entries\", 4);\n"
+                        + "    }\n"
+                        + "}\n");
+    }
 
     @Test
     public void testFixWorkingMixedVARIABLE() throws Exception {

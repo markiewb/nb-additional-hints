@@ -210,6 +210,10 @@ public class ReplacePlusHint {
              * <pre>throw new RuntimeException("B"+42)</pre>
              */
             final boolean isNewClass = checkParentKind(treePath, 1, Kind.NEW_CLASS);
+            /**
+             * <pre>return "B"+42;</pre>
+             */
+            final boolean isReturn = checkParentKind(treePath, 1, Kind.RETURN);
 
             //ignore errornous expressions "a"+42+"b"; with no assignment
             /**
@@ -217,7 +221,7 @@ public class ReplacePlusHint {
              * Detecting erroneous expressions via Kind.ERRONEOUS seems not to
              * work so we use a whitelist here instead.
              */
-            if (!isMethodInvocation && !isVariableAssignment && !isAssignment && !isNewClass) {
+            if (!isMethodInvocation && !isVariableAssignment && !isAssignment && !isNewClass && !isReturn) {
                 return null;
             }
 
