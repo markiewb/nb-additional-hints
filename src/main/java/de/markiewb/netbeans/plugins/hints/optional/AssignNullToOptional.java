@@ -42,61 +42,46 @@
  */
 package de.markiewb.netbeans.plugins.hints.optional;
 
-import com.sun.source.tree.Tree;
-import com.sun.source.util.TreePath;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.type.TypeMirror;
+import java.util.Optional;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
-import static org.netbeans.spi.java.hints.ErrorDescriptionFactory.forName;
+import org.netbeans.spi.java.hints.ConstraintVariableType;
+import org.netbeans.spi.java.hints.ErrorDescriptionFactory;
 import org.netbeans.spi.java.hints.Hint;
 import org.netbeans.spi.java.hints.HintContext;
-import static org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix;
 import org.netbeans.spi.java.hints.TriggerPattern;
-import org.netbeans.spi.java.hints.TriggerTreeKind;
-import org.openide.util.NbBundle.Messages;
+import org.netbeans.spi.java.hints.TriggerPatterns;
+import org.openide.util.NbBundle;
 
 /**
  *
  * @author markiewb
  */
-@Messages({
-    "ERR_ReturnNullForOptional=Convert to Optional.empty(). The return value null looks suspicious for methods with return value java.util.Optional.",
-    "DN_ReturnNullForOptional=Convert return null to return Optional.empty()",
-    "DESC_ReturnNullForOptional=The return value <tt>null</tt> looks suspicious for methods with return value <tt>java.util.Optional</tt>, so replace it with <tt>Optional.empty()</tt>. For example <tt>return null</tt> will be transformed to <tt>return Optional.empty()</tt><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
+@NbBundle.Messages({
+    "DN_AssignNull=Replace with Optional.empty()",
+    "DESC_AssignNull=<tt>java.util.Optional</tt> should not be null, so replace null-assignment with <tt>Optional.empty()</tt>. <p>For example: <tt>Optional<T> o = null;</tt> will be transformed to <tt>Optional<T> o = Optional.empty();</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
+public class AssignNullToOptional {
 
-public class ReturnNullForOptional {
-
-    @Hint(displayName = "#DN_ReturnNullForOptional", description = "#DESC_ReturnNullForOptional", category = "bugs", hintKind = Hint.Kind.INSPECTION, severity = Severity.ERROR)
-    @TriggerTreeKind(Tree.Kind.NULL_LITERAL)
-    public static ErrorDescription nullForOpt(HintContext ctx) {
-
-        final TreePath nullTP = ctx.getPath();
-        final TreePath returnTP = nullTP.getParentPath();
-        if (null == returnTP || Tree.Kind.RETURN != returnTP.getLeaf().getKind()) {
-            return null;
+    @TriggerPatterns({
+        @TriggerPattern(value = "$var1 = null", constraints = @ConstraintVariableType(variable = "$var1", type = "java.util.Optional")),
+        @TriggerPattern(value = "$class $var2 = null", constraints = @ConstraintVariableType(variable = "$var2", type = "java.util.Optional")),
+    })
+    @Hint(displayName = "#DN_AssignNull", description = "#DESC_AssignNull", category = "bugs", hintKind = Hint.Kind.INSPECTION, severity = Severity.ERROR)
+    @NbBundle.Messages("ERR_AssignNull=Replace with Optional.isPresent()")
+    public static ErrorDescription convertToOptional(HintContext ctx) {
+        String result = null;
+        if (ctx.getVariables().containsKey("$var1")) {
+            result = "$var1 = Optional.empty()";
         }
-        TreePath methodTP = getSurroundingMethod(returnTP);
-        if (null == methodTP) {
-            return null;
+        if (ctx.getVariables().containsKey("$var2")) {
+            result = "$class $var2 = Optional.empty()";
         }
-        ExecutableElement method = (ExecutableElement) ctx.getInfo().getTrees().getElement(methodTP);
-        final String returnTyp = method.getReturnType().toString();
-        if (returnTyp.startsWith("java.util.Optional<") || returnTyp.equals("java.util.Optional")) {
-            Fix fix = rewriteFix(ctx, Bundle.DN_ReturnNullForOptional(), ctx.getPath(), "java.util.Optional.empty()");
-            return forName(ctx, ctx.getPath(), Bundle.ERR_ReturnNullForOptional(), fix);
-
+        if (result != null) {
+            Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_AssignNull(), ctx.getPath(), result);
+            return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_AssignNull(), fix);
         }
         return null;
-    }
-
-    private static TreePath getSurroundingMethod(final TreePath startingTreePath) {
-        TreePath tp = startingTreePath;
-        while (null != tp && tp.getLeaf().getKind() != Tree.Kind.METHOD) {
-            tp = tp.getParentPath();
-        }
-        return tp;
     }
 
 }

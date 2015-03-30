@@ -5,7 +5,6 @@
  */
 package de.markiewb.netbeans.plugins.hints.optional;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.modules.java.hints.test.api.HintTest;
 
