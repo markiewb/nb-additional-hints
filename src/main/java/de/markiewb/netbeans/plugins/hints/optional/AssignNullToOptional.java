@@ -68,7 +68,7 @@ public class AssignNullToOptional {
         @TriggerPattern(value = "$class $var2 = null", constraints = @ConstraintVariableType(variable = "$var2", type = "java.util.Optional")),
     })
     @Hint(displayName = "#DN_AssignNull", description = "#DESC_AssignNull", category = "bugs", hintKind = Hint.Kind.INSPECTION, severity = Severity.ERROR)
-    @NbBundle.Messages("ERR_AssignNull=Replace with Optional.isPresent()")
+    @NbBundle.Messages("ERR_AssignNull=Replace with Optional.empty()")
     public static ErrorDescription convertToOptional(HintContext ctx) {
         String result = null;
         if (ctx.getVariables().containsKey("$var1")) {
