@@ -69,7 +69,7 @@ public class AssignNullToOptional {
     })
     @Hint(displayName = "#DN_AssignNull", description = "#DESC_AssignNull", category = "bugs", hintKind = Hint.Kind.INSPECTION, severity = Severity.ERROR)
     @NbBundle.Messages("ERR_AssignNull=Replace with Optional.empty()")
-    public static ErrorDescription convertToOptional(HintContext ctx) {
+    public static ErrorDescription toFix(HintContext ctx) {
         String result = null;
         if (ctx.getVariables().containsKey("$var1")) {
             result = "$var1 = Optional.empty()";

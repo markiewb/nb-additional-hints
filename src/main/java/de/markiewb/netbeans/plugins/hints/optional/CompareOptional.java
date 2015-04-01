@@ -60,7 +60,7 @@ import org.openide.util.NbBundle;
 @NbBundle.Messages({
     "DN_AccessOptional=Replace with Optional.isPresent()",
     "DESC_AccessOptional=<tt>java.util.Optional</tt> should not be null, so replace comparisons using <tt>null</tt> with <tt>isPresent()</tt>. <p>For example: <tt>Optional<T> var=...; if (null!=var){...}</tt> will be transformed to <tt>Optional<T> var=...; if (var.isPresent()){...}</tt></p><p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
-public class AccessOptional {
+public class CompareOptional {
 
     @TriggerPatterns({
         @TriggerPattern(value = "null!=$var1", constraints = @ConstraintVariableType(variable = "$var1", type = "java.util.Optional")),
@@ -70,7 +70,7 @@ public class AccessOptional {
     })
     @Hint(displayName = "#DN_AccessOptional", description = "#DESC_AccessOptional", category = "bugs", hintKind = Hint.Kind.INSPECTION, severity = Severity.ERROR)
     @NbBundle.Messages("ERR_AccessOptional=Replace with Optional.isPresent()")
-    public static ErrorDescription convertToOptional(HintContext ctx) {
+    public static ErrorDescription toFix(HintContext ctx) {
         String result = null;
         if (ctx.getVariables().containsKey("$var1")) {
             result = "$var1.isPresent()";

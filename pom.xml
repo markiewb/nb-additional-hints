@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.6.0</version>
+    <version>1.6.0.1</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -14,7 +14,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <netbeans.version>RELEASE74</netbeans.version>
         <netbeans.run.params.ide/>
-        <netbeans.run.params>-J-javaagent:"${current.jrebel.agent.path}" -J-Drebel.log=true ${netbeans.run.params.ide}</netbeans.run.params>
+        <!--<netbeans.run.params>-J-javaagent:"${current.jrebel.agent.path}" -J-Drebel.log=true ${netbeans.run.params.ide}</netbeans.run.params>-->
     </properties>
     <organization>
         <name>Benno Markiewicz (benno.markiewicz@googlemail.com)</name>
@@ -238,6 +238,7 @@
 &lt;li&gt;"Detect dead instanceof-expressions" (since 1.4, no transformation)&lt;/li&gt;
 &lt;li&gt;"Replace with Optional.isPresent()/Convert return null to return Optional.empty()" (since 1.5)&lt;/li&gt;
 &lt;li&gt;Replace with null-assignment to Optional with Optional.empty() (since 1.6)&lt;/li&gt;
+&lt;li&gt;Convert return xxx to return Optional.ofNullable(xxx)/Optional.of(xxx)/Optional.empty() (since 1.6)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
@@ -246,8 +247,9 @@
 &lt;h2&gt;Updates&lt;/h2&gt;
 &lt;h3&gt;1.6.0:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/54"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." works for more expressions&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/55"&gt;New Fix&lt;/a&gt;]: Replace with null-assignment to Optional with Optional.empty()&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/56"&gt;New Fix&lt;/a&gt;]: Convert return xxx to return Optional.ofNullable(xxx)/Optional.of(xxx)/Optional.empty()&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/54"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." works for more expressions&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.5.0:&lt;/h3&gt;
 &lt;ul&gt;

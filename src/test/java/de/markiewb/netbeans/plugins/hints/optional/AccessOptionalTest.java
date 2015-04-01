@@ -26,7 +26,7 @@ public class AccessOptionalTest {
                         + "    }\n"
                         + "}\n")
                 .sourceLevel("1.8")
-                .run(AccessOptional.class)
+                .run(CompareOptional.class)
                 .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
                 .applyFix()
                 .assertCompilable()
@@ -51,7 +51,7 @@ public class AccessOptionalTest {
                         + "    }\n"
                         + "}\n")
                 .sourceLevel("1.8")
-                .run(AccessOptional.class)
+                .run(CompareOptional.class)
                 .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
                 .applyFix()
                 .assertCompilable()
@@ -76,7 +76,7 @@ public class AccessOptionalTest {
                         + "    }\n"
                         + "}\n")
                 .sourceLevel("1.8")
-                .run(AccessOptional.class)
+                .run(CompareOptional.class)
                 .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
                 .applyFix()
                 .assertCompilable()
@@ -101,7 +101,7 @@ public class AccessOptionalTest {
                         + "    }\n"
                         + "}\n")
                 .sourceLevel("1.8")
-                .run(AccessOptional.class)
+                .run(CompareOptional.class)
                 .findWarning("4:12-4:19:error:" + de.markiewb.netbeans.plugins.hints.optional.Bundle.ERR_AccessOptional())
                 .applyFix()
                 .assertCompilable()
