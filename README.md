@@ -30,4 +30,4 @@ The original sourcecode can be found at http://hg.netbeans.org/main/contrib/file
 
 License remains CDDL-GPL-2-CP - http://www.netbeans.org/cddl-gplv2.html
 
-Compatible to NetBeans 7.2.1 and higher
+Compatible to NetBeans 7.4 and higher
