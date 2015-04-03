@@ -80,4 +80,39 @@ public class AssingNullToOptionalTest {
                 .run(AssignNullToOptional.class)
                 .assertWarnings();
     }
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/57
+     * @throws Exception 
+     */
+    @Test
+    public void testAssigmentFalsePositive2() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public void method() {\n"
+                        + "        java.util.List<String> o = null;\n"
+                        + "    }\n"
+                        + "}")
+                .sourceLevel("1.8")
+                .run(AssignNullToOptional.class)
+                .assertWarnings();
+    }
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/57
+     * @throws Exception 
+     */
+    @Test
+    public void testAssigmentFalsePositive3() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public void method() {\n"
+                        + "        String o;\n"
+                        + "        o = null;\n"
+                        + "    }\n"
+                        + "}")
+                .sourceLevel("1.8")
+                .run(AssignNullToOptional.class)
+                .assertWarnings();
+    }
 }

@@ -42,7 +42,7 @@
  */
 package de.markiewb.netbeans.plugins.hints.optional;
 
-import java.util.Optional;
+import com.sun.source.util.Trees;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -71,11 +71,21 @@ public class AssignNullToOptional {
     @NbBundle.Messages("ERR_AssignNull=Replace with Optional.empty()")
     public static ErrorDescription toFix(HintContext ctx) {
         String result = null;
+        final Trees trees = ctx.getInfo().getTrees();
+
         if (ctx.getVariables().containsKey("$var1")) {
-            result = "$var1 = Optional.empty()";
+            String type = ctx.getInfo().getTypes().erasure(trees.getTypeMirror(ctx.getVariables().get("$var1"))).toString();
+
+            if ("java.util.Optional".equals(type)) {
+                result = "$var1 = Optional.empty()";
+            }
         }
         if (ctx.getVariables().containsKey("$var2")) {
-            result = "$class $var2 = Optional.empty()";
+            String type = ctx.getInfo().getTypes().erasure(trees.getTypeMirror(ctx.getVariables().get("$var2"))).toString();
+
+            if ("java.util.Optional".equals(type)) {
+                result = "$class $var2 = Optional.empty()";
+            }
         }
         if (result != null) {
             Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_AssignNull(), ctx.getPath(), result);
