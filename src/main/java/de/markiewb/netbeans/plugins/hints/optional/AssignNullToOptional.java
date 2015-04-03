@@ -65,7 +65,7 @@ public class AssignNullToOptional {
 
     @TriggerPatterns({
         @TriggerPattern(value = "$var1 = null", constraints = @ConstraintVariableType(variable = "$var1", type = "java.util.Optional")),
-        @TriggerPattern(value = "$class $var2 = null", constraints = @ConstraintVariableType(variable = "$var2", type = "java.util.Optional")),
+        @TriggerPattern(value = "$class $var2 = null", constraints = @ConstraintVariableType(variable = "$class", type = "java.util.Optional")),
     })
     @Hint(displayName = "#DN_AssignNull", description = "#DESC_AssignNull", category = "bugs", hintKind = Hint.Kind.INSPECTION, severity = Severity.ERROR)
     @NbBundle.Messages("ERR_AssignNull=Replace with Optional.empty()")
@@ -74,18 +74,10 @@ public class AssignNullToOptional {
         final Trees trees = ctx.getInfo().getTrees();
 
         if (ctx.getVariables().containsKey("$var1")) {
-            String type = ctx.getInfo().getTypes().erasure(trees.getTypeMirror(ctx.getVariables().get("$var1"))).toString();
-
-            if ("java.util.Optional".equals(type)) {
                 result = "$var1 = Optional.empty()";
-            }
         }
         if (ctx.getVariables().containsKey("$var2")) {
-            String type = ctx.getInfo().getTypes().erasure(trees.getTypeMirror(ctx.getVariables().get("$var2"))).toString();
-
-            if ("java.util.Optional".equals(type)) {
                 result = "$class $var2 = Optional.empty()";
-            }
         }
         if (result != null) {
             Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_AssignNull(), ctx.getPath(), result);
