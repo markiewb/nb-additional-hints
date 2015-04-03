@@ -63,4 +63,21 @@ public class AssingNullToOptionalTest {
 
     }
 
+    /**
+     * https://github.com/markiewb/nb-additional-hints/issues/57
+     * @throws Exception 
+     */
+    @Test
+    public void testAssigmentFalsePositive() throws Exception {
+        HintTest.create()
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public void method() {\n"
+                        + "        String o = null;\n"
+                        + "    }\n"
+                        + "}")
+                .sourceLevel("1.8")
+                .run(AssignNullToOptional.class)
+                .assertWarnings();
+    }
 }
