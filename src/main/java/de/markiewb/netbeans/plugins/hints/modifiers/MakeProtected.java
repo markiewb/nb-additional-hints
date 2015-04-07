@@ -71,11 +71,18 @@ public class MakeProtected {
     private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC);
 
     @Hint(displayName = "#DN_MakeProtected", description = "#DESC_MakeProtected", category = "suggestions",
-            hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+            hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.METHOD, Tree.Kind.VARIABLE})
     public static ErrorDescription convert(HintContext ctx) {
 
         TreePath path = ctx.getPath();
+
+        if (path.getLeaf().getKind() == Tree.Kind.CLASS) {
+            if (!ModifierUtils.isCaretAtClassDeclaration(path, ctx)) {
+                return null;
+            }
+        }
+
         Element element = ctx.getInfo().getTrees().getElement(path);
 
         if (element == null) {

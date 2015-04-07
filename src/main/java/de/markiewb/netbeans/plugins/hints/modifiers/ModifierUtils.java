@@ -47,11 +47,13 @@ import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.tree.VariableTree;
+import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
+import org.netbeans.spi.java.hints.HintContext;
 
 /**
  * 
@@ -91,5 +93,27 @@ class ModifierUtils {
         }
 
         return modifiers;
+    }
+    
+    
+    /**
+     * Workaround: Check if at line of class declaration and not in body of class.
+     * @param path
+     * @param ctx
+     * @return 
+     */
+    static boolean isCaretAtClassDeclaration(TreePath path, HintContext ctx) {
+        SourcePositions sourcePositions = ctx.getInfo().getTrees().getSourcePositions();
+        int startPos = (int) sourcePositions.getStartPosition(path.getCompilationUnit(), path.getLeaf());
+        int caret = ctx.getCaretLocation();
+        String code = ctx.getInfo().getText();
+        if (startPos < 0 || caret < 0 || caret < startPos || caret >= code.length()) {
+            return false;
+        }
+        //Workaround: Check if at line of class declaration and not in body of class
+        if (code.substring(startPos, caret).contains("{")) {
+            return false;
+        }
+        return true;
     }
 }

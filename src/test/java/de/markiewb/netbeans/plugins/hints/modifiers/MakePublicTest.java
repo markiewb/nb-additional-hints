@@ -7,13 +7,13 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_PackageProtected_Field() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    String s = null;\n"
+                        + "    Stri|ng s = null;\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:11-2:12:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:8-2:8:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -24,13 +24,13 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_PackageProtected_Inner_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    class Inner {}\n"
+                        + "    class In|ner {}\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:10-2:15:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:12-2:12:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -41,14 +41,14 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_PackageProtected_Method() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    static void main(String[] args) {\n"
+                        + "    static void m|ain(String[] args) {\n"
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:16-2:20:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -60,10 +60,10 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_PackageProtected_TopLevel_Class() throws Exception {
-        HintTest.create()
-                .input("package test; class Test {}")
+        HintTest.create().setCaretMarker('|')
+                .input("package test; class T|est {}")
                 .run(MakePublic.class)
-                .findWarning("0:20-0:24:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("0:21-0:21:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test; public class Test {}");
@@ -71,13 +71,13 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_Private_Field() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    private String s = null;\n"
+                        + "    private Stri|ng s = null;\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:19-2:20:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:16-2:16:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -88,13 +88,13 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_Private_Inner_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    private class Inner {}\n"
+                        + "    private class In|ner {}\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:18-2:23:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:20-2:20:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -105,14 +105,14 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_Private_Method() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    private static void main(String[] args) {\n"
+                        + "    private static void ma|in(String[] args) {\n"
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:24-2:28:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:26-2:26:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -129,20 +129,20 @@ public class MakePublicTest {
      */
     @Test(expected = AssertionError.class)
     public void testFixWorking_Private_TopLevel_Class() throws Exception {
-        HintTest.create()
-                .input("package test; private class Test {}")
+        HintTest.create().setCaretMarker('|')
+                .input("package test; private class Te|st {}")
                 .run(MakePublic.class);
     }
 
     @Test
     public void testFixWorking_Protected_Field() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    protected String s = null;\n"
+                        + "    protected Str|ing s = null;\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:21-2:22:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -153,13 +153,13 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_Protected_Inner_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    protected class Inner {}\n"
+                        + "    protected class In|ner {}\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:20-2:25:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:22-2:22:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -170,14 +170,14 @@ public class MakePublicTest {
 
     @Test
     public void testFixWorking_Protected_Method() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
                         + "public class Test {\n"
-                        + "    protected static void main(String[] args) {\n"
+                        + "    protected static void m|ain(String[] args) {\n"
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:26-2:30:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:27-2:27:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -194,9 +194,16 @@ public class MakePublicTest {
      */
     @Test(expected = AssertionError.class)
     public void testFixWorking_Protected_TopLevel_Class() throws Exception {
-        HintTest.create()
+        HintTest.create().setCaretMarker('|')
                 .input("package test; protected class Test {}")
                 .run(MakePublic.class);
     }
 
+    @Test
+    public void testFixWorking_Public_TopLevel_Class_InnerBlock() throws Exception {
+        HintTest.create().setCaretMarker('|')
+                .input("package test; public class Test {|}")
+                .run(MakePublic.class)
+                .assertWarnings();
+    }
 }

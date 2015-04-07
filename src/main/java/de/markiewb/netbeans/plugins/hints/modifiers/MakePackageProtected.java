@@ -42,12 +42,15 @@
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
 
+import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
+import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
 import java.util.EnumSet;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
+import org.netbeans.api.java.source.CompilationInfo;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -71,11 +74,18 @@ public class MakePackageProtected {
     private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC, Modifier.PROTECTED);
 
     @Hint(displayName = "#DN_MakePackageProtected", description = "#DESC_MakePackageProtected", category = "suggestions",
-            hintKind = Hint.Kind.INSPECTION, severity = Severity.HINT)
+            hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     @TriggerTreeKind({Tree.Kind.CLASS, Tree.Kind.METHOD, Tree.Kind.VARIABLE})
     public static ErrorDescription convert(HintContext ctx) {
 
         TreePath path = ctx.getPath();
+        
+        if (path.getLeaf().getKind() == Tree.Kind.CLASS) {
+            if (!ModifierUtils.isCaretAtClassDeclaration(path, ctx)) {
+                return null;
+            }
+        }
+        
         Element element = ctx.getInfo().getTrees().getElement(path);
 
         if (element == null) {
