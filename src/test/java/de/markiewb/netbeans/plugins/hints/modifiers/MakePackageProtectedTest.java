@@ -6,6 +6,23 @@ import org.netbeans.modules.java.hints.test.api.HintTest;
 public class MakePackageProtectedTest {
 
     @Test
+    public void testPreserveGenerics_PublicMethod() throws Exception {
+        HintTest.create().setCaretMarker('|')
+                .sourceLevel("1.6")
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public <T extends java.lang.Number> java.util.Set<T> fi|nd(){return null;};\n"
+                        + "}\n")
+                .run(MakePackageProtected.class)
+                .findWarning("2:59-2:59:hint:" + Bundle.ERR_MakePackageProtected())
+                .applyFix()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    <T extends java.lang.Number> java.util.Set<T> find(){return null;};\n"
+                        + "}\n");
+    }
+
+    @Test
     public void testFixWorking_Private_Field() throws Exception {
         HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
