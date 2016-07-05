@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.6.0.3</version>
+    <version>1.6.0.4</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -235,7 +235,6 @@
 &lt;li&gt;"Invert ternary if/else" (since 1.2)&lt;/li&gt;
 &lt;li&gt;"Report methods that have class name" (since 1.2, no transformation)&lt;/li&gt;
 &lt;li&gt;"Add "this." to methods and variables" (since 1.3, disabled by default)&lt;/li&gt;
-&lt;li&gt;"Detect dead instanceof-expressions" (since 1.4, no transformation)&lt;/li&gt;
 &lt;li&gt;"Replace with Optional.isPresent()/Convert return null to return Optional.empty()" (since 1.5)&lt;/li&gt;
 &lt;li&gt;Replace with null-assignment to Optional with Optional.empty() (since 1.6)&lt;/li&gt;
 &lt;li&gt;Convert return xxx to return Optional.ofNullable(xxx)/Optional.of(xxx)/Optional.empty() (since 1.6)&lt;/li&gt;
@@ -252,6 +251,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/54"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." works for more expressions&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/57"&gt;Updated Fix&lt;/a&gt;]: Fixed false positive result from "Convert to Optional.isEmpty()"&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/58"&gt;Updated Fix&lt;/a&gt;]: Make "Change modifiers" hints non-intrusive&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/70"&gt;Removed Fix&lt;/a&gt;]: "dead instanceof" hint has been removed&lt;/li&gt;
 
 
 &lt;/ul&gt;
