@@ -4,6 +4,9 @@ public class ChangeModifier {
 
     public String s = null;
 
+    public ChangeModifier() {
+    }
+
     public void mainPublic() {
     }
 

@@ -40,6 +40,25 @@ public class MakeProtectedTest {
     }
 
     @Test
+    public void testFixWorking_PackageProtected_Constructor() throws Exception {
+        HintTest.create().setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    Tes|t() {\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(MakeProtected.class)
+                .findWarning("2:7-2:7:hint:" + Bundle.ERR_MakeProtected())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    protected Test() {\n"
+                        + "    }\n"
+                        + "}\n");
+    }
+
+    @Test
     public void testFixWorking_PackageProtected_Method() throws Exception {
         HintTest.create().setCaretMarker('|')
                 .input("package test;\n"
@@ -101,6 +120,25 @@ public class MakeProtectedTest {
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
                         + "    protected class Inner {}\n"
+                        + "}\n");
+    }
+
+    @Test
+    public void testFixWorking_Private_Constructor() throws Exception {
+        HintTest.create().setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    private Tes|t() {\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(MakeProtected.class)
+                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakeProtected())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    protected Test() {\n"
+                        + "    }\n"
                         + "}\n");
     }
 
@@ -167,6 +205,25 @@ public class MakeProtectedTest {
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
                         + "    protected class Inner {}\n"
+                        + "}\n");
+    }
+
+    @Test
+    public void testFixWorking_Public_Constructor() throws Exception {
+        HintTest.create().setCaretMarker('|')
+                .input("package test;\n"
+                        + "public class Test {\n"
+                        + "    public Tes|t() {\n"
+                        + "    }\n"
+                        + "}\n")
+                .run(MakeProtected.class)
+                .findWarning("2:14-2:14:hint:" + Bundle.ERR_MakeProtected())
+                .applyFix()
+                .assertCompilable()
+                .assertOutput("package test;\n"
+                        + "public class Test {\n"
+                        + "    protected Test() {\n"
+                        + "    }\n"
                         + "}\n");
     }
 

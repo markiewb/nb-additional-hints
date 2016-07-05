@@ -90,6 +90,9 @@ class ModifierUtils {
             case METHOD:
                 modifiers = ((MethodTree) leaf).getModifiers();
                 break;
+            case CONSTRUCTOR:
+                modifiers = ((MethodTree) leaf).getModifiers();
+                break;
         }
 
         return modifiers;
