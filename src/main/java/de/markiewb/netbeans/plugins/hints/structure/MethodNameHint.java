@@ -76,6 +76,13 @@ public class MethodNameHint {
         }
 
         Element method = ctx.getInfo().getTrees().getElement(path);
+        /**
+         * https://github.com/markiewb/nb-additional-hints/issues/64
+         */
+        if (null == method || null == method.getEnclosingElement()) {
+            return null;
+        }
+
         TypeElement classOrInterface = ctx.getInfo().getElementUtilities().enclosingTypeElement(method);
         if (classOrInterface == null) {
             return null;

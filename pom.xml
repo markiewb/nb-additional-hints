@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.6.0.4</version>
+    <version>1.6.0.5</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -252,6 +252,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/57"&gt;Updated Fix&lt;/a&gt;]: Fixed false positive result from "Convert to Optional.isEmpty()"&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/58"&gt;Updated Fix&lt;/a&gt;]: Make "Change modifiers" hints non-intrusive&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/70"&gt;Removed Fix&lt;/a&gt;]: "dead instanceof" hint has been removed&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/64"&gt;Updated Fix &lt;/a&gt;]: java.lang.NullPointerException in "Report methods that have class name"&lt;/li&gt;
 
 
 &lt;/ul&gt;
