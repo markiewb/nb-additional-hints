@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.6.0.6</version>
+    <version>1.6.0.7</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -236,9 +236,11 @@
 &lt;li&gt;"Report methods that have class name" (since 1.2, no transformation)&lt;/li&gt;
 &lt;li&gt;"Add "this." to methods and variables" (since 1.3, disabled by default)&lt;/li&gt;
 &lt;li&gt;"Replace with Optional.isPresent()/Convert return null to return Optional.empty()" (since 1.5)&lt;/li&gt;
-&lt;li&gt;Replace with null-assignment to Optional with Optional.empty() (since 1.6)&lt;/li&gt;
-&lt;li&gt;Convert return xxx to return Optional.ofNullable(xxx)/Optional.of(xxx)/Optional.empty() (since 1.6)&lt;/li&gt;
+&lt;li&gt;"Replace with null-assignment to Optional with Optional.empty()| (since 1.6)&lt;/li&gt;
+&lt;li&gt;"Convert return xxx to return Optional.ofNullable(xxx)/Optional.of(xxx)/Optional.empty()| (since 1.6)&lt;/li&gt;
 &lt;li&gt;"Convert to assertNull" (since 1.6)&lt;/li&gt;
+&lt;li&gt;"Add/remove parentheses" (since 1.6)&lt;/li&gt;
+
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
@@ -249,7 +251,8 @@
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/55"&gt;New Fix&lt;/a&gt;]: Replace with null-assignment to Optional with Optional.empty()&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/56"&gt;New Fix&lt;/a&gt;]: Convert return xxx to return Optional.ofNullable(xxx)/Optional.of(xxx)/Optional.empty()&lt;/li&gt;
-&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/63"&gt;New Fix&lt;/a&gt;]: "Convert to assertNull"&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/63"&gt;New Fix&lt;/a&gt;]: Convert to assertNull&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/49"&gt;New Fix&lt;/a&gt;]: Add/remove parentheses&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/54"&gt;Updated Fix&lt;/a&gt;]: "Replace +..." works for more expressions&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/57"&gt;Updated Fix&lt;/a&gt;]: Fixed false positive result from "Convert to Optional.isEmpty()"&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/58"&gt;Updated Fix&lt;/a&gt;]: Make "Change modifiers" hints non-intrusive&lt;/li&gt;

@@ -33,4 +33,11 @@ public class ToTernary {
         
         String var3 = suffix != null ? "A" : "B";
     }
+    private void parentheses() {
+        //hints apply
+        String var1; var1 = ("1".equals("2")) ? "A" : "B";
+        String var2; var2 = "1".equals("2") ? "A" : "B";
+        String var3 = ("1".equals("2")) ? "A" : "B";
+        String var4 = "1".equals("2") ? "A" : "B";
+    }
 }
