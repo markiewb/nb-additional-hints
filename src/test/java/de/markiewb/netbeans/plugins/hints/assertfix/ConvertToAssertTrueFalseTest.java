@@ -21,7 +21,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertTrueWithoutMessage())
                 .applyFix()
                 .assertCompilable()
@@ -44,7 +44,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertTrueWithMessage())
                 .applyFix()
                 .assertCompilable()
@@ -67,7 +67,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertFalseWithoutMessage())
                 .applyFix()
                 .assertCompilable()
@@ -90,7 +90,7 @@ public class ConvertToAssertTrueFalseTest {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(org.junit.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:25-3:37:hint:" + Bundle.ERR_computeAssertFalseWithMessage())
                 .applyFix()
                 .assertCompilable()

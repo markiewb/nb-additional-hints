@@ -21,7 +21,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertTrueWithoutMessage2())
                 .applyFix()
                 .assertCompilable()
@@ -44,7 +44,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertTrueWithMessage2())
                 .applyFix()
                 .assertCompilable()
@@ -67,7 +67,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertFalseWithoutMessage2())
                 .applyFix()
                 .assertCompilable()
@@ -90,7 +90,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "    }\n"
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
-                .run(ConvertToAssertTrueFalse.class)
+                .run(ConvertToAssertTrueFalseNull.class)
                 .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertFalseWithMessage2())
                 .applyFix()
                 .assertCompilable()
