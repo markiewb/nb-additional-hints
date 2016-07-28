@@ -13,7 +13,7 @@ public class MakePrivateTest {
                         + "    St|ring s = null;\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:6-2:6:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:20:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -30,7 +30,7 @@ public class MakePrivateTest {
                         + "    class Inn|er {}\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:13-2:13:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:18:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -48,7 +48,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:5-2:5:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:12:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -67,7 +67,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:37:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -97,7 +97,7 @@ public class MakePrivateTest {
                         + "    protected St|ring s = null;\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:16-2:16:hint:" + Bundle.ERR_MakePrivate());
+                .findWarning("2:0-2:30:hint:" + Bundle.ERR_MakePrivate());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class MakePrivateTest {
                         + "    protected class In|ner {}\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:22-2:22:hint:" + Bundle.ERR_MakePrivate());
+                .findWarning("2:0-2:28:hint:" + Bundle.ERR_MakePrivate());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:22:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -139,7 +139,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:28-2:28:hint:" + Bundle.ERR_MakePrivate());
+                .findWarning("2:0-2:47:hint:" + Bundle.ERR_MakePrivate());
     }
 
     /**
@@ -162,7 +162,7 @@ public class MakePrivateTest {
                         + "    public Strin|g s = null;\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:16-2:16:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:27:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -180,7 +180,7 @@ public class MakePrivateTest {
                         + "    public class In|ner {}\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:19-2:19:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:25:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -198,7 +198,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:12-2:12:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:19:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -217,7 +217,7 @@ public class MakePrivateTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePrivate.class)
-                .findWarning("2:18-2:18:hint:" + Bundle.ERR_MakePrivate())
+                .findWarning("2:0-2:37:hint:" + Bundle.ERR_MakePrivate())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"

@@ -1,4 +1,4 @@
-/* 
+/*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
  * Copyright 2014 Oracle and/or its affiliates. All rights reserved.
@@ -42,15 +42,12 @@
  */
 package de.markiewb.netbeans.plugins.hints.modifiers;
 
-import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
-import com.sun.source.util.SourcePositions;
 import com.sun.source.util.TreePath;
 import java.util.EnumSet;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
-import org.netbeans.api.java.source.CompilationInfo;
 import org.netbeans.spi.editor.hints.ErrorDescription;
 import org.netbeans.spi.editor.hints.Fix;
 import org.netbeans.spi.editor.hints.Severity;
@@ -69,7 +66,7 @@ import org.openide.util.NbBundle;
     "ERR_MakePackageProtected=Make Package Protected",
     "DN_MakePackageProtected=Make Package Protected",
     "DESC_MakePackageProtected=Makes a class, method or field package protected.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
-public class MakePackageProtected {
+public class MakePackageProtected extends AbstractChangeModifiers {
 
     private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC, Modifier.PROTECTED);
 
@@ -79,13 +76,13 @@ public class MakePackageProtected {
     public static ErrorDescription convert(HintContext ctx) {
 
         TreePath path = ctx.getPath();
-        
+
         if (path.getLeaf().getKind() == Tree.Kind.CLASS) {
             if (!ModifierUtils.isCaretAtClassDeclaration(path, ctx)) {
                 return null;
             }
         }
-        
+
         Element element = ctx.getInfo().getTrees().getElement(path);
 
         if (element == null) {
@@ -93,6 +90,11 @@ public class MakePackageProtected {
         }
 
         ModifiersTree modifiers = ModifierUtils.getModifiersTree(path, element);
+        
+        int[] span = getFirstLineSpan(ctx, modifiers, path.getLeaf());
+        if (null == span) {
+            return null;
+        }
 
         if (modifiers == null || (!modifiers.getFlags().contains(Modifier.PROTECTED)
                 && !modifiers.getFlags().contains(Modifier.PRIVATE)
@@ -103,6 +105,6 @@ public class MakePackageProtected {
         final EnumSet<Modifier> toRemove = oppositeModifiers;
 
         Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), toAdd, toRemove, Bundle.ERR_MakePackageProtected());
-        return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakePackageProtected(), fix);
+        return forSpan(ErrorDescriptionFactory.forTree(ctx, path, Bundle.ERR_MakePackageProtected(), fix), span[0], span[1]);
     }
 }

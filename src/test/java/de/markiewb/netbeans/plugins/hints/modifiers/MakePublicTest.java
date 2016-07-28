@@ -13,7 +13,7 @@ public class MakePublicTest {
                         + "    Stri|ng s = null;\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:8-2:8:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:20:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -30,7 +30,7 @@ public class MakePublicTest {
                         + "    class In|ner {}\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:12-2:12:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:18:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -48,7 +48,7 @@ public class MakePublicTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:7-2:7:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:12:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -67,7 +67,7 @@ public class MakePublicTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:37:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -82,7 +82,7 @@ public class MakePublicTest {
         HintTest.create().setCaretMarker('|')
                 .input("package test; class T|est {}")
                 .run(MakePublic.class)
-                .findWarning("0:21-0:21:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("0:0-0:25:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test; public class Test {}");
@@ -96,7 +96,7 @@ public class MakePublicTest {
                         + "    private Stri|ng s = null;\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:16-2:16:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:28:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -113,7 +113,7 @@ public class MakePublicTest {
                         + "    private class In|ner {}\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:20-2:20:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:26:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -131,7 +131,7 @@ public class MakePublicTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:20:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -150,7 +150,7 @@ public class MakePublicTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:26-2:26:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:45:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -180,7 +180,7 @@ public class MakePublicTest {
                         + "    protected Str|ing s = null;\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:30:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -197,7 +197,7 @@ public class MakePublicTest {
                         + "    protected class In|ner {}\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:22-2:22:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:28:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -215,7 +215,7 @@ public class MakePublicTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:16-2:16:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:22:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -234,7 +234,7 @@ public class MakePublicTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePublic.class)
-                .findWarning("2:27-2:27:hint:" + Bundle.ERR_MakePublic())
+                .findWarning("2:0-2:47:hint:" + Bundle.ERR_MakePublic())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"

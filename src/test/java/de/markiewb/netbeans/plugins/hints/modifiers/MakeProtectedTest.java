@@ -13,7 +13,7 @@ public class MakeProtectedTest {
                         + "    Str|ing s = null;\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:7-2:7:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:20:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -30,7 +30,7 @@ public class MakeProtectedTest {
                         + "    class I|nner {}\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:11-2:11:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:18:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -48,7 +48,7 @@ public class MakeProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:7-2:7:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:12:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -67,7 +67,7 @@ public class MakeProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:37:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -97,7 +97,7 @@ public class MakeProtectedTest {
                         + "    private Str|ing s = null;\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:28:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -114,7 +114,7 @@ public class MakeProtectedTest {
                         + "    private class In|ner {}\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:20-2:20:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:26:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -132,7 +132,7 @@ public class MakeProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:20:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -151,7 +151,7 @@ public class MakeProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:25-2:25:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:45:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -181,7 +181,7 @@ public class MakeProtectedTest {
                         + "    public Stri|ng s = null;\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:27:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -199,7 +199,7 @@ public class MakeProtectedTest {
                         + "    public class In|ner {}\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:19-2:19:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:25:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -217,7 +217,7 @@ public class MakeProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:14-2:14:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:19:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -236,7 +236,7 @@ public class MakeProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakeProtected.class)
-                .findWarning("2:18-2:18:hint:" + Bundle.ERR_MakeProtected())
+                .findWarning("2:0-2:37:hint:" + Bundle.ERR_MakeProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"

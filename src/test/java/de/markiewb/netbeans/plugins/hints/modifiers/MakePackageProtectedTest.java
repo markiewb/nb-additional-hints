@@ -13,7 +13,7 @@ public class MakePackageProtectedTest {
                         + "    private Strin|g s = null;\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:17-2:17:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:28:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix().assertCompilable()
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
@@ -29,7 +29,7 @@ public class MakePackageProtectedTest {
                         + "    private class In|ner {}\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:20-2:20:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:26:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -47,7 +47,7 @@ public class MakePackageProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:25-2:25:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:45:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -66,7 +66,7 @@ public class MakePackageProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:20:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -96,7 +96,7 @@ public class MakePackageProtectedTest {
                         + "    protected Stri|ng s = null;\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:18-2:18:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:30:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix().assertCompilable()
                 .assertOutput("package test;\n"
                         + "public class Test {\n"
@@ -112,7 +112,7 @@ public class MakePackageProtectedTest {
                         + "    protected class In|ner {}\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:22-2:22:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:28:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix().assertCompilable().
                 assertOutput("package test;\n"
                         + "public class Test {\n"
@@ -129,7 +129,7 @@ public class MakePackageProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:15-2:15:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:22:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -148,7 +148,7 @@ public class MakePackageProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:28-2:28:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:47:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -178,7 +178,7 @@ public class MakePackageProtectedTest {
                         + "    public Str|ing s = null;\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:14-2:14:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:27:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -195,7 +195,7 @@ public class MakePackageProtectedTest {
                         + "    public class In|ner {}\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:19-2:19:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:25:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -213,7 +213,7 @@ public class MakePackageProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:13-2:13:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:19:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -232,7 +232,7 @@ public class MakePackageProtectedTest {
                         + "    }\n"
                         + "}\n")
                 .run(MakePackageProtected.class)
-                .findWarning("2:25-2:25:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("2:0-2:44:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test;\n"
@@ -247,7 +247,7 @@ public class MakePackageProtectedTest {
         HintTest.create().setCaretMarker('|')
                 .input("package test; public class Te|st {}")
                 .run(MakePackageProtected.class)
-                .findWarning("0:29-0:29:hint:" + Bundle.ERR_MakePackageProtected())
+                .findWarning("0:0-0:32:hint:" + Bundle.ERR_MakePackageProtected())
                 .applyFix()
                 .assertCompilable()
                 .assertOutput("package test; class Test {}");

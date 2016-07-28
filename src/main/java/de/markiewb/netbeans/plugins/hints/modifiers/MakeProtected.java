@@ -45,6 +45,8 @@ package de.markiewb.netbeans.plugins.hints.modifiers;
 import com.sun.source.tree.ModifiersTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.util.TreePath;
+import static de.markiewb.netbeans.plugins.hints.modifiers.AbstractChangeModifiers.forSpan;
+import static de.markiewb.netbeans.plugins.hints.modifiers.AbstractChangeModifiers.getFirstLineSpan;
 import java.util.EnumSet;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -66,7 +68,7 @@ import org.openide.util.NbBundle;
     "ERR_MakeProtected=Make Protected",
     "DN_MakeProtected=Make Protected",
     "DESC_MakeProtected=Makes a class, method or field protected.<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>"})
-public class MakeProtected {
+public class MakeProtected extends AbstractChangeModifiers {
 
     private static final EnumSet<Modifier> oppositeModifiers = EnumSet.of(Modifier.PRIVATE, Modifier.PUBLIC);
 
@@ -95,7 +97,11 @@ public class MakeProtected {
         }
 
         ModifiersTree modifiers = ModifierUtils.getModifiersTree(path, element);
-
+        int[] span = getFirstLineSpan(ctx, modifiers, path.getLeaf());
+        if (null == span) {
+            return null;
+        }
+        
         if (modifiers == null || modifiers.getFlags().contains(Modifier.PROTECTED)) {
             return null;
         }
@@ -103,6 +109,6 @@ public class MakeProtected {
         final EnumSet<Modifier> toRemove = oppositeModifiers;
 
         Fix fix = FixFactory.changeModifiersFix(ctx.getInfo(), new TreePath(path, modifiers), toAdd, toRemove, Bundle.ERR_MakeProtected());
-        return ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakeProtected(), fix);
+        return forSpan(ErrorDescriptionFactory.forName(ctx, path, Bundle.ERR_MakeProtected(), fix), span[0], span[1]);
     }
 }
