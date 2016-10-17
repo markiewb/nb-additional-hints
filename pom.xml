@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <netbeans.version>RELEASE74</netbeans.version>
+        <netbeans.version>RELEASE81</netbeans.version>
         <netbeans.run.params.ide/>
         <!--<netbeans.run.params>-J-javaagent:"${current.jrebel.agent.path}" -J-Drebel.log=true ${netbeans.run.params.ide}</netbeans.run.params>-->
     </properties>
@@ -64,6 +64,11 @@
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-java-source-base</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>nb-javac-api</artifactId>
             <version>${netbeans.version}</version>
@@ -81,6 +86,11 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-awt</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-ui</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
@@ -116,6 +126,18 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-parsing-nb</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-projectapi-nb</artifactId>
+            <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -264,6 +286,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/59"&gt;Updated Fix&lt;/a&gt;]: Make "Change modifiers" hints work for constructors too&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/64"&gt;Updated Fix &lt;/a&gt;]: java.lang.NullPointerException in "Report methods that have class name"&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/70"&gt;Removed Fix&lt;/a&gt;]: "dead instanceof" hint has been removed&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/72"&gt;Task&lt;/a&gt;]: Update dependencies to NB 8.1&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.5.0:&lt;/h3&gt;
 &lt;ul&gt;
@@ -326,7 +349,7 @@ The original sourcecode can be found at &lt;a href="http://hg.netbeans.org/main/
 &lt;p&gt;
 Provide defects, request for enhancements and feedback at &lt;a href=https://github.com/markiewb/nb-additional-hints/issues"&gt;https://github.com/markiewb/nb-additional-hints/issues&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;Compatible to NetBeans 7.4+ and higher&lt;/p&gt;
+&lt;p&gt;Compatible to NetBeans 8.1+&lt;/p&gt;
 &lt;p&gt;
 &lt;a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=K4CMP92RZELE2"&gt;&lt;img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="btn_donate_SM.gif"&gt;&lt;/a&gt;
 
