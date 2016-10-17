@@ -1,4 +1,4 @@
-/* 
+/*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
  * Copyright 2014 Oracle and/or its affiliates. All rights reserved.
@@ -85,19 +85,22 @@ public class ReturnForOptional {
         }
         final CompilationInfo ci = ctx.getInfo();
         ExecutableElement method = (ExecutableElement) ci.getTrees().getElement(methodTP);
+        if (null == method) {
+            return null;
+        }
         TypeMirror methodReturnType = method.getReturnType();
         final String returnType = ci.getTypes().erasure(methodReturnType).toString();
         if ("java.util.Optional".equals(returnType)) {
 
             TreePath path = ctx.getVariables().get("$a");
             //ignore existing "return Optional..."/"return o"
-            if (path.getLeaf().getKind()== Kind.IDENTIFIER || path.getLeaf().getKind()== Kind.METHOD_INVOCATION){
-                    TypeMirror typeMirror = ci.getTypes().erasure(ci.getTrees().getTypeMirror(path));
-                    if ("java.util.Optional".equals(typeMirror.toString())){
-                        return null;
-                    }
+            if (path.getLeaf().getKind() == Kind.IDENTIFIER || path.getLeaf().getKind() == Kind.METHOD_INVOCATION) {
+                TypeMirror typeMirror = ci.getTypes().erasure(ci.getTrees().getTypeMirror(path));
+                if ("java.util.Optional".equals(typeMirror.toString())) {
+                    return null;
+                }
             }
-            
+
             if (path.getLeaf().getKind() == Kind.NULL_LITERAL) {
                 Fix fix = rewriteFix(ctx, Bundle.DN_ReturnForOptionalEmpty(), returnTP, "return java.util.Optional.empty()");
                 return forName(ctx, returnTP, Bundle.ERR_ReturnForOptionalEmpty(), fix);

@@ -286,6 +286,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/58"&gt;Updated Fix&lt;/a&gt;]: Make "Change modifiers" hints non-intrusive&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/59"&gt;Updated Fix&lt;/a&gt;]: Make "Change modifiers" hints work for constructors too&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/64"&gt;Updated Fix &lt;/a&gt;]: java.lang.NullPointerException in "Report methods that have class name"&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/75"&gt;Updated Fix &lt;/a&gt;]: java.lang.NullPointerException in ReturnForOptional&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/70"&gt;Removed Fix&lt;/a&gt;]: "dead instanceof" hint has been removed&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/72"&gt;Task&lt;/a&gt;]: Update dependencies to NB 8.1&lt;/li&gt;
 &lt;/ul&gt;
