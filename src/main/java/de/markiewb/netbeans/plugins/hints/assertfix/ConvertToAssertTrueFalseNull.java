@@ -90,38 +90,6 @@ public class ConvertToAssertTrueFalseNull {
         return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertFalseWithMessage(), fix);
     }
 
-    @TriggerPattern(value = "junit.framework.Assert.assertEquals(true, $var)")
-    @Messages("ERR_computeAssertTrueWithoutMessage2=Replace with assertTrue")
-    public static ErrorDescription computeAssertTrueWithoutMessage2(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertTrueWithoutMessage2(), ctx.getPath(), "junit.framework.Assert.assertTrue($var)");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertTrueWithoutMessage2(), fix);
-    }
-
-    @TriggerPattern(value = "junit.framework.Assert.assertEquals(false, $var)")
-    @Messages("ERR_computeAssertFalseWithoutMessage2=Replace with assertFalse")
-    public static ErrorDescription computeAssertFalseWithoutMessage2(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertFalseWithoutMessage2(), ctx.getPath(), "junit.framework.Assert.assertFalse($var)");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertFalseWithoutMessage2(), fix);
-    }
-
-    @TriggerPattern(value = "junit.framework.Assert.assertEquals($msg, true, $var)", constraints = {
-        @ConstraintVariableType(variable = "$msg", type = "java.lang.String")
-    })
-    @Messages("ERR_computeAssertTrueWithMessage2=Replace with assertTrue")
-    public static ErrorDescription computeAssertTrueWithMessage2(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertTrueWithMessage2(), ctx.getPath(), "junit.framework.Assert.assertTrue($msg, $var)");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertTrueWithMessage2(), fix);
-    }
-
-    @TriggerPattern(value = "junit.framework.Assert.assertEquals($msg, false, $var)", constraints = {
-        @ConstraintVariableType(variable = "$msg", type = "java.lang.String")
-    })
-    @Messages("ERR_computeAssertFalseWithMessage2=Replace with assertFalse")
-    public static ErrorDescription computeAssertFalseWithMessage2(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertFalseWithMessage2(), ctx.getPath(), "junit.framework.Assert.assertFalse($msg, $var)");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertFalseWithMessage2(), fix);
-    }
-
     @TriggerPattern(value = "org.junit.Assert.assertEquals(null, $var)")
     @Messages("ERR_computeAssertNullWithoutMessage=Replace with assertNull")
     public static ErrorDescription computeAssertNullWithoutMessage(HintContext ctx) {
@@ -136,22 +104,6 @@ public class ConvertToAssertTrueFalseNull {
     public static ErrorDescription computeAssertNullWithMessage(HintContext ctx) {
         Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertNullWithMessage(), ctx.getPath(), "org.junit.Assert.assertNull($msg, $var)");
         return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertNullWithMessage(), fix);
-    }
-
-    @TriggerPattern(value = "junit.framework.Assert.assertEquals(null, $var)")
-    @Messages("ERR_computeAssertNullWithoutMessage2=Replace with assertNull")
-    public static ErrorDescription computeAssertNullWithoutMessage2(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertNullWithoutMessage2(), ctx.getPath(), "junit.framework.Assert.assertNull($var)");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertNullWithoutMessage2(), fix);
-    }
-
-    @TriggerPattern(value = "junit.framework.Assert.assertEquals($msg, null, $var)", constraints = {
-        @ConstraintVariableType(variable = "$msg", type = "java.lang.String")
-    })
-    @Messages("ERR_computeAssertNullWithMessage2=Replace with assertNull")
-    public static ErrorDescription computeAssertNullWithMessage2(HintContext ctx) {
-        Fix fix = org.netbeans.spi.java.hints.JavaFixUtilities.rewriteFix(ctx, Bundle.ERR_computeAssertNullWithMessage2(), ctx.getPath(), "junit.framework.Assert.assertNull($msg, $var)");
-        return ErrorDescriptionFactory.forName(ctx, ctx.getPath(), Bundle.ERR_computeAssertNullWithMessage2(), fix);
     }
 
 }

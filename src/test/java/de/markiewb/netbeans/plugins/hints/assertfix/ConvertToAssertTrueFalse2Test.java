@@ -22,16 +22,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalseNull.class)
-                .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertTrueWithoutMessage2())
-                .applyFix()
-                .assertCompilable()
-                .assertOutput("package test;\n"
-                        + "import junit.framework.Assert;\n"
-                        + "public class Test {\n"
-                        + "    public static void main(String[] args) {\n"
-                        + "        Assert.assertTrue(false);\n"
-                        + "    }\n"
-                        + "}\n");
+                .assertWarnings();
 
     }
     @Test
@@ -45,16 +36,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalseNull.class)
-                .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertTrueWithMessage2())
-                .applyFix()
-                .assertCompilable()
-                .assertOutput("package test;\n"
-                        + "import junit.framework.Assert;\n"
-                        + "public class Test {\n"
-                        + "    public static void main(String[] args) {\n"
-                        + "        Assert.assertTrue(\"expected different result\", false);\n"
-                        + "    }\n"
-                        + "}\n");
+                .assertWarnings();
 
     }
     @Test
@@ -68,16 +50,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalseNull.class)
-                .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertFalseWithoutMessage2())
-                .applyFix()
-                .assertCompilable()
-                .assertOutput("package test;\n"
-                        + "import junit.framework.Assert;\n"
-                        + "public class Test {\n"
-                        + "    public static void main(String[] args) {\n"
-                        + "        Assert.assertFalse(false);\n"
-                        + "    }\n"
-                        + "}\n");
+                .assertWarnings();
 
     }
     @Test
@@ -91,16 +64,7 @@ public class ConvertToAssertTrueFalse2Test {
                         + "}\n")
                 .classpath(FileUtil.getArchiveRoot(junit.framework.Assert.class.getProtectionDomain().getCodeSource().getLocation()))
                 .run(ConvertToAssertTrueFalseNull.class)
-                .findWarning("3:31-3:43:hint:" + Bundle.ERR_computeAssertFalseWithMessage2())
-                .applyFix()
-                .assertCompilable()
-                .assertOutput("package test;\n"
-                        + "import junit.framework.Assert;\n"
-                        + "public class Test {\n"
-                        + "    public static void main(String[] args) {\n"
-                        + "        Assert.assertFalse(\"expected different result\", true);\n"
-                        + "    }\n"
-                        + "}\n");
+                .assertWarnings();
 
     }
 }
