@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.6.0.8</version>
+    <version>1.6.0.9</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
