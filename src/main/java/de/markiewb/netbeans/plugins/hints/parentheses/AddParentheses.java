@@ -3,15 +3,7 @@ package de.markiewb.netbeans.plugins.hints.parentheses;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.ParenthesizedTree;
 import com.sun.source.tree.Tree.Kind;
-import static com.sun.source.tree.Tree.Kind.BOOLEAN_LITERAL;
-import static com.sun.source.tree.Tree.Kind.CHAR_LITERAL;
-import static com.sun.source.tree.Tree.Kind.CONDITIONAL_EXPRESSION;
-import static com.sun.source.tree.Tree.Kind.DOUBLE_LITERAL;
-import static com.sun.source.tree.Tree.Kind.FLOAT_LITERAL;
-import static com.sun.source.tree.Tree.Kind.INT_LITERAL;
-import static com.sun.source.tree.Tree.Kind.LOGICAL_COMPLEMENT;
-import static com.sun.source.tree.Tree.Kind.LONG_LITERAL;
-import static com.sun.source.tree.Tree.Kind.STRING_LITERAL;
+import static com.sun.source.tree.Tree.Kind.*;
 import com.sun.source.util.TreePath;
 import org.netbeans.api.java.source.TreeMaker;
 import org.netbeans.api.java.source.TreePathHandle;
@@ -35,7 +27,7 @@ import org.openide.util.NbBundle;
     "DESC_AddParentheses=Add parentheses<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class AddParentheses {
 
-    @TriggerTreeKind({INT_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL, CHAR_LITERAL, DOUBLE_LITERAL, FLOAT_LITERAL, LOGICAL_COMPLEMENT, LONG_LITERAL, CONDITIONAL_EXPRESSION})
+    @TriggerTreeKind({INT_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL, CHAR_LITERAL, DOUBLE_LITERAL, FLOAT_LITERAL, LOGICAL_COMPLEMENT, LONG_LITERAL, CONDITIONAL_EXPRESSION, METHOD_INVOCATION, DIVIDE, MINUS, PLUS, MULTIPLY, XOR})
     @Hint(displayName = "#DN_AddParentheses", description = "#DESC_AddParentheses", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     public static ErrorDescription remove(HintContext ctx) {
         // FIXME if errors, do not provide hints
@@ -47,7 +39,7 @@ public class AddParentheses {
         ExpressionTree expressionTree = (ExpressionTree) ctx.getPath().getLeaf();
         String expr = expressionTree.toString();
 
-        String label=Bundle.LABEL_AddParentheses(expr);
+        String label = Bundle.LABEL_AddParentheses(expr);
         Fix fix = new FixImpl(TreePathHandle.create(ctx.getPath(), ctx.getInfo()), label).toEditorFix();
         ErrorDescription forTree = ErrorDescriptionFactory.forTree(ctx, expressionTree, label, fix);
         return forTree;
