@@ -69,11 +69,6 @@
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>nb-javac-api</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-spi-java-hints</artifactId>
             <version>${netbeans.version}</version>
@@ -96,12 +91,6 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-java-hints-test</artifactId>
-            <version>${netbeans.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.modules</groupId>
-            <artifactId>org-netbeans-lib-nbjavac</artifactId>
             <version>${netbeans.version}</version>
             <scope>test</scope>
         </dependency>
@@ -190,45 +179,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>endorsed</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outputDirectory>${endorsed.dir}</outputDirectory>
-                    <silent>true</silent>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>org.netbeans.api</groupId>
-                            <artifactId>org-netbeans-libs-javacapi</artifactId>
-                            <version>${netbeans.version}</version>
-                        </artifactItem>
-                        <artifactItem>
-                            <groupId>org.netbeans.external</groupId>
-                            <artifactId>nb-javac-api</artifactId>
-                            <version>${netbeans.version}</version>
-                        </artifactItem>
-                        <artifactItem>
-                            <groupId>org.netbeans.modules</groupId>
-                            <artifactId>org-netbeans-libs-javacimpl</artifactId>
-                            <version>${netbeans.version}</version>
-                        </artifactItem>
-                        <artifactItem>
-                            <groupId>org.netbeans.external</groupId>
-                            <artifactId>nb-javac-impl</artifactId>
-                            <version>${netbeans.version}</version>
-                        </artifactItem>
-                    </artifactItems>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
@@ -289,6 +239,7 @@
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/75"&gt;Updated Fix &lt;/a&gt;]: java.lang.NullPointerException in ReturnForOptional&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/70"&gt;Removed Fix&lt;/a&gt;]: "dead instanceof" hint has been removed&lt;/li&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/72"&gt;Task&lt;/a&gt;]: Update dependencies to NB 8.1&lt;/li&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/76"&gt;Task&lt;/a&gt;]: Reduce dependencies&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1.5.0:&lt;/h3&gt;
 &lt;ul&gt;
