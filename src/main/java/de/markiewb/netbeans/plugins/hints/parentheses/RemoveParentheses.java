@@ -26,8 +26,8 @@ import org.openide.util.NbBundle;
     "DESC_RemoveParentheses=Remove parentheses<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class RemoveParentheses {
 
-    @TriggerTreeKind(Kind.PARENTHESIZED)
-    @Hint(displayName = "#DN_RemoveParentheses", description = "#DESC_RemoveParentheses", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
+//    @TriggerTreeKind(Kind.PARENTHESIZED)
+//    @Hint(displayName = "#DN_RemoveParentheses", description = "#DESC_RemoveParentheses", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     public static ErrorDescription remove(HintContext ctx) {
         // FIXME if errors, do not provide hints
         Kind kind = ctx.getPath().getParentPath().getLeaf().getKind();

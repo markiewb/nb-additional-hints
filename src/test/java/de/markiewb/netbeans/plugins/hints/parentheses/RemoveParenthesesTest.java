@@ -12,7 +12,7 @@ public class RemoveParenthesesTest {
     public RemoveParenthesesTest() {
     }
 
-    @Test
+    //@Test
     public void testRemove() throws Exception {
         HintTest.create()
                 .setCaretMarker('|')
@@ -35,7 +35,7 @@ public class RemoveParenthesesTest {
 
     }
 
-    @Test
+    //@Test
     public void testDontRemove() throws Exception {
         HintTest.create()
                 .setCaretMarker('|')
@@ -48,7 +48,7 @@ public class RemoveParenthesesTest {
                 .run(RemoveParentheses.class)
                 .assertWarnings();
     }
-    @Test
+    //@Test
     public void testDontRemove2() throws Exception {
         HintTest.create()
                 .setCaretMarker('|')

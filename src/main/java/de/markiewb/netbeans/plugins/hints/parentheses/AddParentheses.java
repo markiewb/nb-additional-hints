@@ -27,8 +27,8 @@ import org.openide.util.NbBundle;
     "DESC_AddParentheses=Add parentheses<p>Provided by <a href=\"https://github.com/markiewb/nb-additional-hints\">nb-additional-hints</a> plugin</p>",})
 public class AddParentheses {
 
-    @TriggerTreeKind({INT_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL, CHAR_LITERAL, DOUBLE_LITERAL, FLOAT_LITERAL, LOGICAL_COMPLEMENT, LONG_LITERAL, CONDITIONAL_EXPRESSION, METHOD_INVOCATION, DIVIDE, MINUS, PLUS, MULTIPLY, XOR})
-    @Hint(displayName = "#DN_AddParentheses", description = "#DESC_AddParentheses", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
+//    @TriggerTreeKind({INT_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL, CHAR_LITERAL, DOUBLE_LITERAL, FLOAT_LITERAL, LOGICAL_COMPLEMENT, LONG_LITERAL, CONDITIONAL_EXPRESSION, METHOD_INVOCATION, DIVIDE, MINUS, PLUS, MULTIPLY, XOR})
+//    @Hint(displayName = "#DN_AddParentheses", description = "#DESC_AddParentheses", category = "suggestions", hintKind = Hint.Kind.ACTION, severity = Severity.HINT)
     public static ErrorDescription remove(HintContext ctx) {
         // FIXME if errors, do not provide hints
 
