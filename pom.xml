@@ -4,7 +4,7 @@
 
     <groupId>de.markiewb.netbeans.plugins</groupId>
     <artifactId>AdditionalHints</artifactId>
-    <version>1.6.0.10</version>
+    <version>1.6.1.0</version>
     <packaging>nbm</packaging>
 
     <name>Additional Java hints</name>
@@ -220,9 +220,13 @@
 &lt;/ul&gt;
 
 &lt;h2&gt;Example:&lt;/h2&gt;
-&lt;img src="https://raw.githubusercontent.com/markiewb/nb-additional-hints/v1.4.0/doc/screenshot.png"/&gt;
+&lt;img src="https://raw.githubusercontent.com/markiewb/nb-additional-hints/v1.6.1/doc/screenshot.png"/&gt;
 
 &lt;h2&gt;Updates&lt;/h2&gt;
+&lt;h3&gt;1.6.1:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/78"&gt;Bugfix&lt;/a&gt;]: Fixed: Hints for converting ternary to if and back are missing&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3&gt;1.6.0:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;[&lt;a href="https://github.com/markiewb/nb-additional-hints/issues/55"&gt;New Fix&lt;/a&gt;]: Replace with null-assignment to Optional with Optional.empty()&lt;/li&gt;
